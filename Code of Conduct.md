@@ -3,6 +3,7 @@
 ### Group members: Emma Davidson, Andy Dickinson, Ben Loughery, and Tim Honisett  
 <br>
 
+* All team members must pull the remote branch before pushing their commits so conflicts are resloved locally and therefore there are never conflicts on a remote branch  
 * All meetings that are set should be attended unless unwell  
 * Team members should have a continues communication with each other  
 * This code of conduct for all team members for the software engineering methods, regardless of team member rank  
