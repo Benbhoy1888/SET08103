@@ -1,7 +1,11 @@
 # Code of Conduct  
 
-### Group members: Emma Davidson: 405354306, Andy Dickinson: 40538519, Ben Loughrey: 40318669, and Tim Honisett: 40595819  
-<br>
+### Group members:  
+
+> Emma Davidson: 405354306  
+> Andy Dickinson: 40538519  
+> Ben Loughrey: 40318669  
+> Tim Honisett: 40595819  
 
 #### All team members should abide by Napiers code of conduct, in addition:  
 
