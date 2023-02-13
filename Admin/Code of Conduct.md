@@ -12,6 +12,8 @@
 General:
 
 * All team members must pull the remote branch before pushing their commits so conflicts are resolved locally and there are never conflicts on a remote branch  
+* Java docs comments to be used for all methods and classes
+* Line comments to be used where appropriate
 * All meetings that are set should be attended unless unwell  
 * Team members should have consistent communication with each other  
 * This code of conduct for all team members for the software engineering methods, regardless of team member rank  
