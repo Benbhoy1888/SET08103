@@ -3,15 +3,40 @@ package com.napier.sem;
 import java.sql.*;
 
 /**
- * A class to run project application
+ * A Class to run project world reports application
  */
 public class App
 {
+    /* Ensure set to false before pushing to GitHub
+    If setting to false and testing locally, start db first before running app
+     */
+    private Boolean test_on_localhost = false;
+
     /**
-     * Applications main method and program starting point
+     * Main Method, program starts here
      * @param args
      */
     public static void main(String[] args)
+    {
+        // Create new Application
+        App a = new App();
+
+        // Connect to database
+        a.connect();
+
+        // Disconnect from database
+        a.disconnect();
+    }
+
+    /**
+     * Connection to MySQL database
+     */
+    private Connection con = null;
+
+    /**
+     * Connect to the MySQL database
+     */
+    public void connect()
     {
         try
         {
@@ -24,27 +49,30 @@ public class App
             System.exit(-1);
         }
 
-        // Connection to the database
-        Connection con = null;
-        int retries = 100;
+        int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
             System.out.println("Connecting to database...");
             try
             {
+                int delay = 30000;
+                String port = "3306";
+                if (test_on_localhost) {
+                    delay = 0;
+                    port = "33060";
+                }
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(delay); // Change delay to 30000 before pushing to GitHub, set to 0 when db up and running and testing locally
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                //docker use db:3306
+                //local use localhost:30060
+                con = DriverManager.getConnection("jdbc:mysql://db:" + port + "/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
-                // Wait a bit
-                Thread.sleep(10000);
-                // Exit for loop
                 break;
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
@@ -52,7 +80,13 @@ public class App
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
+    }
 
+    /**
+     * Disconnect from the MySQL database
+     */
+    public void disconnect()
+    {
         if (con != null)
         {
             try
