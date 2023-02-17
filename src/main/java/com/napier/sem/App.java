@@ -7,8 +7,8 @@ import java.sql.*;
  */
 public class App
 {
-    /* Ensure set to false before pushing to GitHub
-    If setting to false and testing locally, start db first before running app
+    /* Ensure set to false before pushing to GitHub or for running via docker-compose.
+       If setting to true and testing locally, start db first before running app. Will ONLY be able to run via App main()
      */
     private Boolean test_on_localhost = false;
 
