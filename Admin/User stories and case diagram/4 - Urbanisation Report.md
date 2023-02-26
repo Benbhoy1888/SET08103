@@ -11,7 +11,7 @@
 <th><p><strong>Priority:</strong></p>
 <p>High</p></th>
 <th><p><strong>Estimate:</strong></p>
-<p></p></th>
+<p>2</p></th>
 </tr>
 </thead>
 <tbody>
