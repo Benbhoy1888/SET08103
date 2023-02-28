@@ -24,8 +24,7 @@ We know the role. The database contains city data
 
 ### **Success End Condition**
 
-A report is available for the NHS to provide to the health care
-assistant
+A report is available for the Disaster Management Company to provide to the planner.
 
 ### **Failed End Condition**
 
@@ -48,11 +47,8 @@ The management planner selects city reports from main menu
     assistant will be requested to enter a continent, region, country or
     a district
 
-3.  If the management planner selects world in step 1, the menu skips
-    step 2
-
-4.  The management planner is requested to input the number of results
+3.  The management planner is requested to input the number of results
     to show or they just hit enter to see all results
 
-5.  Report should be generated with the columns: Code, Name, Continent,
-    Region, Population and District
+4.  Report should be generated with the columns: Name, Country,
+    District, Population.
