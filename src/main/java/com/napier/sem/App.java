@@ -7,8 +7,8 @@ import java.sql.*;
  */
 public class App
 {
-    /* Ensure set to false before pushing to GitHub
-    If setting to false and testing locally, start db first before running app
+    /* Ensure set to false before pushing to GitHub or for running via docker-compose.
+       If setting to true and testing locally, start db first before running app. Will ONLY be able to run via App main()
      */
     private Boolean test_on_localhost = false;
 
@@ -56,17 +56,17 @@ public class App
             try
             {
                 int delay = 30000;
-                String port = "3306";
+                String port = "db:3306";
                 if (test_on_localhost) {
                     delay = 0;
-                    port = "33060";
+                    port = "localhost:33060";
                 }
                 // Wait a bit for db to start
                 Thread.sleep(delay); // Change delay to 30000 before pushing to GitHub, set to 0 when db up and running and testing locally
                 // Connect to database
                 //docker use db:3306
                 //local use localhost:30060
-                con = DriverManager.getConnection("jdbc:mysql://db:" + port + "/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + port + "/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
