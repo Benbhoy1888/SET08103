@@ -16,7 +16,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Unit Tests
-          run: mvn -Dtest=com.napier.sem.<REPLACE_WITH_TEST_FILE_NAME> test
+          run: mvn -Dtest=com.napier.sem.UnitTests test
       - name: Package and Run docker compose
           run: |
             mvn package -DskipTests
