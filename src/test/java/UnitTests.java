@@ -11,5 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * Ensure to add file to main.yml for Unit tests run line(s)
  */
 public class UnitTests {
+    // Use to setup things before test, e.g.:
+    @BeforeAll
+    static void init() {
+        App app = new App();
+    }
 
+
+    //Example unit test: ..........
+
+    // tests if first parameter (the output) is equal to the the 2nd parameter (or method output)
+    @Test
+    void unitTest() {
+        assertEquals(5, 5);
+    }
 }
