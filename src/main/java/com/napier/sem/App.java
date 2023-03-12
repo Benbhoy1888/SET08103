@@ -10,7 +10,7 @@ public class App
     /* Ensure set to false before pushing to GitHub or for running via docker-compose.
        If setting to true and testing locally, start db first before running app. Will ONLY be able to run via App main()
      */
-    private Boolean test_on_localhost = false;
+    private Boolean test_on_localhost = false; // if changing, make sure to package and rebuild images
 
     /**
      * Main Method, program starts here
@@ -24,8 +24,19 @@ public class App
         // Connect to database
         a.connect();
 
+        // Creates menu for user - parses choice(s) and creates relevant report(s)
+        //a.createMenu();
+
         // Disconnect from database
         a.disconnect();
+    }
+
+    /**
+     * Creates a menu for user
+     * Parses choice(s) and creates relevant report(s)
+     */
+    private void createMenu() {
+        Menu m = new Menu();
     }
 
     /**
@@ -87,12 +98,17 @@ public class App
      */
     public void disconnect()
     {
+        // Lets user know program is in process of exiting
+        System.out.println("Disconnecting from database...");
+
         if (con != null)
         {
             try
             {
                 // Close connection
                 con.close();
+
+                System.out.println("Successfully disconnected");
             }
             catch (Exception e)
             {

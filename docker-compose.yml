@@ -3,6 +3,8 @@ services:
   # Application Dockerfile is in same folder which is .
   app:
     build: .
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
 
   # db is is db folder
   db:
