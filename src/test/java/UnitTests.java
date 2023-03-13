@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UnitTests {
     // Use to setup things before test, e.g.:
-    @Test
     @BeforeAll
     static void init() {
         App app = new App();
