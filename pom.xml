@@ -48,7 +48,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>package com.napier.sem.App</mainClass>
+                                    <mainClass>com.napier.sem.App</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
