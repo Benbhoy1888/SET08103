@@ -16,5 +16,16 @@ class MyTest {
 
     }
 
+    @Test
+    void unitTest3()
+    {
+        int [] a = { 1, 1, 2 };
+        int [] b = {1, 2, 3 };
+
+        assertArrayEquals(a,b,"Arrays not equal");
+
+
+    }
+
 }
 
