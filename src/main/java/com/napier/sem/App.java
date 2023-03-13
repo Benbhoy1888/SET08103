@@ -25,7 +25,9 @@ public class App
         // Connect to database
         a.connect();
 
-
+        // Extract country information
+        ArrayList<Country> countries = a.getAllCountries("", "");
+        a.printCountries(countries);
 
         // Creates menu for user - parses choice(s) and creates relevant report(s)
         //a.createMenu();
@@ -35,10 +37,29 @@ public class App
     }
 
     /**
-     * Gets all the current employees and salaries.
-     * @return A list of all employees and salaries, or null if there is an error.
+     * Prints a list of countries.
+     * @param countries The list of countries to print.
      */
-    public ArrayList<Countries> getAllCountries()
+    public void printCountries(ArrayList<Country> countries)
+    {
+        // Print header
+        System.out.println(String.format("%-3s %-52s %-10s %-15s %-26s %-1s", "Code", "Name", "Population", "Continent", "Region", "Capital"));
+        // Loop over all employees in the list
+        for (Country country : countries)
+        {
+            String country_string =
+                    String.format("%-3s %-52s %-10s %-15s %-26s %-1s",
+                            country.code, country.name, country.population, country.continent, country.region, country.capital);
+            System.out.println(country_string);
+        }
+        System.out.println("");
+    }
+
+    /**
+     * Gets all countries (default world, pass cont or region to get relevant report).
+     * @return A list of all countries, or null if there is an error.
+     */
+    public ArrayList<Country> getAllCountries(String cont, String region)
     {
         try
         {
@@ -46,29 +67,35 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
-                            + "FROM employees, salaries "
-                            + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
-                            + "ORDER BY employees.emp_no ASC";
+                    "SELECT Code, Name, Population, Continent, Region, Capital "
+                            + "FROM country"
+                           /* if (!cont.equals("")){
+                                + "WHERE Continent = " + cont;
+                            } else if (!region.equals("")){
+                                + "WHERE Region = " + region;
+                            }*/
+                            + " ORDER BY Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract employee information
-            ArrayList<Employee> employees = new ArrayList<Employee>();
+            ArrayList<Country> countries = new ArrayList<Country>();
             while (rset.next())
             {
-                Employee emp = new Employee();
-                emp.emp_no = rset.getInt("employees.emp_no");
-                emp.first_name = rset.getString("employees.first_name");
-                emp.last_name = rset.getString("employees.last_name");
-                emp.salary = rset.getInt("salaries.salary");
-                employees.add(emp);
+                Country country = new Country();
+                country.code = rset.getString("Code");
+                country.name = rset.getString("Name");
+                country.population = rset.getInt("Population");
+                country.continent = rset.getString("Continent");
+                country.region = rset.getString("Region");
+                country.capital = rset.getString("Capital");
+                countries.add(country);
             }
-            return employees;
+            return countries;
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get salary details");
+            System.out.println("Failed to get country details\n");
             return null;
         }
     }
@@ -120,7 +147,7 @@ public class App
                 //docker use db:3306
                 //local use localhost:30060
                 con = DriverManager.getConnection("jdbc:mysql://" + port + "/world?useSSL=false", "root", "example");
-                System.out.println("Successfully connected");
+                System.out.println("Successfully connected\n");
                 break;
             }
             catch (SQLException sqle)

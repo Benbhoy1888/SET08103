@@ -3,7 +3,7 @@ package com.napier.sem;
 /**
  * Represents a country
  */
-public class Countries {
+public class Country {
 
     /**
      * Country code
@@ -33,5 +33,5 @@ public class Countries {
     /**
      * Capital
      */
-    public int capital;
+    public String capital;
 }
