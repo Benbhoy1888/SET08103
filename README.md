@@ -22,3 +22,4 @@ To up-date version and create a release-
 * Merge release to master
 * Merge release to develop
 * Checkout feature branch  
+* Version 1.0 - test unit testing packages
