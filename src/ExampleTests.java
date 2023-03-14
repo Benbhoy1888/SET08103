@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Project tests
  * Run using Maven by opening Maven view ->
- * Select "test" lifecycle stage
+ * Select "test" lifecycle stage (or run test file with green arrow, or click Run >> Run 'com.napier.sem in seMethods' with Coverage to see how much of code is tested)
  *
  * Tests should be written in a separate file for each class.
- * Ensure to add file to main.yml for Unit tests run line(s)
+ * #### Ensure to add a run line for each file to main.yml for Unit tests #####
  */
 public class ExampleTests
 {
