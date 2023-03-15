@@ -1,11 +1,11 @@
 package com.napier.sem;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * Class to display menu and parse choices for user
  * Program flow is directed via parseChoice() method
+ *
+ * ///////////////////// NO LONGER USED, keep here for now //////////////////
  */
 public class Menu {
 

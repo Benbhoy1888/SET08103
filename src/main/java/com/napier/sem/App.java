@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * A Class to run project world reports application
+ * Reports generated are saved in reports directory
  *
  * To run locally, now just need to use green run arrow next to main method (no need to rebuild)
  */
@@ -27,41 +28,33 @@ public class App
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        ///////////////////// NO LONGER USED, keep here for now //////////////////
-        // Creates menu for user - parses choice(s) and creates relevant report(s)
-        //a.createMenu();
 
+        // Country reports ------------------------------------------------------------------------------
 
-        // Country reports
-
-        // Extract country information for world report
+        // Extract country information for:
+        // world report
         ArrayList<Country> worldCountries = a.getAllCountries("w", "");
-        // Extract country information for continent report
+        // continent report
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
-        //Extract country information for region report
+        //region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
 
-        // Generates country report for world and outputs to markdown file
-        a.outputReport(worldCountries, -1, "allWorldCountries.md");
+        // Generates country reports and outputs to markdown file for:
+        // all countries in world
+        a.outputReport(worldCountries, -1, "allWorldCountries");
+        // all countries in continent (in this case, continent = 'Oceania')
+        a.outputReport(continentCountries, -1, "allCountriesContinent");
+        // all countries in region (in this case, region = 'Western Europe')
+        a.outputReport(regionCountries, -1, "allCountriesRegion");
+        // top n populated countries in world (in this case, n = 5)
+        a.outputReport(worldCountries, 5, "top5_worldCountries");
+        // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
+        a.outputReport(continentCountries, 8, "top8_continentCountries");
+        // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
+        a.outputReport(regionCountries, 3, "top3_regionCountries");
 
-        // Print report for all countries in the world
-        System.out.println("Countries report (all, world):");
-        a.printCountries(worldCountries, -1);
-        // Print report for all countries in continent
-        System.out.println("Countries report (all, continent = 'Oceania'):");
-        a.printCountries(continentCountries, -1);
-        // Print report for all countries in region
-        System.out.println("Countries report (all, region = 'Western Europe'):");
-        a.printCountries(regionCountries, -1);
-        // Print report for top 5 most populated countries in world
-        System.out.println("Countries report (n = 5, world):");
-        a.printCountries(worldCountries, 5);
-        // Print report for top 8 most populated countries in continent
-        System.out.println("Countries report (n = 8, continent = 'Oceania'):");
-        a.printCountries(continentCountries, 8);
-        // Print report for top 3 most populated countries in region
-        System.out.println("Countries report (n = 3, region = 'Western Europe'):");
-        a.printCountries(regionCountries, 3);
+        // ---------------------------------------------------------------------------------------------
+
 
 
         // Disconnect from database
@@ -70,7 +63,7 @@ public class App
 
     /**
      * Outputs to Markdown
-     *
+     * Extension is automatically added
      * @param countries The list of countries to print
      * @param displayN number to display, -1 displays all
      * @param filename markdown output filename
@@ -107,7 +100,7 @@ public class App
         }
         try {
             new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + filename));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + filename + ".md"));
             writer.write(sb.toString());
             writer.close();
         } catch (IOException e) {
@@ -117,6 +110,8 @@ public class App
 
     /**
      * Prints a list of countries
+     * ///////////////////// NO LONGER USED, keep here for now //////////////////
+     *
      * @param countries The list of countries to print
      * @param displayN number to display, -1 displays all
      */
