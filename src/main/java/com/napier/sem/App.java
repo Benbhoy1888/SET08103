@@ -28,6 +28,7 @@ public class App
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
+        System.out.println("Generating Reports...");
 
         // Country reports ------------------------------------------------------------------------------
 
@@ -55,7 +56,7 @@ public class App
 
         // ---------------------------------------------------------------------------------------------
 
-
+        System.out.println("Program finished\n");
 
         // Disconnect from database
         a.disconnect();
