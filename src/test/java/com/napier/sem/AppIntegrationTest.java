@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,5 +24,19 @@ public class AppIntegrationTest
     @Test
     void unitTest() {
         assertEquals(5, 5);
+    }
+
+
+
+    // Need test for connection to database without checking specific return values or inserting values to database
+
+    // Need test to check returned values are as expected
+
+    /**
+     * Disconnects from database
+     */
+    @AfterAll
+    static void disconnect() {
+        app.disconnect();
     }
 }

@@ -41,17 +41,17 @@ public class App
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
-        a.outputReport(worldCountries, -1, "allWorldCountries");
+        a.outputCountryReport(worldCountries, -1, "allWorldCountries");
         // all countries in continent (in this case, continent = 'Oceania')
-        a.outputReport(continentCountries, -1, "allCountriesContinent");
+        a.outputCountryReport(continentCountries, -1, "allCountriesContinent");
         // all countries in region (in this case, region = 'Western Europe')
-        a.outputReport(regionCountries, -1, "allCountriesRegion");
+        a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
         // top n populated countries in world (in this case, n = 5)
-        a.outputReport(worldCountries, 5, "top5_worldCountries");
+        a.outputCountryReport(worldCountries, 5, "top5_worldCountries");
         // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
-        a.outputReport(continentCountries, 8, "top8_continentCountries");
+        a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
-        a.outputReport(regionCountries, 3, "top3_regionCountries");
+        a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
 
         // ---------------------------------------------------------------------------------------------
 
@@ -68,7 +68,12 @@ public class App
      * @param displayN number to display, -1 displays all
      * @param filename markdown output filename
      */
-    public void outputReport(ArrayList<Country> countries, int displayN, String filename) {
+    public void outputCountryReport(ArrayList<Country> countries, int displayN, String filename) {
+        if(filename.equals("")){
+            System.out.println("Empty filename provided");
+            return;
+        }
+
         // Check countries is not null
         if (countries == null || countries.size()<1) {
             System.out.println("No countries");
@@ -109,68 +114,30 @@ public class App
     }
 
     /**
-     * Prints a list of countries
-     * ///////////////////// NO LONGER USED, keep here for now //////////////////
-     *
-     * @param countries The list of countries to print
-     * @param displayN number to display, -1 displays all
-     */
-    public void printCountries(ArrayList<Country> countries, int displayN)
-    {
-        // checks list exists
-        if(countries != null) {
-
-            // checks list is not empty
-            if(countries.size()<1){
-                System.out.println("No countries found\n");
-                return;
-            }
-
-            // Print header
-            System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s %-36s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
-
-            // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
-            // or displayN is greater than the number of countries
-            if(displayN>countries.size() || displayN==-1){
-                displayN = countries.size();
-            }
-
-            // Loop over all countries in the list
-            for (int i=0; i<displayN;i++) {
-                Country country;
-                country = countries.get(i);
-                String country_string =
-                        String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
-                                country.code, country.name, country.continent, country.region, country.population, country.capital);
-                System.out.println(country_string);
-            }
-            System.out.println("");
-        }
-    }
-
-    /**
      * Gets all countries (defaults to world, pass "c" (continent) or "r" (region) to get relevant report)
      * 'choice' is only used if continent or region is specified as reportType
      * @param reportType should be "w", "c" or "r", "" can also be used to get world
      * @param choice if selecting a continent or region, this should be specified here - ignored if report type is "w"
      * @return A list of all countries, or null if there is an error
      */
-    public ArrayList<Country> getAllCountries(String reportType, String choice)
-    {
+    public ArrayList<Country> getAllCountries(String reportType, String choice) {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if(reportType.toUpperCase().equals("C")){
+            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+                reportType = "World";
+            } else if (choice.equals("")){
+                System.out.println("No choice provided when report type is not W or ''");
+                return null;
+            } else if(reportType.toUpperCase().equals("C")){
                 reportType = "Continent";
             } else if (reportType.toUpperCase().equals("R")){
                 reportType = "Region";
-            } else if (reportType.toUpperCase().equals("W") || reportType.equals("")){
-                reportType = "World";
             } else {
-                System.out.println("Countries report type not valid\n");
+                System.out.println("Countries report type not valid");
                 return null;
             }
 
@@ -207,6 +174,46 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get country details\n");
             return null;
+        }
+    }
+
+    /**
+     * Prints a list of countries
+     * ///////////////////// NO LONGER USED, keep here for now //////////////////
+     *
+     * @param countries The list of countries to print
+     * @param displayN number to display, -1 displays all
+     */
+    public void printCountries(ArrayList<Country> countries, int displayN)
+    {
+        // checks list exists
+        if(countries != null) {
+
+            // checks list is not empty
+            if(countries.size()<1){
+                System.out.println("No countries found\n");
+                return;
+            }
+
+            // Print header
+            System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s %-36s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+
+            // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
+            // or displayN is greater than the number of countries
+            if(displayN>countries.size() || displayN==-1){
+                displayN = countries.size();
+            }
+
+            // Loop over all countries in the list
+            for (int i=0; i<displayN;i++) {
+                Country country;
+                country = countries.get(i);
+                String country_string =
+                        String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
+                                country.code, country.name, country.continent, country.region, country.population, country.capital);
+                System.out.println(country_string);
+            }
+            System.out.println("");
         }
     }
 
