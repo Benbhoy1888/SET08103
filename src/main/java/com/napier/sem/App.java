@@ -1,18 +1,16 @@
 package com.napier.sem;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 /**
  * A Class to run project world reports application
+ *
+ * To run locally, now just need to use green run arrow next to main method (no need to rebuild)
  */
 public class App
 {
-    /* Ensure set to false before pushing to GitHub or for running via docker-compose.
-       If setting to true and testing locally, start db first before running app. Will ONLY be able to run via App main()
-     */
-    private Boolean test_on_localhost = false; // if changing, make sure to package and rebuild images
-
     /**
      * Main Method, program starts here
      * @param args
@@ -23,7 +21,11 @@ public class App
         App a = new App();
 
         // Connect to database
-        a.connect();
+        if(args.length < 1){
+            a.connect("localhost:33060", 0);
+        }else{
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         ///////////////////// NO LONGER USED, keep here for now //////////////////
         // Creates menu for user - parses choice(s) and creates relevant report(s)
@@ -38,6 +40,9 @@ public class App
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
         //Extract country information for region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
+
+        // Generates country report for world and outputs to markdown file
+        a.outputReport(worldCountries, -1, "allWorldCountries.md");
 
         // Print report for all countries in the world
         System.out.println("Countries report (all, world):");
@@ -61,6 +66,53 @@ public class App
 
         // Disconnect from database
         a.disconnect();
+    }
+
+    /**
+     * Outputs to Markdown
+     *
+     * @param countries The list of countries to print
+     * @param displayN number to display, -1 displays all
+     * @param filename markdown output filename
+     */
+    public void outputReport(ArrayList<Country> countries, int displayN, String filename) {
+        // Check countries is not null
+        if (countries == null || countries.size()<1) {
+            System.out.println("No countries");
+            return;
+        }
+
+        // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
+        // or displayN is greater than the number of countries
+        if(displayN>countries.size() || displayN==-1){
+            displayN = countries.size();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Code |Name |Continent | Region | Population | Capital |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | ---: | :--- |\r\n");
+
+        // Loop over all countries in the list
+        for (int i=0; i<displayN;i++) {
+            Country country;
+            country = countries.get(i);
+            if(country == null) continue;
+            sb.append(("| " + country.code + " | " +
+                        country.name + " | " +
+                        country.continent + " | " +
+                        country.region + " | " +
+                        country.population + " | " +
+                        country.capital + " |\r\n"));
+        }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + filename));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -179,7 +231,7 @@ public class App
     /**
      * Connect to the MySQL database
      */
-    public void connect()
+    public void connect(String location, int delay)
     {
         try
         {
@@ -198,18 +250,12 @@ public class App
             System.out.println("Connecting to database...");
             try
             {
-                int delay = 30000;
-                String port = "db:3306";
-                if (test_on_localhost) {
-                    delay = 0;
-                    port = "localhost:33060";
-                }
                 // Wait a bit for db to start
-                Thread.sleep(delay); // Change delay to 30000 before pushing to GitHub, set to 0 when db up and running and testing locally
+                Thread.sleep(delay); // Should be 30000 for pushing to GitHub, 0 when db up and running and testing locally
                 // Connect to database
                 //docker use db:3306
                 //local use localhost:30060
-                con = DriverManager.getConnection("jdbc:mysql://" + port + "/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected\n");
                 break;
             }
