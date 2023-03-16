@@ -32,6 +32,8 @@ public class AppIntegrationTest
 
     // Need test to check returned values are as expected
 
+    // Need test to check reports are outputted correctly from docker container
+
     /**
      * Disconnects from database
      */

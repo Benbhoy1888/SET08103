@@ -60,13 +60,16 @@ public class CountryReportTests
     void outuputCountryReportsNullFieldTest() {
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
+
         country.code = null;
         country.name = null;
         country.continent = null;
         country.region = null;
         country.population = 0; // int field
         country.capital = null;
+
         countries.add(country);
+
         app.outputCountryReport(countries, -1, "test");
     }
 
