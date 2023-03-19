@@ -30,7 +30,7 @@ public class App
 
         System.out.println("Generating Reports...");
 
-        // Country reports ------------------------------------------------------------------------------
+        // Country reports --- vvv ---------------------------------------------------------------------
 
         // Extract country information for:
         // world report
@@ -54,6 +54,16 @@ public class App
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
         a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
 
+        // Cities reports --- vvv ----------------------------------------------------------------------
+
+        // Capital City reports --- vvv ----------------------------------------------------------------
+
+        // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+        // TotalPopulation reports --- vvv -------------------------------------------------------------
+
+        // Language reports --- vvv --------------------------------------------------------------------
+
         // ---------------------------------------------------------------------------------------------
 
         System.out.println("Program finished\n");
@@ -62,6 +72,42 @@ public class App
         a.disconnect();
     }
 
+    // Cities reports --- vvv ----------------------------------------------------------------------
+
+    // Capital City reports --- vvv ----------------------------------------------------------------
+
+    // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+    // Language reports --- vvv --------------------------------------------------------------------
+
+    // Total Population --- vvv --------------------------------------------------------------------
+    /**
+     * Gets total population information from database
+     * @param reportType
+     * @param choice specifies which continent, region, country, distric or city as per reportType
+     * @return A TotalPopulation object, or null if there is an error
+     */
+    public TotalPopulation getTotalPopulation(String reportType, String choice) {
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+        // if reportType is empty, should generate world report
+        // store reportType name in object
+        // get population in thousands to 2 decimal places
+        System.out.println("Report type = " + reportType);
+        return null;
+    }
+
+    /**
+     * Outputs to Markdown
+     * Filename and extension is automatically generated based on reportType
+     * @param population A TotalPopulation object
+     * @param reportType Used to generate correct filename
+     */
+    public void outputTotalPopulationReport(TotalPopulation population) {
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+        // population column in thousands, reflect in header
+    }
+
+    // Country reports --- vvv ---------------------------------------------------------------------
     /**
      * Outputs to Markdown
      * Extension is automatically added
@@ -71,7 +117,6 @@ public class App
      */
     public void outputCountryReport(ArrayList<Country> countries, int displayN, String filename) {
         if(filename.equals("")){
-            System.out.println("Empty filename provided");
             return;
         }
 
@@ -83,7 +128,7 @@ public class App
 
         // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
         // or displayN is greater than the number of countries
-        if(displayN>countries.size() || displayN==-1){
+        if(displayN>countries.size() || displayN<0){
             displayN = countries.size();
         }
 
@@ -104,9 +149,14 @@ public class App
                         country.population + " | " +
                         country.capital + " |\r\n"));
         }
+
         try {
-            new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + filename + ".md"));
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/country_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/country_reports/" + filename + ".md"));
             writer.write(sb.toString());
             writer.close();
         } catch (IOException e) {
@@ -115,7 +165,8 @@ public class App
     }
 
     /**
-     * Gets all countries (defaults to world, pass "c" (continent) or "r" (region) to get relevant report)
+     * Gets all countries information from database (defaults to world, pass "c" (continent)
+     * or "r" (region) to get relevant report)
      * 'choice' is only used if continent or region is specified as reportType
      * @param reportType should be "w", "c" or "r", "" can also be used to get world
      * @param choice if selecting a continent or region, this should be specified here - ignored if report type is "w"
@@ -218,6 +269,7 @@ public class App
         }
     }
 
+    // Menu --- vvv --------------------------------------------------------------------------------
     /**
      * Creates a menu for user
      * Parses choice(s) and creates relevant report(s)
@@ -226,6 +278,7 @@ public class App
         Menu m = new Menu();
     }
 
+    // Database --- vvv ----------------------------------------------------------------------------
     /**
      * Connection to MySQL database
      */

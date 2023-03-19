@@ -34,6 +34,8 @@ public class AppIntegrationTest
 
     // Need test to check reports are outputted correctly from docker container
 
+    // Test getAllCountries (and any others which fall into same bracket) does not return null when reportType is empty (to generate world report)
+
     /**
      * Disconnects from database
      */

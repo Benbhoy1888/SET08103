@@ -7,14 +7,12 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for App class
  */
-public class CountryReportTests
-{
+public class CountryReportTests {
     static App app;
 
     /**
@@ -27,7 +25,7 @@ public class CountryReportTests
     }
 
     /**
-     * Tests if ArrayList passed is null
+     * Tests if ArrayList passed is null, an error is not thrown
      */
     @Test
     void outputCountryReportsTestNull() {
@@ -35,26 +33,29 @@ public class CountryReportTests
     }
 
     /**
-     *Tests if ArrayList passed is empty
+     *Tests if ArrayList passed is empty, an error is not thrown
      */
     @Test
     void outputCountryReportsEmptyListTest() {
-        ArrayList<Country> countries = new ArrayList<Country>();
+        ArrayList<Country> countries = new ArrayList<>();
+
         app.outputCountryReport(countries, -1, "test");
     }
 
     /**
-     * Tests for if an element in ArrayList passed is null
+     * Tests for if an element in ArrayList passed is null, an error is not thrown
      */
     @Test
     void outputCountryReportsListContainsNull() {
         ArrayList<Country> countries = new ArrayList<>();
+
         countries.add(null);
+
         app.outputCountryReport(countries, -1, "test");
     }
 
     /**
-     * Tests if a field is null
+     * Tests if a field is null, an error is not thrown
      */
     @Test
     void outuputCountryReportsNullFieldTest() {
@@ -74,63 +75,80 @@ public class CountryReportTests
     }
 
     /**
-     * Test for when ArrayList passed has elements as expected
+     * Test for when ArrayList passed has elements as expected, an error is not thrown
      */
     @Test
     void outputCountryReports() {
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
+
         country.code = "AUS";
         country.name = "Australia";
         country.continent = "Oceania";
         country.region = "Australia and New Zealand";
         country.population = 18886000;
         country.capital = "Canberra";
+
         countries.add(country);
+
         app.outputCountryReport(countries, -1, "test");
     }
 
     /**
-     * Tests for if displayN provided is greater than elements in list provided
+     * Tests for if displayN provided is greater than elements in list provided, an error is not thrown
      */
     @Test
     void outputCountriesReportsN_MoreThanInListTest() {
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
+
         country.code = "AUS";
         country.name = "Australia";
         country.continent = "Oceania";
         country.region = "Australia and New Zealand";
         country.population = 18886000;
         country.capital = "Canberra";
+
         countries.add(country);
+
         app.outputCountryReport(countries, 2, "test");
     }
 
     /**
-     * Tests for if empty string provided for filename creates a file
+     * Tests for if empty string provided for filename, does not create a file
      */
     @Test
     void outputCountriesReportsEmptyFileNameTest() {
         ArrayList<Country> countries = new ArrayList<>();
         Country country = new Country();
+
         country.code = "AUS";
         country.name = "Australia";
         country.continent = "Oceania";
         country.region = "Australia and New Zealand";
         country.population = 18886000;
         country.capital = "Canberra";
+
         countries.add(country);
+
         app.outputCountryReport(countries, -1, "");
 
-        File file = new File("./reports/.md");
+        File file = new File("./reports/country_reports/.md");
         if(file.exists()){
             fail("File with empty name created");
         }
     }
 
     /**
-     * Tests when choice is empty for region and continent report types, return is null
+     * Tests if reportType is not recognised, returns null
+     */
+    @Test
+    void getAllCountriesTypeNotRecognised() {
+        assertNull(app.getAllCountries("aaaaa", "Asia"));
+    }
+
+    /**
+     * Tests when choice is empty for report types other than world, returns null
      */
     @Test
     void getAllCountriesChoiceEmpty() {
@@ -140,18 +158,18 @@ public class CountryReportTests
 
     /**
      * Clears up after tests
-     * Deletes created test file
+     * Deletes reports directory including any files created in tests
      */
     @AfterAll
     static void clearUp() {
-        File file = new File("./reports/test.md");
-        if(file.exists()){
-            file.delete();
-        }
-
-        file = new File("./reports/.md");
-        if(file.exists()){
-            file.delete();
+        // deletes reports directory
+        File directory = new File("./reports");
+        File[] entries = directory.listFiles();
+        if (entries != null) {
+            for (File entry : entries) {
+                entry.delete();
+            }
+            directory.delete();
         }
     }
 }
