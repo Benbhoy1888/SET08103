@@ -18,7 +18,7 @@ jobs:
       - name: Unit Tests
         run: mvn -Dtest=com.napier.sem.* test
       - name: CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v2
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
@@ -47,7 +47,7 @@ jobs:
           docker rm world
           docker image rm database
       - name: CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v2
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
