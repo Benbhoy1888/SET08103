@@ -72,7 +72,7 @@ public class App
         a.disconnect();
     }
 
-    // Cities reports --- vvv ----------------------------------------------------------------------
+    // City reports --- vvv ----------------------------------------------------------------------
 
     // Capital City reports --- vvv ----------------------------------------------------------------
 
@@ -92,7 +92,6 @@ public class App
         // if reportType is empty, should generate world report
         // store reportType name in object
         // get population in thousands to 2 decimal places
-        System.out.println("Report type = " + reportType);
         return null;
     }
 

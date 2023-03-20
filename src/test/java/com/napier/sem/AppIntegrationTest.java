@@ -4,6 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest
@@ -16,6 +22,11 @@ public class AppIntegrationTest
         app = new App();
         app.connect("localhost:33060", 30000);
 
+        // deletes reports directory
+        File directory = new File("./reports");
+        if (directory.exists()) {
+            directory.delete();
+        }
     }
 
     /**
@@ -34,7 +45,39 @@ public class AppIntegrationTest
 
     // Need test to check reports are outputted correctly from docker container
 
-    // Test getAllCountries (and any others which fall into same bracket) does not return null when reportType is empty (to generate world report)
+    /**
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
+    @Test
+    void testWorldCountries() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Country> worldCountries = app.getAllCountries("", "");
+
+        assertTrue(worldCountries.size()>0);
+        assertNotNull(worldCountries.get(0).code);
+        assertNotNull(worldCountries.get(0).name);
+        assertNotNull(worldCountries.get(0).continent);
+        assertNotNull(worldCountries.get(0).region);
+        assertNotEquals(-1, worldCountries.get(0).population);
+        assertNotNull(worldCountries.get(0).capital);
+    }
+
+    /**
+     * Tests object and attributes are not null after trying to get total population information from database when using
+     * an empty string for report type (should generate world report object)
+     */
+    @Test
+    void testTotalPopulation() {
+        // gets world countries information for world report using empty report type
+        TotalPopulation totalPopulation = app.getTotalPopulation("", "");
+
+        assertNotNull(totalPopulation);
+        assertEquals("World", totalPopulation.reportType);
+        assertNotNull(totalPopulation.name);
+        assertNotEquals(-1.0, totalPopulation.population);
+    }
 
     /**
      * Disconnects from database
