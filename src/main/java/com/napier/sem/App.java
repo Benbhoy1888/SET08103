@@ -30,7 +30,7 @@ public class App
 
         System.out.println("Generating Reports...");
 
-        // Country reports --- vvv ---------------------------------------------------------------------
+        // Country reports method calls--- vvv ---------------------------------------------------------------------
 
         // Extract country information for:
         // world report
@@ -54,15 +54,16 @@ public class App
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
         a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
 
-        // Cities reports --- vvv ----------------------------------------------------------------------
+        // Cities reports method calls--- vvv ----------------------------------------------------------------------
 
-        // Capital City reports --- vvv ----------------------------------------------------------------
+        // Capital City reports method calls--- vvv ----------------------------------------------------------------
 
-        // Urbanisation reports --- vvv ----------------------------------------------------------------
 
-        // TotalPopulation reports --- vvv -------------------------------------------------------------
+        // Urbanisation reports method calls--- vvv ----------------------------------------------------------------
 
-        // Language reports --- vvv --------------------------------------------------------------------
+        // TotalPopulation reports method calls--- vvv -------------------------------------------------------------
+
+        // Language reports method calls--- vvv --------------------------------------------------------------------
 
         // ---------------------------------------------------------------------------------------------
 
@@ -72,15 +73,29 @@ public class App
         a.disconnect();
     }
 
-    // Cities reports --- vvv ----------------------------------------------------------------------
+    // Cities reports methods--- vvv ----------------------------------------------------------------------
 
-    // Capital City reports --- vvv ----------------------------------------------------------------
 
-    // Urbanisation reports --- vvv ----------------------------------------------------------------
+    // Capital City reports methods--- vvv ----------------------------------------------------------------
+    /**
+     * //////////////////////////////////////////////////////////////////////////// FILL IN
+     */
+    public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
+        return null;
+    }
 
-    // Language reports --- vvv --------------------------------------------------------------------
+    /**
+     * //////////////////////////////////////////////////////////////////////////// FILL IN
+     */
+    public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
 
-    // Total Population --- vvv --------------------------------------------------------------------
+    }
+
+    // Urbanisation reports methods--- vvv ----------------------------------------------------------------
+
+    // Language reports methods--- vvv --------------------------------------------------------------------
+
+    // Total Population methods--- vvv --------------------------------------------------------------------
     /**
      * Gets total population information from database
      * @param reportType
@@ -100,14 +115,13 @@ public class App
      * Outputs to Markdown
      * Filename and extension is automatically generated based on reportType
      * @param population A TotalPopulation object
-     * @param reportType Used to generate correct filename
      */
     public void outputTotalPopulationReport(TotalPopulation population) {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
         // population column in thousands, reflect in header
     }
 
-    // Country reports --- vvv ---------------------------------------------------------------------
+    // Country reports methods--- vvv ---------------------------------------------------------------------
     /**
      * Outputs to Markdown
      * Extension is automatically added
