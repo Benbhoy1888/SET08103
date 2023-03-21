@@ -28,9 +28,9 @@ public class AppIntegrationTest
 
 
 
-    // Need test for connection to database without checking specific return values or inserting values to database
+    // Emma Need test for connection to database without checking specific return values or inserting values to database
 
-    // Need test to check returned values are as expected
+    // Emma Need test to check returned values are as expected
 
     // Andy to do - Need test to check reports are outputted correctly from docker container
 
