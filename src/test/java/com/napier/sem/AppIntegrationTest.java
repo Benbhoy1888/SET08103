@@ -31,7 +31,7 @@ public class AppIntegrationTest {
      * Test to check tests actually pass on GitHub actions
      */
     @Test
-    void unitTest() {
+    void integrationGitHubTest() {
         assertEquals(5, 5);
     }
 

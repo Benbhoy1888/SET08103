@@ -17,8 +17,8 @@ jobs:
           distribution: 'adopt'
       - name: Unit Tests
         run: |
-          mvn -Dtest=com.napier.sem.CountryReportTests test
-          mvn -Dtest=com.napier.sem.TotalPopulationTests test
+          mvn -Dtest=com.napier.sem.CountryReportTests -Dtest=com.napier.sem.TotalPopulationTests test
+#          mvn -Dtest=com.napier.sem.TotalPopulationTests test
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
