@@ -40,6 +40,8 @@ public class App
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
         //
         ArrayList<Population> populationRegion = a.getPopulationByRegion();
+        //
+        ArrayList<Population> populationContinent = a.getPopulationByContinent();
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
@@ -407,7 +409,7 @@ public class App
                 pop.totalPopulation = rset.getLong(2);
                 pop.urbanPopulation = rset.getLong(3);
                 pop.ruralPopulation = rset.getLong(4);
-                pop.percentageUrban = rset.getLong(5);
+                pop.percentageUrban = rset.getFloat(5);
                 population.add(pop);
             }
             return population;
@@ -418,6 +420,59 @@ public class App
             System.out.println("Failed to get country population details\n");
             return null;
         }
+    }
+
+    public ArrayList<Population> getPopulationByContinent() {
+
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT world.country.Continent AS Continent, SUM(world.country.Population) as total_population,\n" +
+                            "       (SELECT SUM(world.city.Population)\n" +
+                            "        FROM world.city\n" +
+                            "        JOIN country c on c.Code = city.CountryCode\n" +
+                            "        WHERE c.Continent = world.country.Continent) as urban_population,\n" +
+                            "    SUM(world.country.Population) -   (SELECT SUM(world.city.Population)\n" +
+                            "                                       FROM world.city\n" +
+                            "                                       JOIN country c on c.Code = city.CountryCode\n" +
+                            "                                       WHERE c.Continent = world.country.Continent) as rural_population,\n" +
+                            "\n" +
+                            "                                       (SELECT SUM(world.city.Population)\n" +
+                            "                                            FROM world.city\n" +
+                            "                                                     JOIN country c on c.Code = city.CountryCode\n" +
+                            "                                            WHERE c.Continent = world.country.Continent) / (SUM(world.country.Population )\n" +
+                            "                                                ) * 100 as urban_percentage\n" +
+                            "FROM country\n" +
+                            "GROUP BY world.country.Continent";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information from result set
+            ArrayList<Population> population = new ArrayList<Population>();
+            while (rset.next())
+            {
+                Population pop = new Population();
+                pop.Name = rset.getString(1);
+                pop.totalPopulation = rset.getLong(2);
+                pop.urbanPopulation = rset.getLong(3);
+                pop.ruralPopulation = rset.getLong(4);
+                pop.percentageUrban = rset.getFloat(5);
+                population.add(pop);
+
+            }
+            return population;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get continent population details\n");
+            return null;
+        }
+
     }
 
     /**
