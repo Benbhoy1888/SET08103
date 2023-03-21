@@ -18,7 +18,7 @@ public class AppIntegrationTest {
     static void init()
     {
         app = new App();
-        app.connect("localhost:33060", 30000);
+        app.connect("localhost:33060", 0);
 
         // deletes reports directory
         File directory = new File("./reports");
@@ -42,6 +42,8 @@ public class AppIntegrationTest {
     // Need test to check returned values are as expected
 
     // Need test to check reports are outputted correctly from docker container
+
+    // test sql queries are correct
 
     /**
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
