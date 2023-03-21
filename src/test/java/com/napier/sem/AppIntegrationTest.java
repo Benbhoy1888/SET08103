@@ -55,7 +55,7 @@ public class AppIntegrationTest {
 
         if(worldCountries != null) {
             assertTrue(worldCountries.size() > 0);
-            assertNotNull(worldCountries.get(0).);
+            assertNotNull(worldCountries.get(0).code);
             assertNotNull(worldCountries.get(0).name);
             assertNotNull(worldCountries.get(0).continent);
             assertNotNull(worldCountries.get(0).region);
