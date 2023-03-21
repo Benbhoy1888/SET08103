@@ -17,7 +17,7 @@ public class AppIntegrationTest {
     static void init()
     {
         app = new App();
-        app.connect("localhost:33060", 30000);
+        app.connect("db:3306", 30000);
 
         // deletes reports directory
         File directory = new File("./reports");
@@ -52,7 +52,7 @@ public class AppIntegrationTest {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
 
-//        assertTrue(worldCountries.size()>0);
+        assertTrue(worldCountries.size()>0);
         assertNotNull(worldCountries.get(0).code);
         assertNotNull(worldCountries.get(0).name);
         assertNotNull(worldCountries.get(0).continent);
