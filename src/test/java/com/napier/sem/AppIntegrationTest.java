@@ -1,3 +1,5 @@
+package com.napier.sem;
+
 import com.napier.sem.App;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -46,20 +48,23 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
-//    @Test
-//    void testWorldCountries() {
-//        // gets world countries information for world report using empty report type
-//        ArrayList<Country> worldCountries = app.getAllCountries("", "");
-//
-//        assertNotNull(worldCountries);
-//        assertTrue(worldCountries.size()>0);
-//        assertNotNull(worldCountries.get(0).code);
-//        assertNotNull(worldCountries.get(0).name);
-//        assertNotNull(worldCountries.get(0).continent);
-//        assertNotNull(worldCountries.get(0).region);
-//        assertNotEquals(-1, worldCountries.get(0).population);
-//        assertNotNull(worldCountries.get(0).capital);
-//    }
+    @Test
+    void testWorldCountries() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Country> worldCountries = app.getAllCountries("", "");
+
+        if(worldCountries != null) {
+            assertTrue(worldCountries.size() > 0);
+            assertNotNull(worldCountries.get(0).);
+            assertNotNull(worldCountries.get(0).name);
+            assertNotNull(worldCountries.get(0).continent);
+            assertNotNull(worldCountries.get(0).region);
+            assertNotEquals(-1, worldCountries.get(0).population);
+            assertNotNull(worldCountries.get(0).capital);
+        } else {
+            fail("getAllCountries returning Null pointer");
+        }
+    }
 
     /**
      * Tests object and attributes are not null after trying to get total population information from database when using
