@@ -72,4 +72,4 @@ jobs:
           mvn package -DskipTests
           docker-compose up --abort-on-container-exit
       - name: Copy Output
-        run: docker container cp set08103_app:/tmp/reports ./reports
+        run: docker container cp set08103_app_1:/tmp/reports ./reports
