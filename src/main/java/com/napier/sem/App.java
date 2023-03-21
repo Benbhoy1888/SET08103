@@ -369,7 +369,7 @@ public class App
         }
     }
 
-    public ArrayList<Country> getPopulationByRegion() {
+    public ArrayList<Population> getPopulationByRegion() {
         try
         {
             // Create an SQL statement
@@ -382,16 +382,16 @@ public class App
                             "       (SELECT SUM(world.city.Population)\n" +
                             "        FROM world.city\n" +
                             "        JOIN world.country c on c.Code = city.CountryCode\n" +
-                            "        WHERE world.c.Region = world.country.Region) as urban_population,\n" +
+                            "        WHERE c.Region = world.country.Region) as urban_population,\n" +
                             "    SUM(world.country.Population) -   (SELECT SUM(world.city.Population)\n" +
                             "                                       FROM world.city\n" +
                             "                                       JOIN world.country c on c.Code = city.CountryCode\n" +
-                            "                                       WHERE world.c.Region = world.country.Region) as rural_population,\n" +
+                            "                                       WHERE c.Region = world.country.Region) as rural_population,\n" +
                             "\n" +
                             "                                       (SELECT SUM(world.city.Population)\n" +
                             "                                            FROM world.city\n" +
-                            "                                                     JOIN world.country c on c.world.Code = city.CountryCode\n" +
-                            "                                            WHERE world.c.Region = world.country.Region) / (SUM(world.country.Population )\n" +
+                            "                                                     JOIN world.country c on c.Code = city.CountryCode\n" +
+                            "                                            WHERE c.Region = country.Region) / (SUM(world.country.Population )\n" +
                             "                                                ) * 100 as urban_percentage\n" +
                             "FROM world.country\n" +
                             "GROUP BY world.country.Region";
@@ -399,18 +399,18 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
-            ArrayList<Population> population = new ArrayList<Country>();
+            ArrayList<Population> population = new ArrayList<Population>();
             while (rset.next())
             {
-                Population pop= new Population();
-                pop.name = rset.getString(1);
+                Population pop = new Population();
+                pop.Name = rset.getString(1);
                 pop.totalPopulation = rset.getLong(2);
                 pop.urbanPopulation = rset.getLong(3);
                 pop.ruralPopulation = rset.getLong(4);
                 pop.percentageUrban = rset.getLong(5);
                 population.add(pop);
             }
-            return pop;
+            return population;
         }
         catch (Exception e)
         {
