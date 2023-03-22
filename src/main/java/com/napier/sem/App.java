@@ -211,7 +211,7 @@ public class App
     // Capital City reports --- vvv ----------------------------------------------------------------
     public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test) {
 
-        // Check countries is not null
+        /** Check countries is not null*/
          if (capitalCities == null || capitalCities.size()<1) {
             System.out.println("No capital cities");
             return;
@@ -236,7 +236,6 @@ public class App
          if(capital== null) continue;
          sb.append(("| " + capital.name + " | " +
          capital.country + " | " +
-         capital.region + " | " +
          capital.population + " |\r\n"));
          }
 
@@ -246,7 +245,7 @@ public class App
            directory.mkdir();
           }
          new File("./reports/capital_reports").mkdir();
-          BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/capital_reports/" + filename + ".md"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/capitalCity_reports/" + filename + ".md"));
          writer.write(sb.toString());
          writer.close();
         } catch (IOException e) {
@@ -254,62 +253,63 @@ public class App
           }
         }
 
-        //public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) {
-        //  try
-        // {
-        // Create an SQL statement
-        //  Statement stmt = con.createStatement();
+        public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) {
+            Statement stmt;
+            try {
+                // Create an SQL statement
+                stmt = con.createStatement();
 
-        // Checks report type valid and correctly sets formatting
-        // if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
-        //  reportType = "World";
-        //  } else if (choice.equals("")){
-        //     System.out.println("No choice provided when report type is not W or ''");
-        //    return null;
-        // } else if(reportType.toUpperCase().equals("C")){
-        //    reportType = "Continent";
-        //} else if (reportType.toUpperCase().equals("R")) {
-        //  reportType = "Region";
-        //  }    else if (reportType.toUpperCase().equals("CO")){
-        //        reportType = "Country";
-        // }     else {
-        //   System.out.println("Capital Cities report type not valid");
-        //   return null;
-        //}
+                // Checks report type valid and correctly sets formatting
+                if (reportType.toUpperCase().equals("W") || reportType.equals("")) {
+                    reportType = "World";
+                } else if (choice.equals("")) {
+                    System.out.println("No choice provided when report type is not W or ''");
+                    return null;
+                } else if (reportType.toUpperCase().equals("C")) {
+                    reportType = "Continent";
+                } else if (reportType.toUpperCase().equals("R")) {
+                    reportType = "Region";
+                } else if (reportType.toUpperCase().equals("CO")) {
+                    reportType = "Country";
+                } else {
+                    System.out.println("Capital Cities report type not valid");
+                    return null;
+                }
+            }
 
 
-        // Create string for SQL statement
-        // String strSelect =
-        //       "SELECT city.Name, city.Country, city.District, city.Population\n"
-        //             + "FROM city\n";
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
+                            + "FROM city\n"
+            //      +JOIN city.ID on country.code  =city.ID;\n"
 
-        // Sets where clause for continent or region
-        // if(!(reportType.equals("World"))){
-        //    strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
-        // }
-        // Orders by largest population to smallest
-        //strSelect += " ORDER BY Population DESC";
-        // Execute SQL statement
-        //ResultSet rset = stmt.executeQuery(strSelect);
-        // Extract country information from result set
-        // ArrayList<Capital> capitalCities = new ArrayList<Capital>();
-        //while (rset.next())
-        //  {
-        //   Capital capital = new Capital();
-        //   capital.name = rset.getString("Name");
-        //  capital.country = rset.getString("Country");
-        // capital.Region = rset.getString("Region");
-        // capital.population = rset.getInt("Population");
-        //  capitalCities.add(capital);
-        // }
-        //   return capitalCities;
-        // }
-        // catch (Exception e)
-        // {
-        //   System.out.println(e.getMessage());
-        //   System.out.println("Failed to get city details\n");
-        //    return null;
-        // }
+            // Sets where clause for continent or region
+            if (!(reportType.equals("World"))) {
+                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            }
+            /** Orders by largest population to smallest*/
+            strSelect += " ORDER BY Population DESC";
+            /** Execute SQL statement*/
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information from result set
+            ArrayList<Capital> capitalCities = new ArrayList<Capital>();
+            while (rset.next()) {
+                Capital capital = new Capital();
+                capital.name = rset.getString("Name");
+                capital.country = rset.getString("Country");
+                //  capital.region = rset.getString("Region");
+                capital.population = rset.getInt("Population");
+                capitalCities.add(capital);
+            }
+            return capitalCities;
+        }
+        catch (Exception e)
+        {
+           System.out.println(e.getMessage());
+         System.out.println("Failed to get capital city details\n");
+            return null;
+        }
     }
 
     public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
