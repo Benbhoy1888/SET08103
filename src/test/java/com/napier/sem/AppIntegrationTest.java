@@ -1,6 +1,5 @@
 package com.napier.sem;
 
-import com.napier.sem.App;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
