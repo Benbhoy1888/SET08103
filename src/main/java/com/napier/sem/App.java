@@ -38,9 +38,12 @@ public class App
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
         //region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
-        // region urban report
-        ArrayList<Population> populationRegion = a.getTotalUrbanRuralPopulation("Region");
-
+        // region urban report - Continent
+        ArrayList<Population> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Continent");
+        // region urban report - Region
+        ArrayList<Population> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Region");
+        // region urban report - Continent
+        ArrayList<Population> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Country");
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
@@ -48,14 +51,21 @@ public class App
         // all countries in continent (in this case, continent = 'Oceania')
         a.outputCountryReport(continentCountries, -1, "allCountriesContinent");
         // all countries in region (in this case, region = 'Western Europe')
-        // a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
+        a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
         // top n populated countries in world (in this case, n = 5)
         a.outputCountryReport(worldCountries, 5, "top5_worldCountries");
         // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
         a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
-      //  a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
-        a.outputUrbanPopulationReport(populationRegion,"Urban_Rural_Region");
+        a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
+        // urban population report by Continent
+        a.outputUrbanPopulationReport(urbanPopulationContinent,"Urban_Rural_Continent");
+        // urban population report by Region
+        a.outputUrbanPopulationReport(urbanPopulationRegion,"Urban_Rural_Region");
+        // urban population report by country
+        a.outputUrbanPopulationReport(urbanPopulationCountry,"Urban_Rural_Country");
+        // urban population report for world
+        //a.outputUrbanPopulationReport(urbanPopulation,"Urban_Rural_world");
 
 
 
@@ -89,7 +99,11 @@ public class App
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
-        a.getTotalUrbanRuralPopulation("Region_Urban_Rural");
+        a.outputUrbanPopulationReport(urbanPopulationContinent, "Urban_Continent");
+        a.outputUrbanPopulationReport(urbanPopulationRegion, "Urban_Region");
+        a.outputUrbanPopulationReport(urbanPopulationCountry, "Urban_Country");
+
+
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
