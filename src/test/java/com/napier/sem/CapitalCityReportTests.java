@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class CapitalCityReportTests {
 
     static App app;
-    Object capitalCites;
+
 
     /**
      * Creates a new app

@@ -8,13 +8,13 @@ public class Capital {
     /**
      * Capital name
      */
-    public String name;
+    public String name ;
 
 
     /**
      * Population
      */
-    public int population;
+    public int population ;
 
     /**
      * Country

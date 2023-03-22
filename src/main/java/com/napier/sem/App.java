@@ -78,6 +78,15 @@ public class App
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
+      //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
+           // if(filename.equals("")){
+            //    return;
+           // }
+      // Check countries is not null
+      //  if (CapitalCities == null || CapitalCities.size()<1) {
+        // System.out.println("No capitals");
+         //return;
+        //}
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // TotalPopulation reports method calls--- vvv -------------------------------------------------
@@ -200,7 +209,12 @@ public class App
         }
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
+    public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test) {
+    }
 
+    public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
+        return null;
+    }
 
 
 
@@ -230,7 +244,6 @@ public class App
      * Outputs to Markdown
      * Filename and extension is automatically generated based on reportType
      * @param population A TotalPopulation object
-     * @param reportType Used to generate correct filename
      */
     public void outputTotalPopulationReport(TotalPopulation population) {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
