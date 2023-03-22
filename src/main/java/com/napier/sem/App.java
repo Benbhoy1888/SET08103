@@ -3,6 +3,7 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * A Class to run project world reports application
@@ -407,6 +408,14 @@ public class App
      * Connection to MySQL database
      */
     private Connection con = null;
+
+    /**
+     * Gets connection
+     * @return con
+     */
+    public Connection getConnection() {
+        return con;
+    }
 
     /**
      * Connect to the MySQL database

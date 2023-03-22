@@ -6,7 +6,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,6 +47,20 @@ public class AppIntegrationTest {
     // Need test to check reports are outputted correctly from docker container
 
     // test sql queries are correct
+
+    /**
+     * Tests database connection
+     */
+    @Test
+    public void testConnection() {
+        Connection con = app.getConnection();
+        try {
+            con.isValid(30);
+        } catch (SQLException sqle) {
+            System.out.println("No connection");
+            fail(sqle.getMessage());
+        }
+    }
 
     /**
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
