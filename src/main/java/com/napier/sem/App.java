@@ -3,6 +3,7 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * A Class to run project world reports application
@@ -78,9 +79,6 @@ public class App
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
-
-
-
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // region urban report - Continent
@@ -98,11 +96,6 @@ public class App
 
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
-
-
-
-
-
 
         // Language reports --- vvv --------------------------------------------------------------------
 
@@ -223,11 +216,6 @@ public class App
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
 
-
-
-
-
-
     // Urbanisation reports --- vvv ----------------------------------------------------------------
 
 
@@ -246,7 +234,6 @@ public class App
         // if reportType is empty, should generate world report
         // store reportType name in object
         // get population in thousands to 2 decimal places
-        System.out.println("Report type = " + reportType);
         return null;
     }
 
@@ -631,6 +618,14 @@ public class App
     private Connection con = null;
 
     /**
+     * Gets connection
+     * @return con
+     */
+    public Connection getConnection() {
+        return con;
+    }
+
+    /**
      * Connect to the MySQL database
      */
     public void connect(String location, int delay)
@@ -657,7 +652,7 @@ public class App
                 // Connect to database
                 //docker use db:3306
                 //local use localhost:30060
-                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected\n");
                 break;
             }
