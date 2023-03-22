@@ -1,6 +1,23 @@
 package com.napier.sem;
 
-public class Capital extends Population{
+/**
+ * Represents a capital
+ */
+public class Capital {
+
+    /**
+     * Capital name
+     */
+    public String name;
 
 
+    /**
+     * Population
+     */
+    public int population;
+
+    /**
+     * Country
+     */
+    public String country;
 }

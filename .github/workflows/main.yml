@@ -20,7 +20,7 @@ jobs:
           mvn -Dtest=com.napier.sem.CountryReportTests -Dtest=com.napier.sem.TotalPopulationTests test
 #          mvn -Dtest=com.napier.sem.TotalPopulationTests test
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
@@ -49,7 +49,7 @@ jobs:
           docker rm world
           docker image rm database
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
