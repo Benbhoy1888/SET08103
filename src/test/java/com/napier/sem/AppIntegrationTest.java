@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest
@@ -29,6 +31,16 @@ public class AppIntegrationTest
 
 
     // Emma Need test for connection to database without checking specific return values or inserting values to database
+    @Test
+    static void databaseTest(){
+        if (!(app.connect("localhost:3306", 3000) = null)) {
+            app.disconnect();
+            System.out.prinln("sorry please try and reconnect to the database");
+            return;
+        }
+
+        app.connect("localhost:3306", 3000);
+    }
 
     // Emma Need test to check returned values are as expected
 
