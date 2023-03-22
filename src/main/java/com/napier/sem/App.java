@@ -257,7 +257,7 @@ public class App
             Statement stmt;
             try {
                 // Create an SQL statement
-                stmt = con.createStatement();
+               Statement stmt = con.createStatement();
 
                 // Checks report type valid and correctly sets formatting
                 if (reportType.toUpperCase().equals("W") || reportType.equals("")) {
@@ -276,6 +276,7 @@ public class App
                     return null;
                 }
             }
+
 
 
             // Create string for SQL statement
@@ -304,11 +305,11 @@ public class App
             }
             return capitalCities;
         }
-        catch (Exception e)
+        catch(Exception e)
         {
            System.out.println(e.getMessage());
          System.out.println("Failed to get capital city details\n");
-            return null;
+         return null;
         }
     }
 
