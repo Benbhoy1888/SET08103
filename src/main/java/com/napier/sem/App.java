@@ -393,8 +393,8 @@ public class App
 
         StringBuilder sb = new StringBuilder();
         // Print header
-        sb.append("|Code |Total Population | Urban Population | Rural Population | Urban Percentage \r\n");
-        sb.append("| :--- | :--- | :--- | :--- | ---: | \r\n");
+        sb.append("|Name |Total Population |Population living in cities |Population not living in cities | \r\n");
+        sb.append("| :--- | ---: | ---: | ---: |\r\n");
 
         // Loop over all countries in the list
         int rowCount = population.size();
@@ -402,11 +402,11 @@ public class App
             Population pop;
             pop = population.get(i);
             if(pop == null) continue;
-            sb.append(("| " + pop.Name + " | " +
+            sb.append("| " + pop.Name + " | " +
                     pop.totalPopulation + " | " +
                     pop.urbanPopulation + " | " +
-                    pop.ruralPopulation + " | " +
-                    pop.percentageUrban + " |\r\n"));
+                    pop.ruralPopulation + " |\r\n");
+
 
         }
 
@@ -467,7 +467,6 @@ public class App
                 pop.totalPopulation = rset.getLong(2);
                 pop.urbanPopulation = rset.getLong(3);
                 pop.ruralPopulation = rset.getLong(4);
-                pop.percentageUrban = rset.getFloat(5);
                 population.add(pop);
             }
             return population;
@@ -652,7 +651,7 @@ public class App
                 // Connect to database
                 //docker use db:3306
                 //local use localhost:30060
-                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected\n");
                 break;
             }
