@@ -38,8 +38,8 @@ public class App
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
         //region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
-        //
-        ArrayList<Population> populationRegion = a.getTotalUrbanRualPopulation("Region");
+        // region urban report
+        ArrayList<Population> populationRegion = a.getTotalUrbanRuralPopulation("Region");
 
 
         // Generates country reports and outputs to markdown file for:
@@ -55,6 +55,9 @@ public class App
         a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
       //  a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
+        a.outputUrbanPopulationReport(populationRegion,"Urban_Rural_Region");
+
+
 
         // Cities reports --- vvv ----------------------------------------------------------------------
         ArrayList<City> worldCities= a.getAllCities("w", "");
@@ -85,6 +88,8 @@ public class App
 
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+        a.getTotalUrbanRuralPopulation("Region_Urban_Rural");
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
@@ -179,7 +184,7 @@ public class App
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, city.Country, city.District, city.Population\n"
+                    "SELECT world.city.Name, world.city.Country, world.city.District, world.city.Population\n"
                             + "FROM city\n";
 
             // Sets where clause for continent or region
@@ -219,6 +224,8 @@ public class App
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
 
+
+
     // Language reports --- vvv --------------------------------------------------------------------
 
     // Total Population --- vvv --------------------------------------------------------------------
@@ -241,7 +248,7 @@ public class App
      * Outputs to Markdown
      * Filename and extension is automatically generated based on reportType
      * @param population A TotalPopulation object
-     * @param reportType Used to generate correct filename
+    // * @param reportType Used to generate correct filename
      */
     public void outputTotalPopulationReport(TotalPopulation population) {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
@@ -370,6 +377,58 @@ public class App
         }
     }
 
+    /**
+     * Gets all urban/rural information from database (defaults to world, pass "Continent" (continent)
+     * or, "Region" (region), "Country" (Country)
+     * 'choice' is only used if continent or region is specified as reportType
+    // * @param reportType should be "world", "continent","region","country" can also be used to get world
+   //  * @param choice if selecting a continent or region, this should be specified here - ignored if report type is "w"
+     * @return A list of all countries, or null if there is an error
+     */
+    public void outputUrbanPopulationReport(ArrayList<Population> population, String filename) {
+        if(filename.equals("")){
+            return;
+        }
+
+        // Check urban populations is not null
+        if (population == null || population.size()<1) {
+            System.out.println("No ubran population");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Code |Total Population | Urban Population | Rural Population | Urban Percentage \r\n");
+        sb.append("| :--- | :--- | :--- | :--- | ---: | \r\n");
+
+        // Loop over all countries in the list
+        int rowCount = population.size();
+       for (int i= 0; i<rowCount; i++){
+            Population pop;
+            pop = population.get(i);
+            if(pop == null) continue;
+            sb.append(("| " + pop.Name + " | " +
+                    pop.totalPopulation + " | " +
+                    pop.urbanPopulation + " | " +
+                    pop.ruralPopulation + " | " +
+                    pop.percentageUrban + " |\r\n"));
+
+        }
+
+        try {
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/urban_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/country_reports/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Population> getTotalUrbanRuralPopulation(String reportType) {
 
         try
@@ -412,8 +471,6 @@ public class App
                 pop.ruralPopulation = rset.getLong(4);
                 pop.percentageUrban = rset.getFloat(5);
                 population.add(pop);
-                System.out.printf("%s,%d,%d,%d,%d",rset.getString(1),rset.getLong(2), rset.getLong(3), rset.getLong(4), rset.getLong(5)  );
-                System.out.println("\n");
             }
             return population;
         }
@@ -449,7 +506,7 @@ public class App
                             "                                                     JOIN country c on c.Code = city.CountryCode\n" +
                             "                                            WHERE c.Continent = world.country.Continent) / (SUM(world.country.Population )\n" +
                             "                                                ) * 100 as urban_percentage\n" +
-                            "FROM country\n" +
+                            "FROM world.country\n" +
                             "GROUP BY world.country.Continent";
 
             // Execute SQL statement
@@ -517,6 +574,35 @@ public class App
             System.out.println("");
         }
     }
+
+    public void printUrbanPopulation(ArrayList<Population> populations)
+    {
+        // checks list exists
+        if(populations != null) {
+
+            // checks list is not empty
+            if(populations.size()<1){
+                System.out.println("No urban populations found\n");
+                return;
+            }
+
+            // Print header
+            System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s", "Code", "Total Population", "Urban Population", "Rural Population", "Percentage Rural"));
+
+            int rowSize = populations.size();
+            // Loop over all countries in the list
+            for (int i=0; i<rowSize;i++) {
+                Population pop;
+                pop = populations.get(i);
+                String country_string =
+                        String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
+                                pop.Name, pop.totalPopulation, pop.urbanPopulation, pop.totalPopulation, pop.percentageUrban);
+                System.out.println(country_string);
+            }
+            System.out.println("");
+        }
+    }
+
 
     // Menu --- vvv --------------------------------------------------------------------------------
     /**
@@ -599,4 +685,6 @@ public class App
             }
         }
     }
+
+
 }
