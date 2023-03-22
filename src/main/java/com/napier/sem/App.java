@@ -7,14 +7,12 @@ import java.util.ArrayList;
 /**
  * A Class to run project world reports application
  * Reports generated are saved in reports directory
- *
  * To run locally, now just need to use green run arrow next to main method (no need to rebuild)
  */
 public class App
 {
     /**
      * Main Method, program starts here
-     * @param args
      */
     public static void main(String[] args) {
         // Create new Application
@@ -38,12 +36,6 @@ public class App
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
         //region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
-        // region urban report - Continent
-        ArrayList<Population> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Continent");
-        // region urban report - Region
-        ArrayList<Population> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Region");
-        // region urban report - Continent
-        ArrayList<Population> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Country");
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
@@ -57,15 +49,7 @@ public class App
         // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
         a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
-        a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
-        // urban population report by Continent
-        a.outputUrbanPopulationReport(urbanPopulationContinent,"Urban_Rural_Continent");
-        // urban population report by Region
-        a.outputUrbanPopulationReport(urbanPopulationRegion,"Urban_Rural_Region");
-        // urban population report by country
-        a.outputUrbanPopulationReport(urbanPopulationCountry,"Urban_Rural_Country");
-        // urban population report for world
-        //a.outputUrbanPopulationReport(urbanPopulation,"Urban_Rural_world");
+
 
 
 
@@ -98,6 +82,14 @@ public class App
 
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+        // region urban report - Continent
+        ArrayList<Population> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Continent");
+        // region urban report - Region
+        ArrayList<Population> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Region");
+        // region urban report - Continent
+        ArrayList<Population> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Country");
+
 
         a.outputUrbanPopulationReport(urbanPopulationContinent, "Urban_Continent");
         a.outputUrbanPopulationReport(urbanPopulationRegion, "Urban_Region");
@@ -400,13 +392,15 @@ public class App
      * @return A list of all countries, or null if there is an error
      */
     public void outputUrbanPopulationReport(ArrayList<Population> population, String filename) {
+
+
         if(filename.equals("")){
             return;
         }
 
         // Check urban populations is not null
         if (population == null || population.size()<1) {
-            System.out.println("No ubran population");
+            System.out.println("No urban population");
             return;
         }
 
@@ -435,7 +429,7 @@ public class App
                 directory.mkdir();
             }
             new File("./reports/urban_reports").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/country_reports/" + filename + ".md"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/urban_reports/" + filename + ".md"));
             writer.write(sb.toString());
             writer.close();
         } catch (IOException e) {
@@ -447,6 +441,9 @@ public class App
 
         try
         {
+            if(reportType=="Country"){
+                reportType="Name";
+            }
 
             System.out.println(reportType);
 
@@ -526,7 +523,7 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
-            ArrayList<Population> population = new ArrayList<Population>();
+            ArrayList<Population> population = new ArrayList<>();
             while (rset.next())
             {
                 Population pop = new Population();
