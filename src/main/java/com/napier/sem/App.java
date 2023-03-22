@@ -39,9 +39,8 @@ public class App
         //region report
         ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
         //
-        ArrayList<Population> populationRegion = a.getPopulationByRegion();
-        //
-        ArrayList<Population> populationContinent = a.getPopulationByContinent();
+        ArrayList<Population> populationRegion = a.getTotalUrbanRualPopulation("Region");
+
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
@@ -49,13 +48,13 @@ public class App
         // all countries in continent (in this case, continent = 'Oceania')
         a.outputCountryReport(continentCountries, -1, "allCountriesContinent");
         // all countries in region (in this case, region = 'Western Europe')
-        a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
+        // a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
         // top n populated countries in world (in this case, n = 5)
         a.outputCountryReport(worldCountries, 5, "top5_worldCountries");
         // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
         a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
-        a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
+      //  a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
 
         // Cities reports --- vvv ----------------------------------------------------------------------
         ArrayList<City> worldCities= a.getAllCities("w", "");
@@ -371,32 +370,34 @@ public class App
         }
     }
 
-    public ArrayList<Population> getPopulationByRegion() {
+    public ArrayList<Population> getTotalUrbanRuralPopulation(String reportType) {
+
         try
         {
+
+            System.out.println(reportType);
+
             // Create an SQL statement
             Statement stmt = con.createStatement();
-
-
             // Create string for SQL statement
             String strSelect =
-                    "SELECT world.country.Region AS region, SUM(world.country.Population) as total_population,\n" +
+                    "SELECT world.country." + reportType + " AS " + reportType + ", SUM(world.country.Population) as total_population,\n" +
                             "       (SELECT SUM(world.city.Population)\n" +
                             "        FROM world.city\n" +
-                            "        JOIN world.country c on c.Code = city.CountryCode\n" +
-                            "        WHERE c.Region = world.country.Region) as urban_population,\n" +
-                            "    SUM(world.country.Population) -   (SELECT SUM(world.city.Population)\n" +
+                            "        JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "        WHERE world.c." + reportType + " = world.country." + reportType + ") as urban_population,\n" +
+                            "    SUM(world.country.Population) - (SELECT SUM(world.city.Population)\n" +
                             "                                       FROM world.city\n" +
-                            "                                       JOIN world.country c on c.Code = city.CountryCode\n" +
-                            "                                       WHERE c.Region = world.country.Region) as rural_population,\n" +
+                            "                                       JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "                                       WHERE world.c." + reportType + " = world.country. " + reportType + ") as rural_population,\n" +
                             "\n" +
                             "                                       (SELECT SUM(world.city.Population)\n" +
                             "                                            FROM world.city\n" +
-                            "                                                     JOIN world.country c on c.Code = city.CountryCode\n" +
-                            "                                            WHERE c.Region = country.Region) / (SUM(world.country.Population )\n" +
+                            "                                                     JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "                                            WHERE world.c. " + reportType + " = world.country. " + reportType + ") / (SUM(world.country.Population )\n" +
                             "                                                ) * 100 as urban_percentage\n" +
                             "FROM world.country\n" +
-                            "GROUP BY world.country.Region";
+                            "GROUP BY world.country." + reportType;
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -411,6 +412,8 @@ public class App
                 pop.ruralPopulation = rset.getLong(4);
                 pop.percentageUrban = rset.getFloat(5);
                 population.add(pop);
+                System.out.printf("%s,%d,%d,%d,%d",rset.getString(1),rset.getLong(2), rset.getLong(3), rset.getLong(4), rset.getLong(5)  );
+                System.out.println("\n");
             }
             return population;
         }
