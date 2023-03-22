@@ -210,6 +210,106 @@ public class App
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
     public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test) {
+
+        // Check countries is not null
+         if (capitalCities == null || capitalCities.size()<1) {
+            System.out.println("No capital cities");
+            return;
+        }
+
+        /** sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)*/
+        /** or displayN is greater than the number of countries*/
+        int displayN;
+        if((displayN > capitalCities.size()) || (displayN < 0)){
+            displayN = capitalCities.size();
+         }
+
+        StringBuilder sb = new StringBuilder();
+        //Println header
+        sb.append("|Name | Country | Population| \r\n");
+        sb.append("| :--- | :--- | ---: |\r\n");
+
+        // Loop over all countries in the list
+        for (int i=0; i<displayN;i++) {
+         Capital capital;
+            capital = capitalCities.get(i);
+         if(capital== null) continue;
+         sb.append(("| " + capital.name + " | " +
+         capital.country + " | " +
+         capital.region + " | " +
+         capital.population + " |\r\n"));
+         }
+
+        try {
+         File directory = new File("./reports");
+          if(!directory.exists()){
+           directory.mkdir();
+          }
+         new File("./reports/capital_reports").mkdir();
+          BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/capital_reports/" + filename + ".md"));
+         writer.write(sb.toString());
+         writer.close();
+        } catch (IOException e) {
+              e.printStackTrace();
+          }
+        }
+
+        //public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) {
+        //  try
+        // {
+        // Create an SQL statement
+        //  Statement stmt = con.createStatement();
+
+        // Checks report type valid and correctly sets formatting
+        // if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+        //  reportType = "World";
+        //  } else if (choice.equals("")){
+        //     System.out.println("No choice provided when report type is not W or ''");
+        //    return null;
+        // } else if(reportType.toUpperCase().equals("C")){
+        //    reportType = "Continent";
+        //} else if (reportType.toUpperCase().equals("R")) {
+        //  reportType = "Region";
+        //  }    else if (reportType.toUpperCase().equals("CO")){
+        //        reportType = "Country";
+        // }     else {
+        //   System.out.println("Capital Cities report type not valid");
+        //   return null;
+        //}
+
+
+        // Create string for SQL statement
+        // String strSelect =
+        //       "SELECT city.Name, city.Country, city.District, city.Population\n"
+        //             + "FROM city\n";
+
+        // Sets where clause for continent or region
+        // if(!(reportType.equals("World"))){
+        //    strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+        // }
+        // Orders by largest population to smallest
+        //strSelect += " ORDER BY Population DESC";
+        // Execute SQL statement
+        //ResultSet rset = stmt.executeQuery(strSelect);
+        // Extract country information from result set
+        // ArrayList<Capital> capitalCities = new ArrayList<Capital>();
+        //while (rset.next())
+        //  {
+        //   Capital capital = new Capital();
+        //   capital.name = rset.getString("Name");
+        //  capital.country = rset.getString("Country");
+        // capital.Region = rset.getString("Region");
+        // capital.population = rset.getInt("Population");
+        //  capitalCities.add(capital);
+        // }
+        //   return capitalCities;
+        // }
+        // catch (Exception e)
+        // {
+        //   System.out.println(e.getMessage());
+        //   System.out.println("Failed to get city details\n");
+        //    return null;
+        // }
     }
 
     public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
@@ -280,7 +380,7 @@ public class App
         sb.append("|Code |Name |Continent | Region | Population | Capital |\r\n");
         sb.append("| :--- | :--- | :--- | :--- | ---: | :--- |\r\n");
 
-        // Loop over all countries in the list
+        /** Loop over all countries in the list */
         for (int i=0; i<displayN;i++) {
             Country country;
             country = countries.get(i);
