@@ -32,16 +32,15 @@ public class AppIntegrationTest
 
     // Emma Need test for connection to database without checking specific return values or inserting values to database
     @Test
-      static void databaseTest(){
-        if (!(app.connect("localhost:3306",3000)=null)){
+      static void databaseTest() {
+        if (app.connect("localhost:3306",3000) = null) {
             app.disconnect();
             System.out.println("sorry please try and reconnect to the database");
             return;
+        } else {
+            app.connect("localhost:3306", 3000);
         }
-
-        app.connect("localhost:3306", 3000);
     }
-
     // Emma Need test to check returned values are as expected
 
     // Andy to do - Need test to check reports are outputted correctly from docker container
