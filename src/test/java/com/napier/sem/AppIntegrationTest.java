@@ -32,10 +32,10 @@ public class AppIntegrationTest
 
     // Emma Need test for connection to database without checking specific return values or inserting values to database
     @Test
-    static void databaseTest(){
-        if (!(app.connect("localhost:3306", 3000) = null)) {
+      static void databaseTest(){
+        if (!(app.connect("localhost:3306",3000)=null)){
             app.disconnect();
-            System.out.prinln("sorry please try and reconnect to the database");
+            System.out.println("sorry please try and reconnect to the database");
             return;
         }
 
