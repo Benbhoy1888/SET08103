@@ -236,7 +236,7 @@ public class App
         sb.append("|Name | Country | Population| \r\n");
         sb.append("| :--- | :--- | ---: |\r\n");
 
-        // Loop over all countries in the list
+        /** Loop over all countries in the list*/
         for (i = 0; i<displayN; i++) {
          Capital capital;
             capital = capitalCities.get(i);
@@ -263,11 +263,11 @@ public class App
         public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) throws SQLException {
             Statement stmt;
             try {
-                // Create an SQL statement
+                /** Creating an SQL statement*/
                 stmt = con.createStatement();
 
                 // Checks report type valid and correctly sets formatting
-                if (reportType.equalsIgnoreCase("W") || reportType.equals("")) {
+                if (reportType.equalsIgnoreCase("W") || reportType.equals("")){
                     reportType = "World";
                 } else if (choice.equals("")) {
                     System.out.println("No choice provided when report type is not W or ''");
@@ -286,12 +286,12 @@ public class App
 
 
 
-            // Create string for SQL statement
+            /** Create string for SQL statement*/
             String strSelect =
                     "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
-                            + "FROM city\n" +
+                            + "FROM country\n" +
                             "JOIN city on country.capital  = city.ID;/n";
-            // Sets where clause for continent or region
+            /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
@@ -299,7 +299,7 @@ public class App
             strSelect += " ORDER BY Population DESC";
             /** Execute SQL statement*/
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Extract country information from result set
+            /** Extract country information from result set*/
             ArrayList<Capital> capitalCities = new ArrayList<Capital>();
             while (rset.next()) {
                 Capital capital = new Capital();
