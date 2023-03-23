@@ -28,7 +28,7 @@ public class Country {
     /**
      * Population
      */
-    public int population;
+    public int population = -1;
 
     /**
      * Capital

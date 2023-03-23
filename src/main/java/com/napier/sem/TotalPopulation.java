@@ -17,5 +17,5 @@ public class TotalPopulation{
     /**
      * Population in thousands showing 2 decimal places
      */
-    public Double population;
+    public Double population = -1.0;
 }
