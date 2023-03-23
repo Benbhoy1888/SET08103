@@ -19,6 +19,7 @@ jobs:
         run: |
           mvn -Dtest=com.napier.sem.CountryReportTests test
           mvn -Dtest=com.napier.sem.TotalPopulationTests test
+          mvn -Dtest=com.napier.sem.UrbanPopulationTests test
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
