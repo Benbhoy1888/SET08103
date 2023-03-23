@@ -4,6 +4,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest {
@@ -11,7 +16,8 @@ public class AppIntegrationTest {
     static App app;
 
     @BeforeAll
-    static void init() {
+    static void init()
+    {
         app = new App();
         app.connect("localhost:33060", 0);
 
@@ -31,16 +37,81 @@ public class AppIntegrationTest {
     }
 
 
-    // Emma Need test for connection to database without checking specific return values or inserting values to database
 
-    // Emma Need test to check returned values are as expected
+    // Need test for connection to database without checking specific return values or inserting values to database
 
-    // Andy to do - Need test to check reports are outputted correctly from docker container
+    // Need test to check returned values are as expected
 
     // Need test to check reports are outputted correctly from docker container
 
-    // Test getAllCountries (and any others which fall into same bracket) does not return null when reportType is empty (to generate world report)
+    // test sql queries are correct
 
+    /**
+     * Tests database connection
+     */
+    @Test
+    public void testConnection() {
+        Connection con = app.getConnection();
+        try {
+            con.isValid(30);
+        } catch (SQLException sqle) {
+            System.out.println("No connection");
+            fail(sqle.getMessage());
+        }
+    }
+
+    /**
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
+    @Test
+    void testWorldCountries() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Country> worldCountries = app.getAllCountries("", "");
+
+        if(worldCountries != null) {
+            assertTrue(worldCountries.size() > 0);
+            assertNotNull(worldCountries.get(0).code);
+            assertNotNull(worldCountries.get(0).name);
+            assertNotNull(worldCountries.get(0).continent);
+            assertNotNull(worldCountries.get(0).region);
+            assertNotEquals(-1, worldCountries.get(0).population);
+            assertNotNull(worldCountries.get(0).capital);
+        } else {
+            fail("getAllCountries returning Null pointer");
+        }
+    }
+
+    /**
+     * Tests object and attributes are not null after trying to get total population information from database when using
+     * an empty string for report type (should generate world report object)
+     */
+//    @Test
+//    void testTotalPopulation() {
+//        // gets world countries information for world report using empty report type
+//        TotalPopulation totalPopulation = app.getTotalPopulation("", "");
+//
+//        assertNotNull(totalPopulation);
+//        assertEquals("World", totalPopulation.reportType);
+//        assertNotNull(totalPopulation.name);
+//        assertNotEquals(-1.0, totalPopulation.population);
+//    }
+
+    @Test
+    void testWorldCapitalCities() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Capital> worldcapitalCities = app.getAllCapitalCites("", "");
+
+        if(worldcapitalCities != null) {
+            assertTrue(worldcapitalCities.size() > 0);
+            assertNotNull(worldcapitalCities.get(0).name);
+            assertNotNull(worldcapitalCities.get(0).country);
+            assertNotEquals(-1, worldcapitalCities.get(0).population);
+        } else {
+            fail("getAllCapitalCities returning Null pointer");
+        }
+    }
     /**
      * Disconnects from database
      */
