@@ -40,6 +40,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+          - name: Unit Tests
+        run: |
+          mvn -Dtest=com.napier.sem.CountryReportTests -Dtest=com.napier.sem.UrbanPopulationTests test
+#          mvn -Dtest=com.napier.sem.UrbanPopulationTests test
       - name: Integration Tests and CodeCov
         run: |
           docker build -t database ./db 
