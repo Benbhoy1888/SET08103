@@ -586,9 +586,6 @@ public class App
         }
     }
 
-
-
-
     /**
      * Prints a list of countries
      * ///////////////////// NO LONGER USED, keep here for now //////////////////
