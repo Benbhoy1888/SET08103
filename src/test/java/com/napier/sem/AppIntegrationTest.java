@@ -98,6 +98,22 @@ public class AppIntegrationTest {
 //        assertNotEquals(-1.0, totalPopulation.population);
 //    }
 
+    @Test
+    void testWorldCities() {
+        // gets world countries information for world report using empty report type
+        ArrayList<City> worldCities = app.getAllCities("", "");
+
+        if(worldCities != null) {
+            assertTrue(worldCities.size() > 0);
+            assertNotNull(worldCities.get(0).name);
+            assertNotNull(worldCities.get(0).country);
+            assertNotNull(worldCities.get(0).district);
+            assertNotEquals(-1, worldCities.get(0).population);
+        } else {
+            fail("getAllCities returning Null pointer");
+        }
+    }
+
     /**
      * Disconnects from database
      */

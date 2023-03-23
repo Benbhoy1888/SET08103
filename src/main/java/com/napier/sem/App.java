@@ -101,7 +101,7 @@ public class App
 
         // Check countries is not null
         if (cities == null || cities.size()<1) {
-            System.out.println("No capitals");
+            System.out.println("No cities");
             return;
         }
 
@@ -114,7 +114,7 @@ public class App
         StringBuilder sb = new StringBuilder();
         // Print header
         sb.append("|Name | Country | District| Population| \r\n");
-        sb.append("| :--- | :--- | ---: |\r\n");
+        sb.append("| :--- | :--- | ---: | ---: |\r\n");
 
         // Loop over all countries in the list
         for (int i=0; i<displayN;i++) {
@@ -164,13 +164,17 @@ public class App
             } else {
                 System.out.println("Cities report type not valid");
                 return null;
+
             }
 
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, city.Country, city.District, city.Population\n"
-                            + "FROM city\n";
+                    "SELECT city.Name, country.Name AS Country, city.District, city.Population\n"
+                            + "FROM city\n"
+                            + "JOIN country on city.CountryCode = country.Code\n"
+                            + "ORDER BY city.Population DESC\n";
+
 
             // Sets where clause for continent or region
             if(!(reportType.equals("World"))){
@@ -225,7 +229,6 @@ public class App
      * Outputs to Markdown
      * Filename and extension is automatically generated based on reportType
      * @param population A TotalPopulation object
-     * @param reportType Used to generate correct filename
      */
     public void outputTotalPopulationReport(TotalPopulation population) {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter

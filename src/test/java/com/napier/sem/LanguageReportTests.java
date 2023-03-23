@@ -4,11 +4,13 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
-public class CityReportTests {
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class LanguageReportTests {
 
         static App app;
 
@@ -94,8 +96,8 @@ public class CityReportTests {
             City city = new City();
 
             city.name = "Edinburgh";
-            city.country = "GBR";
-            city.district = "Scotland";
+            city.country = "United Kingdom";
+            city.district = "Western Europe";
             city.population = 450180;
             cities.add(city);
 
@@ -111,11 +113,10 @@ public class CityReportTests {
             City city = new City();
 
             city.name = "Edinburgh";
-            city.country = "GBR";
-            city.district = "Scotland";
+            city.country = "United Kingdom";
+            city.district = "Western Europe";
             city.population = 450180;
             cities.add(city);
-
             app.outputCityReport(cities, -1, "test");
 
             File file = new File("./reports/city_reports/.md");
@@ -160,3 +161,4 @@ public class CityReportTests {
             }
         }
     }
+
