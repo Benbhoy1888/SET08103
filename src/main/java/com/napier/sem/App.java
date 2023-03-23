@@ -210,6 +210,28 @@ public class App
 
     // Language reports --- vvv --------------------------------------------------------------------
 
+    /**
+     * Gets total population information from database
+     * @param choice specifies which continent, region, country, distric or city as per reportType
+     * @return A TotalPopulation object, or null if there is an error
+     */
+    public Language getLanguage(String reportType, String choice) {
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+        // if reportType is empty, should generate world report
+        // store reportType name in object
+        // get population in thousands to 2 decimal places
+        return null;
+    }
+
+    /**
+     * Outputs to Markdown
+     * Filename and extension is automatically generated based on reportType
+     */
+    public void outputLanguageReport(Language language) {
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+        // population column in thousands, reflect in header
+    }
+
     // Total Population --- vvv --------------------------------------------------------------------
     /**
      * Gets total population information from database

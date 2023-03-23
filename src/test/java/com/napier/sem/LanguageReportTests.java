@@ -5,160 +5,81 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static org.junit.jupiter.api.Assertions.*;
 public class LanguageReportTests {
+    static App app;
 
-        static App app;
+    /**
+     * Creates a new app
+     */
+    @BeforeAll
+    static void init() {
+        app = new App();
+    }
 
-        /**
-         * Creates a new app
-         */
-        @BeforeAll
-        static void init()
-        {
-            app = new App();
-        }
+    /**
+     *Tests if object passed is null and error is not thrown
+     */
+    @Test
+    void outputLanguageReportNullObject() {
+        Language language = null;
 
-        /**
-         * Tests if ArrayList passed is null, an error is not thrown
-         */
-        @Test
-        void outputCityReportsTestNull() {
-            app.outputCityReport(null, -1, "test");
-        }
+        app.outputLanguageReport(language);
+    }
 
-        /**
-         *Tests if ArrayList passed is empty, an error is not thrown
-         */
-        @Test
-        void outputCityReportsEmptyListTest() {
-            ArrayList<City> cities = new ArrayList<>();
+    /**
+     * Tests if a field is null an error is not thrown
+     */
+    @Test
+    void outputLanguageReportNullField() {
+        Language language = new Language();
 
-            app.outputCityReport(cities, -1, "test");
-        }
+        language.countryCode = null;
+        language.languageName = null;
+        language.population = 0;
 
-        /**
-         * Tests for if an element in ArrayList passed is null, an error is not thrown
-         */
-        @Test
-        void outputCityReportsListContainsNull() {
-            ArrayList<City> cities = new ArrayList<>();
 
-            cities.add(null);
+        app.outputLanguageReport(language);
+    }
 
-            app.outputCityReport(cities, -1, "test");
-        }
+    /**
+     * Test when object passed as expected an error is not thrown
+     */
+    @Test
+    void outputLanguageReport() {
+        Language language = new Language();
 
-        /**
-         * Tests if a field is null, an error is not thrown
-         */
-        @Test
-        void outputCityReportsNullFieldTest() {
-            ArrayList<City> cities = new ArrayList<>();
-            City city = new City();
+        language.countryCode = "GBR";
+        language.languageName = "English";
+        language.population = 93.7;
 
-            city.name = null;
-            city.country = null;
-            city.district = null;
-            city.population = 0;
-            cities.add(city);
+        app.outputLanguageReport(language);
+    }
 
-            app.outputCityReport(cities, -1, "test");
-        }
+    /**
+     * Tests if reportType is not recognised, returns null
+     */
 
-        /**
-         * Test for when ArrayList passed has elements as expected, an error is not thrown
-         */
-        @Test
-        void outputCityReports() {
-            ArrayList<City> cities = new ArrayList<>();
-            City city = new City();
+    /**
+     * Tests when choice is empty for report types other than world, return is null
+     */
 
-            city.name = "Edinburgh";
-            city.country = "United Kingdom";
-            city.district = "Western Europe";
-            city.population = 450180;
-            cities.add(city);
-
-            app.outputCityReport(cities, -1, "test");
-        }
-
-        /**
-         * Tests for if displayN provided is greater than elements in list provided, an error is not thrown
-         */
-        @Test
-        void outputCityReportsN_MoreThanInListTest() {
-            ArrayList<City> cities = new ArrayList<>();
-            City city = new City();
-
-            city.name = "Edinburgh";
-            city.country = "United Kingdom";
-            city.district = "Western Europe";
-            city.population = 450180;
-            cities.add(city);
-
-            app.outputCityReport(cities, 2, "test");
-        }
-
-        /**
-         * Tests for if empty string provided for filename, does not create a file
-         */
-        @Test
-        void outputCityReportsEmptyFileNameTest() {
-            ArrayList<City> cities = new ArrayList<>();
-            City city = new City();
-
-            city.name = "Edinburgh";
-            city.country = "United Kingdom";
-            city.district = "Western Europe";
-            city.population = 450180;
-            cities.add(city);
-            app.outputCityReport(cities, -1, "test");
-
-            File file = new File("./reports/city_reports/.md");
-            if(file.exists()){
-                fail("File with empty name created");
+    /**
+     * Clears up after tests
+     * Deletes reports directory
+     */
+    @AfterAll
+    static void clearUp() {
+        // deletes reports directory
+        File directory = new File("./reports");
+        File[] entries = directory.listFiles();
+        if (entries != null) {
+            for (File entry : entries) {
+                entry.delete();
             }
-        }
-
-        /**
-         * Tests if reportType is not recognised, returns null
-         */
-        @Test
-        void getAllCitiesTypeNotRecognised() {
-            assertNull(app.getAllCities("aaaaa", "Funky Town"));
-        }
-
-        /**
-         * Tests when choice is empty for report types other than world, returns null
-         */
-        @Test
-        void getAllCitiesChoiceEmpty() {
-            assertNull(app.getAllCities("r", ""));
-            assertNull(app.getAllCities("c", ""));
-            assertNull(app.getAllCities("co", ""));
-            assertNull(app.getAllCities("d", ""));
-        }
-
-        /**
-         * Clears up after tests
-         * Deletes reports directory including any files created in tests
-         */
-        @AfterAll
-        static void clearUp() {
-            // deletes reports directory
-            File directory = new File("./reports");
-            File[] entries = directory.listFiles();
-            if (entries != null) {
-                for (File entry : entries) {
-                    entry.delete();
-                }
-                directory.delete();
-            }
+            directory.delete();
         }
     }
+}
 
