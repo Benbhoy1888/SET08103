@@ -25,17 +25,17 @@ public class CapitalCityReportTests {
      * Tests if ArrayList passed is null
      */
     @Test
-    void outputCapitalCitiesReportsTestNull() {
-        app.outputCapitalCityReport(null, -1, "test");
+    void outputCapitalCitiesReportsTestNull(int displayN, String filename) {
+        app.outputCapitalCityReport(null, -1, "test", displayN, filename);
     }
 
     /**
      *Tests if ArrayList passed is empty
      */
     @Test
-    void outputCapitalCitiesReportsEmptyListTest() {
+    void outputCapitalCitiesReportsEmptyListTest(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
-        app.outputCapitalCityReport(capitalCities, -1, "test");
+        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
 
     }
 
@@ -43,10 +43,10 @@ public class CapitalCityReportTests {
      * Tests for if an element in ArrayList passed is null
      */
     @Test
-    void outputCapitalCitiesReportsListContainsNull() {
+    void outputCapitalCitiesReportsListContainsNull(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         capitalCities.add(null);
-        app.outputCapitalCityReport(capitalCities, -1, "test");
+        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
 
     }
 
@@ -54,56 +54,56 @@ public class CapitalCityReportTests {
      * Tests if a field is null
      */
     @Test
-    void outuputCapitalCitiesReportsNullFieldTest() {
+    void outuputCapitalCitiesReportsNullFieldTest(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = null;
         capital.population = 0; // int field
         capital.country= null;
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test");
+        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
     }
 
     /**
      * Test for when ArrayList passed has elements as expected
      */
     @Test
-    void outputCapitalCitesReports() {
+    void outputCapitalCitesReports(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
         capital.population = 18886000;
         capital.country = "Australia";
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test");
+        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
     }
 
     /**
      * Tests for if displayN provided is greater than elements in list provided
      */
     @Test
-    void outputCapitalCitiesReportsN_MoreThanInListTest() {
+    void outputCapitalCitiesReportsN_MoreThanInListTest(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
         capital.population = 18886000;
         capital.country = "Australia";
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, 2, "test");
+        app.outputCapitalCityReport(capitalCities, 2, "test", displayN, filename);
     }
 
     /**
      * Tests for if empty string provided for filename creates a file
      */
     @Test
-    void outputCapitalCitiesReportsEmptyFileNameTest() {
+    void outputCapitalCitiesReportsEmptyFileNameTest(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
         capital.population = 18886000;
         capital.country = "Australia";
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test");
+        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
 
         File file = new File("./reports/.md");
         if(file.exists()) {

@@ -156,18 +156,18 @@ public class App
             Statement stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+            if(reportType.equalsIgnoreCase("W") || reportType.equals("")) {
                 reportType = "World";
             } else if (choice.equals("")){
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
-            } else if(reportType.toUpperCase().equals("C")){
+            } else if(reportType.equalsIgnoreCase("C")){
                 reportType = "Continent";
-            } else if (reportType.toUpperCase().equals("R")) {
+            } else if (reportType.equalsIgnoreCase("R")) {
                 reportType = "Region";
-            }    else if (reportType.toUpperCase().equals("CO")){
+            }    else if (reportType.equalsIgnoreCase("CO")){
                     reportType = "Country";
-            }    else if (reportType.toUpperCase().equals("D")){
+            }    else if (reportType.equalsIgnoreCase("D")){
                 reportType = "District";
             } else {
                 System.out.println("Cities report type not valid");
@@ -209,7 +209,7 @@ public class App
         }
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
-    public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test) {
+    public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test, int displayN, String filename) {
 
         /** Check countries is not null*/
          if (capitalCities == null || capitalCities.size()<1) {
@@ -219,10 +219,9 @@ public class App
 
         /** sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)*/
         /** or displayN is greater than the number of countries*/
-        int displayN;
-        if((displayN > capitalCities.size()) || (displayN < 0)){
+        if(displayN>capitalCities.size() || displayN<0){
             displayN = capitalCities.size();
-         }
+        }
 
         StringBuilder sb = new StringBuilder();
         //Println header
@@ -230,7 +229,7 @@ public class App
         sb.append("| :--- | :--- | ---: |\r\n");
 
         // Loop over all countries in the list
-        for (int i=0; i<displayN;i++) {
+        for (i = 0; i<displayN; i++) {
          Capital capital;
             capital = capitalCities.get(i);
          if(capital== null) continue;
@@ -253,38 +252,37 @@ public class App
           }
         }
 
-        public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) {
+        public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) throws SQLException {
             Statement stmt;
             try {
                 // Create an SQL statement
-               Statement stmt = con.createStatement();
+                stmt = con.createStatement();
 
                 // Checks report type valid and correctly sets formatting
-                if (reportType.toUpperCase().equals("W") || reportType.equals("")) {
+                if (reportType.equalsIgnoreCase("W") || reportType.equals("")) {
                     reportType = "World";
                 } else if (choice.equals("")) {
                     System.out.println("No choice provided when report type is not W or ''");
                     return null;
-                } else if (reportType.toUpperCase().equals("C")) {
+                } else if (reportType.equalsIgnoreCase("C")) {
                     reportType = "Continent";
-                } else if (reportType.toUpperCase().equals("R")) {
+                } else if (reportType.equalsIgnoreCase("R")) {
                     reportType = "Region";
-                } else if (reportType.toUpperCase().equals("CO")) {
+                } else if (reportType.equalsIgnoreCase("CO")) {
                     reportType = "Country";
                 } else {
                     System.out.println("Capital Cities report type not valid");
                     return null;
                 }
-            }
+
 
 
 
             // Create string for SQL statement
             String strSelect =
                     "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
-                            + "FROM city\n"
-            //      +JOIN city.ID on country.code  =city.ID;\n"
-
+                            + "FROM city\n" +
+                            "JOIN city on country.capital  = city.ID;/n";
             // Sets where clause for continent or region
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
@@ -305,11 +303,11 @@ public class App
             }
             return capitalCities;
         }
-        catch(Exception e)
+            catch(Exception e)
         {
-           System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
          System.out.println("Failed to get capital city details\n");
-         return null;
+            return null;
         }
     }
 
@@ -374,7 +372,7 @@ public class App
         // or displayN is greater than the number of countries
         if(displayN>countries.size() || displayN<0){
             displayN = countries.size();
-        }
+    }
 
         StringBuilder sb = new StringBuilder();
         // Print header
@@ -423,14 +421,14 @@ public class App
             Statement stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+            if(reportType.equalsIgnoreCase("W") || reportType.equals("")) {
                 reportType = "World";
             } else if (choice.equals("")){
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
-            } else if(reportType.toUpperCase().equals("C")){
+            } else if(reportType.equalsIgnoreCase("C")){
                 reportType = "Continent";
-            } else if (reportType.toUpperCase().equals("R")){
+            } else if (reportType.equalsIgnoreCase("R")){
                 reportType = "Region";
             } else {
                 System.out.println("Countries report type not valid");
@@ -492,7 +490,7 @@ public class App
             }
 
             // Print header
-            System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s %-36s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+            System.out.printf("%-4s %-53s %-15s %-27s %-12s %-36s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
 
             // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
             // or displayN is greater than the number of countries
@@ -509,7 +507,7 @@ public class App
                                 country.code, country.name, country.continent, country.region, country.population, country.capital);
                 System.out.println(country_string);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
