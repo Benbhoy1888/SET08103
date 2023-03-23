@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class UrbanPopulationTests {
 
     static App app;
@@ -35,6 +37,15 @@ public class UrbanPopulationTests {
         ArrayList<Population> populations = new ArrayList<>();
         app.outputUrbanPopulationReport(populations, "test");
     }
+
+
+    /**
+     * Tests if reportType is not recognised, returns null
+     */
+    @Test
+    void getAllUrbanReportTypesNotRecognised() {
+        assertNull(app.getTotalUrbanRuralPopulation("Report"));}
+
 
     /**
      * Clears up post test
