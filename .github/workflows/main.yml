@@ -21,7 +21,7 @@ jobs:
           mvn -Dtest=com.napier.sem.TotalPopulationTests test
           mvn -Dtest=com.napier.sem.UrbanPopulationTests test
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
@@ -41,10 +41,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-          - name: Integration Tests and CodeCov
-        run: |
-          mvn -Dtest=com.napier.sem.CountryReportTests -Dtest=com.napier.sem.UrbanPopulationTests test
-#          mvn -Dtest=com.napier.sem.UrbanPopulationTests test
       - name: Integration Tests and CodeCov
         run: |
           docker build -t database ./db 
@@ -54,7 +50,7 @@ jobs:
           docker rm world
           docker image rm database
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
