@@ -79,7 +79,7 @@ public class App
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
-<<<<<<< HEAD
+
       //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
            // if(filename.equals("")){
             //    return;
@@ -89,17 +89,17 @@ public class App
         // System.out.println("No capitals");
          //return;
         //}
-=======
->>>>>>> develop
+
+
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // TotalPopulation reports method calls--- vvv -------------------------------------------------
 
-<<<<<<< HEAD
+
         // Language reports method calls--- vvv --------------------------------------------------------
-=======
+
         // Language reports --- vvv --------------------------------------------------------------------
->>>>>>> develop
+
 
         // ---------------------------------------------------------------------------------------------
 
@@ -323,7 +323,7 @@ public class App
         return null;
     }
 
-<<<<<<< HEAD
+
 
 
 
@@ -331,9 +331,9 @@ public class App
     // Urbanisation reports methods--- vvv ----------------------------------------------------------------
 
     // Language reports methods--- vvv --------------------------------------------------------------------
-=======
+
     // Urbanisation reports --- vvv ----------------------------------------------------------------
->>>>>>> develop
+
 
     // Total Population methods--- vvv --------------------------------------------------------------------
     /**
