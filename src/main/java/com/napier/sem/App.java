@@ -154,13 +154,13 @@ public class App
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
             } else if(reportType.toUpperCase().equals("C")){
-                reportType = "Continent";
+                reportType = "country.Continent";
             } else if (reportType.toUpperCase().equals("R")) {
-                reportType = "Region";
+                reportType = "country.Region";
             }    else if (reportType.toUpperCase().equals("CO")){
-                    reportType = "Country";
+                    reportType = "country.Name";
             }    else if (reportType.toUpperCase().equals("D")){
-                reportType = "District";
+                reportType = "city.District";
             } else {
                 System.out.println("Cities report type not valid");
                 return null;
@@ -172,8 +172,8 @@ public class App
             String strSelect =
                     "SELECT city.Name, country.Name AS Country, city.District, city.Population\n"
                             + "FROM city\n"
-                            + "JOIN country on city.CountryCode = country.Code\n"
-                            + "ORDER BY city.Population DESC\n";
+                            + "LEFT JOIN country on city.CountryCode = country.Code\n";
+
 
 
             // Sets where clause for continent or region
@@ -181,7 +181,7 @@ public class App
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
             // Orders by largest population to smallest
-            strSelect += " ORDER BY Population DESC";
+            strSelect += " ORDER BY city.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
@@ -325,7 +325,7 @@ public class App
             String strSelect =
                     "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name as Capital\n"
                            + "FROM country\n"
-                           + "LEFT JOIN city on country.Capital = city.ID\n";
+                           + "JOIN city on country.Capital = city.ID\n";
             // Sets where clause for continent or region
             if(!(reportType.equals("World"))){
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
