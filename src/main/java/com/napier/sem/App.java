@@ -98,8 +98,6 @@ public class App
         // produce urban population report for world
         a.outputUrbanPopulationReport(urbanPopulationWorld,"Urban_World");
 
-
-
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
         // Language reports --- vvv --------------------------------------------------------------------
