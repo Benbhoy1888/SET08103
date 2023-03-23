@@ -84,6 +84,52 @@ public class AppIntegrationTest {
     }
 
     /**
+     * Tests ruralPopulation array for the following...
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
+    @Test
+    void testUrbanPopulation() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Population> ruralPopulation = app.getTotalUrbanRuralPopulation("");
+
+        if(ruralPopulation != null) {
+            assertTrue(ruralPopulation.size() > 0);
+            assertNotNull(ruralPopulation.get(0).Name);
+            assertNotNull(ruralPopulation.get(0).totalPopulation);
+            assertNotNull(ruralPopulation.get(0).cityPopulation);
+            assertNotNull(ruralPopulation.get(0).nonCityPopulation);
+            assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
+        } else {
+            fail("getTotalUrbanRuralPopulation returning Null pointer");
+        }
+    }
+
+    /**
+     * Tests ruralWorldPopulation array for the following...
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
+    @Test
+    void testUrbanWorldPopulation() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Population> ruralWorldPopulation = app.getTotalUrbanRuralPopulationWorld();
+
+        if(ruralWorldPopulation != null) {
+            assertTrue(ruralWorldPopulation.size() > 0);
+            assertNotNull(ruralWorldPopulation.get(0).totalPopulation);
+            assertNotNull(ruralWorldPopulation.get(0).cityPopulation);
+            assertNotNull(ruralWorldPopulation.get(0).nonCityPopulation);
+            assertNotEquals(-1, ruralWorldPopulation.get(0).totalPopulation);
+        } else {
+            fail("getTotalUrbanRuralPopulationWorld returning Null pointer");
+        }
+    }
+
+
+    /**
      * Tests object and attributes are not null after trying to get total population information from database when using
      * an empty string for report type (should generate world report object)
      */

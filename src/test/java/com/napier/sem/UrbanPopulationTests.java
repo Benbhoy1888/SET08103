@@ -23,7 +23,7 @@ public class UrbanPopulationTests {
      * Test if ArrayList passed is null
      */
     @Test
-    void outputCountryPopulationReportsTestNull() {
+    void outputUrbanPopulationNullTest() {
         app.outputUrbanPopulationReport(null, "test");
     }
 
@@ -31,23 +31,10 @@ public class UrbanPopulationTests {
      * Test if ArrayList passed is empty
      */
     @Test
-    void outputCountryPopulationReportsEmptyListTest() {
+    void outputUrbanPopulationEmptyTest() {
         ArrayList<Population> populations = new ArrayList<>();
         app.outputUrbanPopulationReport(populations, "test");
     }
-
-    /**
-     * Tests for if an element in ArrayList passed is null
-     */
-  /** @Test
-   * void outputCountryReportsListContainsNull() {
-   * ArrayList<Population> populations = new ArrayList<>();
-  * populations.add(null);
-   *   app.outputUrbanPopulationReport(populations, "test");
-  * }
-   * */
-
-
 
     /**
      * Clears up post test

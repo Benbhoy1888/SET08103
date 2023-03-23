@@ -3,7 +3,7 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
+
 
 /**
  * A Class to run project world reports application
@@ -81,17 +81,22 @@ public class App
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
-        // region urban report - Continent
+        // urban report - Continent
         ArrayList<Population> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Continent");
-        // region urban report - Region
+        // urban report - Region
         ArrayList<Population> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Region");
-        // region urban report - Continent
+        // urban report - Continent
         ArrayList<Population> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Country");
-
-
+        // urban report - world
+        ArrayList<Population> urbanPopulationWorld = a.getTotalUrbanRuralPopulationWorld();
+        // produce urban population report by continent
         a.outputUrbanPopulationReport(urbanPopulationContinent, "Urban_Continent");
+        // produce urban population report by region
         a.outputUrbanPopulationReport(urbanPopulationRegion, "Urban_Region");
+        // produce urban population report by country
         a.outputUrbanPopulationReport(urbanPopulationCountry, "Urban_Country");
+        // produce urban population report for world
+        a.outputUrbanPopulationReport(urbanPopulationWorld,"Urban_World");
 
 
 
@@ -217,6 +222,220 @@ public class App
     // Capital City reports --- vvv ----------------------------------------------------------------
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+    /**
+     * This method creates SQL query to return either urban continent, urban region or urban country data depending on report type
+     * @param reportType "Continent" (urban continent report), "Region" (urban region report), "Country" (urban country report)
+     * @return population array containing return of SQL statment
+     */
+    public ArrayList<Population> getTotalUrbanRuralPopulation(String reportType) {
+
+        String strSelect="";
+
+        try
+        {
+            // if country report, chose column "Name"
+            if(reportType=="Country"){
+                reportType="Name";
+            }
+
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            strSelect =
+                    "SELECT world.country." + reportType + " AS " + reportType + ", SUM(world.country.Population) as total_population,\n" +
+                            "       (SELECT SUM(world.city.Population)\n" +
+                            "        FROM world.city\n" +
+                            "        JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "        WHERE world.c." + reportType + " = world.country." + reportType + ") as urban_population,\n" +
+                            "    SUM(world.country.Population) - (SELECT SUM(world.city.Population)\n" +
+                            "                                       FROM world.city\n" +
+                            "                                       JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "                                       WHERE world.c." + reportType + " = world.country. " + reportType + ") as rural_population,\n" +
+                            "\n" +
+                            "                                       (SELECT SUM(world.city.Population)\n" +
+                            "                                            FROM world.city\n" +
+                            "                                                     JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
+                            "                                            WHERE world.c. " + reportType + " = world.country. " + reportType + ") / (SUM(world.country.Population )\n" +
+                            "                                                ) * 100 as urban_percentage\n" +
+                            "FROM world.country\n" +
+                            "GROUP BY world.country." + reportType;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract urban population information from result set
+            ArrayList<Population> population = new ArrayList<Population>();
+            // Loop though query return and store values in population array
+            while (rset.next())
+            {
+                Population pop = new Population();
+                pop.Name = rset.getString(1);
+                pop.totalPopulation = rset.getLong(2);
+                pop.cityPopulation = rset.getLong(3);
+                pop.nonCityPopulation = rset.getLong(4);
+                population.add(pop);
+            }
+            return population;
+        }
+        catch (Exception e)
+        {
+            // capture SQL query error(s)
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country population details\n");
+            return null;
+        }
+    }
+
+    /**
+     * This method creates SQL query to return either global urban population
+     * @return global urban population return from sql query
+     */
+    public ArrayList<Population> getTotalUrbanRuralPopulationWorld() {
+
+        String strSelect="";
+
+        try {
+
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            strSelect ="SELECT SUM(world.country.Population) as total_population,\n" +
+                    "       (SELECT(SUM(world.city.Population))\n" +
+                    "        FROM world.city) as city_population,\n" +
+                    "       (SELECT(SUM(world.country.Population)) -\n" +
+                    "                (SELECT(SUM(world.city.Population))\n" +
+                    "                 FROM world.city)\n" +
+                    "                            FROM world.country) as non_city_population\n" +
+                    " FROM world.country";
+
+
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information from result set
+            ArrayList<Population> population = new ArrayList<Population>();
+            while (rset.next())
+            {
+                Population pop = new Population();
+                pop.totalPopulation = rset.getLong(1);
+                pop.cityPopulation = rset.getLong(2);
+                pop.nonCityPopulation = rset.getLong(3);
+                population.add(pop);
+            }
+            return population;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world population details\n");
+            return null;
+        }
+    }
+
+
+
+    /**
+     * This method creates reports for urban continent, urban regional and urban country
+     * @param population array
+     * @param filename name of markdown report file
+     */
+    public void outputUrbanPopulationReport(ArrayList<Population> population, String filename) {
+
+        // return from method if no report filename provided
+        if(filename.equals("")){
+            return;
+        }
+
+        // Check urban populations is not null
+        if (population == null || population.size()<1) {
+            System.out.println("No urban population");
+            return;
+        }
+
+        // build report header
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Name |Total Population |Population living in cities |Population not living in cities | \r\n");
+        sb.append("| :--- | ---: | ---: | ---: |\r\n");
+
+        // Loop over all rows in the list
+        int rowCount = population.size();
+        for (int i= 0; i<rowCount; i++){
+            Population pop;
+            pop = population.get(i);
+            if(pop == null) continue;
+            sb.append("| " + pop.Name + " | " +
+                    pop.totalPopulation + " | " +
+                    pop.cityPopulation + " | " +
+                    pop.nonCityPopulation + " |\r\n");
+
+        }
+
+        try {
+            // create directory and file for the report
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/urban_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/urban_reports/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method creates reports for world urban
+     *      * @param population array
+     *      * @param filename name of markdown report file
+     */
+    public void getTotalUrbanRuralPopulationWorld(ArrayList<Population> population, String filename) {
+
+        // return from method if no report filename provided
+        if(filename.equals("")){
+            return;
+        }
+
+        // Check urban populations is not null
+        if (population == null || population.size()<1) {
+            System.out.println("No urban world population");
+            return;
+        }
+
+        // build report header
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Total Population |Population living in cities |Population not living in cities | \r\n");
+        sb.append("| ---: | ---: | ---: |\r\n");
+
+        // Loop over all rows in the list
+        int rowCount = population.size();
+        for (int i= 0; i<rowCount; i++){
+            Population pop;
+            pop = population.get(i);
+            if(pop == null) continue;
+            sb.append("| " + pop.totalPopulation + " | " +
+                    pop.cityPopulation + " | " +
+                    pop.nonCityPopulation  + " |\r\n");
+
+
+        }
+
+        try {
+            // create directory and file for the report
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/urban_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/urban_reports/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -370,167 +589,8 @@ public class App
         }
     }
 
-    /**
-     * Gets all urban/rural information from database (defaults to world, pass "Continent" (continent)
-     * or, "Region" (region), "Country" (Country)
-     * 'choice' is only used if continent or region is specified as reportType
-    // * @param reportType should be "world", "continent","region","country" can also be used to get world
-   //  * @param choice if selecting a continent or region, this should be specified here - ignored if report type is "w"
-     * @return A list of all countries, or null if there is an error
-     */
-    public void outputUrbanPopulationReport(ArrayList<Population> population, String filename) {
 
 
-        if(filename.equals("")){
-            return;
-        }
-
-        // Check urban populations is not null
-        if (population == null || population.size()<1) {
-            System.out.println("No urban population");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        // Print header
-        sb.append("|Name |Total Population |Population living in cities |Population not living in cities | \r\n");
-        sb.append("| :--- | ---: | ---: | ---: |\r\n");
-
-        // Loop over all countries in the list
-        int rowCount = population.size();
-       for (int i= 0; i<rowCount; i++){
-            Population pop;
-            pop = population.get(i);
-            if(pop == null) continue;
-            sb.append("| " + pop.Name + " | " +
-                    pop.totalPopulation + " | " +
-                    pop.urbanPopulation + " | " +
-                    pop.ruralPopulation + " |\r\n");
-
-
-        }
-
-        try {
-            File directory = new File("./reports");
-            if(!directory.exists()){
-                directory.mkdir();
-            }
-            new File("./reports/urban_reports").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/urban_reports/" + filename + ".md"));
-            writer.write(sb.toString());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ArrayList<Population> getTotalUrbanRuralPopulation(String reportType) {
-
-        try
-        {
-            if(reportType=="Country"){
-                reportType="Name";
-            }
-
-            System.out.println(reportType);
-
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT world.country." + reportType + " AS " + reportType + ", SUM(world.country.Population) as total_population,\n" +
-                            "       (SELECT SUM(world.city.Population)\n" +
-                            "        FROM world.city\n" +
-                            "        JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
-                            "        WHERE world.c." + reportType + " = world.country." + reportType + ") as urban_population,\n" +
-                            "    SUM(world.country.Population) - (SELECT SUM(world.city.Population)\n" +
-                            "                                       FROM world.city\n" +
-                            "                                       JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
-                            "                                       WHERE world.c." + reportType + " = world.country. " + reportType + ") as rural_population,\n" +
-                            "\n" +
-                            "                                       (SELECT SUM(world.city.Population)\n" +
-                            "                                            FROM world.city\n" +
-                            "                                                     JOIN world.country c on world.c.Code = world.city.CountryCode\n" +
-                            "                                            WHERE world.c. " + reportType + " = world.country. " + reportType + ") / (SUM(world.country.Population )\n" +
-                            "                                                ) * 100 as urban_percentage\n" +
-                            "FROM world.country\n" +
-                            "GROUP BY world.country." + reportType;
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Extract country information from result set
-            ArrayList<Population> population = new ArrayList<Population>();
-            while (rset.next())
-            {
-                Population pop = new Population();
-                pop.Name = rset.getString(1);
-                pop.totalPopulation = rset.getLong(2);
-                pop.urbanPopulation = rset.getLong(3);
-                pop.ruralPopulation = rset.getLong(4);
-                population.add(pop);
-            }
-            return population;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country population details\n");
-            return null;
-        }
-    }
-
-    public ArrayList<Population> getPopulationByContinent() {
-
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT world.country.Continent AS Continent, SUM(world.country.Population) as total_population,\n" +
-                            "       (SELECT SUM(world.city.Population)\n" +
-                            "        FROM world.city\n" +
-                            "        JOIN country c on c.Code = city.CountryCode\n" +
-                            "        WHERE c.Continent = world.country.Continent) as urban_population,\n" +
-                            "    SUM(world.country.Population) -   (SELECT SUM(world.city.Population)\n" +
-                            "                                       FROM world.city\n" +
-                            "                                       JOIN country c on c.Code = city.CountryCode\n" +
-                            "                                       WHERE c.Continent = world.country.Continent) as rural_population,\n" +
-                            "\n" +
-                            "                                       (SELECT SUM(world.city.Population)\n" +
-                            "                                            FROM world.city\n" +
-                            "                                                     JOIN country c on c.Code = city.CountryCode\n" +
-                            "                                            WHERE c.Continent = world.country.Continent) / (SUM(world.country.Population )\n" +
-                            "                                                ) * 100 as urban_percentage\n" +
-                            "FROM world.country\n" +
-                            "GROUP BY world.country.Continent";
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Extract country information from result set
-            ArrayList<Population> population = new ArrayList<>();
-            while (rset.next())
-            {
-                Population pop = new Population();
-                pop.Name = rset.getString(1);
-                pop.totalPopulation = rset.getLong(2);
-                pop.urbanPopulation = rset.getLong(3);
-                pop.ruralPopulation = rset.getLong(4);
-                pop.percentageUrban = rset.getFloat(5);
-                population.add(pop);
-
-            }
-            return population;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get continent population details\n");
-            return null;
-        }
-
-    }
 
     /**
      * Prints a list of countries
@@ -572,33 +632,7 @@ public class App
         }
     }
 
-    public void printUrbanPopulation(ArrayList<Population> populations)
-    {
-        // checks list exists
-        if(populations != null) {
 
-            // checks list is not empty
-            if(populations.size()<1){
-                System.out.println("No urban populations found\n");
-                return;
-            }
-
-            // Print header
-            System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s", "Code", "Total Population", "Urban Population", "Rural Population", "Percentage Rural"));
-
-            int rowSize = populations.size();
-            // Loop over all countries in the list
-            for (int i=0; i<rowSize;i++) {
-                Population pop;
-                pop = populations.get(i);
-                String country_string =
-                        String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
-                                pop.Name, pop.totalPopulation, pop.urbanPopulation, pop.totalPopulation, pop.percentageUrban);
-                System.out.println(country_string);
-            }
-            System.out.println("");
-        }
-    }
 
 
     // Menu --- vvv --------------------------------------------------------------------------------
