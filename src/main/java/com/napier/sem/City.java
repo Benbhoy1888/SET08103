@@ -24,5 +24,5 @@ public class City {
         /**
          * Population
          */
-        public double population;
+        public int population;
 }
