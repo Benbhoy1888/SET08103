@@ -222,9 +222,9 @@ public class App
     // Urbanisation reports --- vvv ----------------------------------------------------------------
 
     /**
-     * This method creates SQL query to return either urban continent, urban region or urban country data depending on report type
+     * This method creates SQL query to return urban/rural population by either continent, region, or country
      * @param reportType "Continent" (urban continent report), "Region" (urban region report), "Country" (urban country report)
-     * @return population array containing return of SQL statment
+     * @return population array containing return of SQL statement
      */
     public ArrayList<Population> getTotalUrbanRuralPopulation(String reportType) {
 
@@ -284,7 +284,7 @@ public class App
     }
 
     /**
-     * This method creates SQL query to return either global urban population
+     * This method creates SQL query to return world total urban/rural population
      * @return global urban population return from sql query
      */
     public ArrayList<Population> getTotalUrbanRuralPopulationWorld() {
@@ -323,6 +323,7 @@ public class App
         }
         catch (Exception e)
         {
+            // capture any SQL query errors
             System.out.println(e.getMessage());
             System.out.println("Failed to get world population details\n");
             return null;
@@ -332,7 +333,7 @@ public class App
 
 
     /**
-     * This method creates reports for urban continent, urban regional and urban country
+     * This method reads from array and stores data into markdown report file
      * @param population array
      * @param filename name of markdown report file
      */
@@ -384,7 +385,7 @@ public class App
     }
 
     /**
-     * This method creates reports for world urban
+     * This method reads from array and stores data into markdown report file
      *      * @param population array
      *      * @param filename name of markdown report file
      */
@@ -416,8 +417,6 @@ public class App
             sb.append("| " + pop.totalPopulation + " | " +
                     pop.cityPopulation + " | " +
                     pop.nonCityPopulation  + " |\r\n");
-
-
         }
 
         try {
