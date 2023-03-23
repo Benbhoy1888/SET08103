@@ -41,7 +41,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-          - name: Unit Tests
+          - name: Integration Tests and CodeCov
         run: |
           mvn -Dtest=com.napier.sem.CountryReportTests -Dtest=com.napier.sem.UrbanPopulationTests test
 #          mvn -Dtest=com.napier.sem.UrbanPopulationTests test
