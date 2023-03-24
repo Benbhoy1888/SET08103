@@ -3,7 +3,6 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 /**
  * A Class to run project world reports application
@@ -13,6 +12,8 @@ import java.util.Properties;
  */
 public class App
 {
+
+
     /**
      * Main Method, program starts here
      * @param args
@@ -217,7 +218,8 @@ public class App
         }
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
-    public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int i, String test, int displayN, String filename) {
+    public void outputCapitalCitiesReport(
+            ArrayList<Capital> capitalCities, int displayN, String filename) {
 
         /** Check countries is not null*/
          if (capitalCities == null || capitalCities.size()<1) {
@@ -237,7 +239,7 @@ public class App
         sb.append("| :--- | :--- | ---: |\r\n");
 
         /** Loop over all countries in the list*/
-        for (i = 0; i<displayN; i++) {
+        for (int i=0; i<displayN;i++) {
          Capital capital;
             capital = capitalCities.get(i);
          if(capital== null) continue;
@@ -290,7 +292,7 @@ public class App
             String strSelect =
                     "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
                             + "FROM country\n" +
-                            "JOIN city on country.capital  = city.ID;/n";
+                            "JOIN city on country.code  = city.ID;/n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";

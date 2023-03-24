@@ -26,7 +26,7 @@ public class CapitalCityReportTests {
      */
     @Test
     void outputCapitalCitiesReportsTestNull(int displayN, String filename) {
-        app.outputCapitalCityReport(null, -1, "test", displayN, filename);
+        app.outputCapitalCitiesReport(null, -1, "test");
     }
 
     /**
@@ -35,7 +35,7 @@ public class CapitalCityReportTests {
     @Test
     void outputCapitalCitiesReportsEmptyListTest(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
-        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
+        app.outputCapitalCitiesReport(capitalCities, -1, "test");
 
     }
 
@@ -46,7 +46,7 @@ public class CapitalCityReportTests {
     void outputCapitalCitiesReportsListContainsNull(int displayN, String filename) {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         capitalCities.add(null);
-        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
+        app.outputCapitalCitiesReport(capitalCities, -1, "test");
 
     }
 
@@ -61,7 +61,7 @@ public class CapitalCityReportTests {
         capital.population = 0; // int field
         capital.country= null;
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
+        app.outputCapitalCitiesReport(capitalCities, -1, "test");
     }
 
     /**
@@ -74,8 +74,10 @@ public class CapitalCityReportTests {
         capital.name = "Canberra";
         capital.population = 18886000;
         capital.country = "Australia";
+
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
+
+        app.outputCapitalCitiesReport(capitalCities, -1, "test");
     }
 
     /**
@@ -89,7 +91,7 @@ public class CapitalCityReportTests {
         capital.population = 18886000;
         capital.country = "Australia";
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, 2, "test", displayN, filename);
+        app.outputCapitalCitiesReport(capitalCities, 2, "test");
     }
 
     /**
@@ -103,7 +105,7 @@ public class CapitalCityReportTests {
         capital.population = 18886000;
         capital.country = "Australia";
         capitalCities.add(capital);
-        app.outputCapitalCityReport(capitalCities, -1, "test", displayN, filename);
+        app.outputCapitalCitiesReport(capitalCities, -1, "test");
 
         File file = new File("./reports/.md");
         if(file.exists()) {
