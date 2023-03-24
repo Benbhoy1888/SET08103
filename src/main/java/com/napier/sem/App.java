@@ -91,7 +91,7 @@ public class App
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
-<<<<<<< HEAD
+
 
       //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
            // if(filename.equals("")){
@@ -104,21 +104,20 @@ public class App
         //}
 
 
-=======
->>>>>>> develop
+
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
-<<<<<<< HEAD
+
 
         // Language reports method calls--- vvv --------------------------------------------------------
 
         // Language reports --- vvv --------------------------------------------------------------------
 
-=======
+
         // Language reports --- vvv --------------------------------------------------------------------
->>>>>>> develop
+
 
         // ---------------------------------------------------------------------------------------------
 
@@ -256,17 +255,15 @@ public class App
         }
     }
     // Capital City reports --- vvv ----------------------------------------------------------------
-<<<<<<< HEAD
+
     public void outputCapitalCitiesReport(
             ArrayList<Capital> capitalCities, int displayN, String filename) {
-=======
->>>>>>> develop
+
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
 
     // Language reports --- vvv --------------------------------------------------------------------
 
-<<<<<<< HEAD
         StringBuilder sb = new StringBuilder();
         //Println header
         sb.append("|Name | Country | Population| \r\n");
@@ -372,7 +369,7 @@ public class App
 
 
     // Total Population methods--- vvv --------------------------------------------------------------------
-=======
+
     /**
      * Gets language information from database
      * @return A Language object, or null if there is an error
@@ -388,7 +385,7 @@ public class App
     }
 
     // Total Population --- vvv --------------------------------------------------------------------
->>>>>>> develop
+
     /**
      * Gets total population information from database
      * @param reportType
