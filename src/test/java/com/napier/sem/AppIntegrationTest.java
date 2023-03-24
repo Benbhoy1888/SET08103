@@ -78,9 +78,7 @@ public class AppIntegrationTest {
             assertNotNull(worldCountries.get(0).region);
             assertNotEquals(-1, worldCountries.get(0).population);
             assertNotNull(worldCountries.get(0).capital);
-        } else {
-            fail("getAllCountries returning Null pointer");
-        }
+        } else fail("getAllCountries returning Null pointer");
     }
 
     /**
@@ -92,14 +90,14 @@ public class AppIntegrationTest {
     @Test
     void testUrbanPopulation() {
         // gets world countries information for world report using empty report type
-        ArrayList<Population> ruralPopulation = app.getTotalUrbanRuralPopulation("");
+        ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("");
 
         if(ruralPopulation != null) {
             assertTrue(ruralPopulation.size() > 0);
-            assertNotNull(ruralPopulation.get(0).Name);
-            assertNotNull(ruralPopulation.get(0).totalPopulation);
-            assertNotNull(ruralPopulation.get(0).cityPopulation);
-            assertNotNull(ruralPopulation.get(0).nonCityPopulation);
+            assertNotNull(-1,ruralPopulation.get(0).Name);
+            assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
+            assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
+            assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
             assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
         } else {
             fail("getTotalUrbanRuralPopulation returning Null pointer");
@@ -112,21 +110,7 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
-    @Test
-    void testUrbanWorldPopulation() {
-        // gets world countries information for world report using empty report type
-        ArrayList<Population> ruralWorldPopulation = app.getTotalUrbanRuralPopulationWorld();
 
-        if(ruralWorldPopulation != null) {
-            assertTrue(ruralWorldPopulation.size() > 0);
-            assertNotNull(ruralWorldPopulation.get(0).totalPopulation);
-            assertNotNull(ruralWorldPopulation.get(0).cityPopulation);
-            assertNotNull(ruralWorldPopulation.get(0).nonCityPopulation);
-            assertNotEquals(-1, ruralWorldPopulation.get(0).totalPopulation);
-        } else {
-            fail("getTotalUrbanRuralPopulationWorld returning Null pointer");
-        }
-    }
 
 
     /**

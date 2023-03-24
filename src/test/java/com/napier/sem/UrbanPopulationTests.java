@@ -4,10 +4,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+
 import java.io.*;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UrbanPopulationTests {
 
@@ -34,8 +35,8 @@ public class UrbanPopulationTests {
      */
     @Test
     void outputUrbanPopulationEmptyTest() {
-        ArrayList<Population> populations = new ArrayList<>();
-        app.outputUrbanPopulationReport(populations, "test");
+        ArrayList<Urbanisation> urbanisations = new ArrayList<>();
+        app.outputUrbanPopulationReport(urbanisations, "test");
     }
 
 

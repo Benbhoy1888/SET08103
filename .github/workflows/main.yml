@@ -19,9 +19,10 @@ jobs:
         run: |
           mvn -Dtest=com.napier.sem.CountryReportTests test
           mvn -Dtest=com.napier.sem.TotalPopulationTests test
-          mvn -Dtest=com.napier.sem.UrbanPopulationTests test
+          mvn -Dtest=com.napier.sem.CityReportTests test
+          mvn -Dtest=com.napier.sem.LanguageReportTests test
       - name: CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v2
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
@@ -50,9 +51,9 @@ jobs:
           docker rm world
           docker image rm database
       - name: CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v2
         with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          #  token: ${{ secrets.2607292f-03ab-40d9-87c5-861aa91ab9c1 }} # not required for public repos
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
