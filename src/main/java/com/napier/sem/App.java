@@ -65,16 +65,27 @@ public class App
 
         ArrayList<City> districtCities = a.getAllCities("d", "Kabol");
 
+        // Generates country reports and outputs to markdown file for:
+        // world
         a.outputCityReport(worldCities, -1, "allWorldCities");
+        // continent
         a.outputCityReport(continentCities, -1, "allCitiesContinent");
+        // region
         a.outputCityReport(regionCities, -1, "allCitiesRegion");
+        // country
         a.outputCityReport(countryCities, -1, "allCitiesCountry");
+        // district
         a.outputCityReport(districtCities, -1, "allCitiesDistrict");
 
+        // top n in world
         a.outputCityReport(worldCities, 5, "top5_worldCities");
+        // top n in continent
         a.outputCityReport(continentCities, 8, "top8_continentCities");
+        // top n in region
         a.outputCityReport(regionCities, 3, "top3_regionCities");
+        // top n in country
         a.outputCityReport(countryCities, 5, "top5_countryCities");
+        // top n in region
         a.outputCityReport(regionCities, 1, "top1_districtCities");
 
         // Capital City reports --- vvv ----------------------------------------------------------------
@@ -94,6 +105,14 @@ public class App
     }
 
     // Cities reports --- vvv ----------------------------------------------------------------------
+
+    /**
+     * Outputs to Markdown
+     * Extension is automatically added
+     * @param cities The list of cities to print
+     * @param displayN number to display, -1 displays all
+     * @param filename markdown output filename
+     */
     public void outputCityReport(ArrayList<City> cities, int displayN, String filename) {
         if(filename.equals("")){
             return;
@@ -141,6 +160,14 @@ public class App
         }
     }
 
+    /**
+     * Gets all cities information from database (defaults to world, pass "c" (continent)
+     * or "r" (region) or "co" (country) or "d" (district) to get relevant report)
+     * 'choice' is only used if continent or region is specified as reportType
+     * @param reportType should be "w", "c" or "r", "" can also be used to get world
+     * @param choice if selecting a continent, region, country, district this should be specified here - ignored if report type is "w"
+     * @return A list of all cities, or null if there is an error
+     */
     public ArrayList<City> getAllCities(String reportType, String choice) {
         try
         {
@@ -215,7 +242,7 @@ public class App
      * @param choice specifies which continent, region, country, distric or city as per reportType
      * @return A TotalPopulation object, or null if there is an error
      */
-    public Language getLanguage(String reportType, String choice) {
+    public Language getLanguage() {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
         // if reportType is empty, should generate world report
         // store reportType name in object
