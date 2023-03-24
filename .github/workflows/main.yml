@@ -49,7 +49,7 @@ jobs:
         with:
         #  token: ${{ secrets.2607292f-03ab-40d9-87c5-861aa91ab9c1 }} # not required for public repos
           directory: ./target/site/jacoco
-          flags: Integration Tests # optional
+          flags: Integration_Tests # optional
           verbose: false # optional (default = false)
 
   build:
