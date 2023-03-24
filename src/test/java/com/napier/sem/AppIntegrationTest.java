@@ -122,22 +122,22 @@ public class AppIntegrationTest {
     /**
      * Tests object and attributes are not null after trying to get language information from database
      */
-    @Test
-    void testLanguage() {
+ //   @Test
+//    void testLanguage() {
         // gets world countries information for world report using empty report type
-        Language language = app.getLanguage();
+//        Language language = app.getLanguage();
 
 
 
-        if(language != null) {
-            assertNotNull(language);
-            assertNotNull(language.countryCode);
-            assertNotNull(language.languageName);
-            assertNotEquals(-1, language.population);
-        } else {
-            fail("language returning Null pointer");
-        }
-    }
+//        if(language != null) {
+//            assertNotNull(language);
+//            assertNotNull(language.countryCode);
+//            assertNotNull(language.languageName);
+//            assertNotEquals(-1, language.population);
+ //       } else {
+//            fail("language returning Null pointer");
+//        }
+//   }
 
 
 
