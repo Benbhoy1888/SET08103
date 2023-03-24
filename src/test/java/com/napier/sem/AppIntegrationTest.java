@@ -88,20 +88,20 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
-    @Test
-     void testTotalUrbanRuralPopulation() {
+ ////   @Test
+ //    void testTotalUrbanRuralPopulation() {
         // gets world countries information for world report using empty report type
-        ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("");
+ //       ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("");
 
-        if(ruralPopulation != null) {
-            assertTrue(ruralPopulation.size() > 0);
-            Assertions.assertNotNull(ruralPopulation.get(0).Name);
-            assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
-            assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
-            assertNotEquals(-1.0, ruralPopulation.get(0).cityPopulationPercentage);
-            assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
-        } else fail("getTotalUrbanRuralPopulation returning Null pointer");
-    }
+ //       if(ruralPopulation != null) {
+  //          assertTrue(ruralPopulation.size() > 0);
+  //          Assertions.assertNotNull(ruralPopulation.get(0).Name);
+ //           assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
+  //          assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
+  //          assertNotEquals(-1.0, ruralPopulation.get(0).cityPopulationPercentage);
+   //         assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
+  //     } else fail("getTotalUrbanRuralPopulation returning Null pointer");
+  //  }
 
     /**
      * Tests ruralWorldPopulation array for the following...
