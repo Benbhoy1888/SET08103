@@ -82,11 +82,11 @@ public class App
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // urban report - Continent
-        ArrayList<Urbanisation> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Continent");
+        ArrayList<Urbanisation> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Con");
         // urban report - Region
-        ArrayList<Urbanisation> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Region");
+        ArrayList<Urbanisation> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Reg");
         // urban report - Continent
-        ArrayList<Urbanisation> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Name");
+        ArrayList<Urbanisation> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Cou");
 
         // produce urban population report by continent
         a.outputUrbanPopulationReport(urbanPopulationContinent, "Urban_Continent");
@@ -94,6 +94,7 @@ public class App
         a.outputUrbanPopulationReport(urbanPopulationRegion, "Urban_Region");
         // produce urban population report by country
         a.outputUrbanPopulationReport(urbanPopulationCountry, "Urban_Country");
+
 
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
@@ -229,6 +230,20 @@ public class App
 
         try
         {
+            // Checks report type valid and correctly sets formatting
+
+           if(reportType.toUpperCase().equals("CON")) {
+               reportType="Continent";
+           }
+           else if(reportType.toUpperCase().equals("REG")) {
+               reportType="Region";
+           }
+           else if(reportType.toUpperCase().equals("COU")) {
+                reportType="Name";
+           }
+           else{
+               reportType="Name";
+           }
 
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -251,8 +266,6 @@ public class App
                             "                                                ) * 100 as urban_percentage\n" +
                             "FROM world.country\n" +
                             "GROUP BY world.country." + reportType;
-
-            System.out.println(strSelect);
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -298,23 +311,10 @@ public class App
             // capture SQL query error(s)
             System.out.println(e.getMessage());
             System.out.println("Failed to get urban population details\n");
+            System.out.println(reportType);
             return null;
         }
     }
-
-    /**
-     * @return null if no urban report type provided
-     */
-    private ArrayList<Urbanisation> Urbanisation() {
-        return null;
-    }
-
-    /**
-     * This method creates SQL query to return world total urban/rural population
-     * @return global urban population return from sql query
-     */
-
-
 
     /**
      * This method reads from array and stores data into markdown report file

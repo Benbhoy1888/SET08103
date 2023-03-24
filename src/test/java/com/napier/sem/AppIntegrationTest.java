@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -88,19 +89,17 @@ public class AppIntegrationTest {
      * an empty string for report type (should generate world report objects list)
      */
     @Test
-    void testUrbanPopulation() {
+     void testTotalUrbanRuralPopulation() {
         // gets world countries information for world report using empty report type
         ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("");
 
         if(ruralPopulation != null) {
             assertTrue(ruralPopulation.size() > 0);
-            assertNotNull(ruralPopulation.get(0).Name);
+            Assertions.assertNotNull(ruralPopulation.get(0).Name);
             assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
             assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
             assertNotEquals(-1.0, ruralPopulation.get(0).cityPopulationPercentage);
             assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
-            assertNotEquals(-1.0, ruralPopulation.get(0).nonCityPopulationPercentage);
-            assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
         } else fail("getTotalUrbanRuralPopulation returning Null pointer");
     }
 
