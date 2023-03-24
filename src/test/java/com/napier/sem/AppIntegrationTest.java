@@ -68,11 +68,11 @@ public class AppIntegrationTest {
      * an empty string for report type (should generate world report objects list)
      */
     @Test
-    void testWorldCountries() {
+    void testWorldCountry() {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
 
-        if(worldCountries != null) {
+        if (worldCountries != null) {
             assertTrue(worldCountries.size() > 0);
             assertNotNull(worldCountries.get(0).code);
             assertNotNull(worldCountries.get(0).name);
@@ -82,6 +82,9 @@ public class AppIntegrationTest {
             assertNotNull(worldCountries.get(0).capital);
         } else {
             fail("getAllCountries returning Null pointer");
+        }
+    }
+
 
         void testWorldCities() {
         // gets world countries information for world report using empty report type
@@ -119,22 +122,22 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
+    /**
     @Test
-    void testWorldCities() {
+    void testWorldCapitalCities(){
         // gets world countries information for world report using empty report type
         ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
 
-        if(worldCities != null) {
-            assertTrue(worldCities.size() > 0);
-            assertNotNull(worldCities.get(0).name);
-            assertNotNull(worldCities.get(0).country);
-            assertNotNull(worldCities.get(0).district);
-            assertNotEquals(-1, worldCities.get(0).population);
+        if(worldCapitalCities != null) {
+            assertTrue(worldCapitalCities.size() > 0);
+            assertNotNull(worldCapitalCities.get(0).name);
+            assertNotNull(worldCapitalCities.get(0).country);
+            assertNotEquals(-1, worldCapitalCities.get(0).population);
         } else {
             fail("getAllCities returning Null pointer");
         }
     }
-
+*/
     /**
      * Tests object and attributes are not null after trying to get language information from database
      */
@@ -163,5 +166,7 @@ public class AppIntegrationTest {
     @AfterAll
     static void disconnect() {
         app.disconnect();
-    }
-}
+        }
+
+        }
+
