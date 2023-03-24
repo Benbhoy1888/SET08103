@@ -21,13 +21,7 @@ jobs:
           mvn -Dtest=com.napier.sem.TotalPopulationTests test
           mvn -Dtest=com.napier.sem.CityReportTests test
           mvn -Dtest=com.napier.sem.LanguageReportTests test
-      - name: CodeCov
-        uses: codecov/codecov-action@v2
-        with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          directory: ./target/site/jacoco
-          flags: Unit Tests # optional
-          verbose: true # optional (default = false)
+  
 
   IntegrationTests:
     name: Integration Tests
@@ -56,7 +50,7 @@ jobs:
         #  token: ${{ secrets.2607292f-03ab-40d9-87c5-861aa91ab9c1 }} # not required for public repos
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
-          verbose: true # optional (default = false)
+          verbose: false # optional (default = false)
 
   build:
     name: Build and Start Using docker-compose

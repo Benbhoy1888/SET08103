@@ -3,6 +3,7 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * A Class to run project world reports application
