@@ -94,14 +94,14 @@ public class AppIntegrationTest {
 
         if(ruralPopulation != null) {
             assertTrue(ruralPopulation.size() > 0);
-            assertNotNull(-1,ruralPopulation.get(0).Name);
+            assertNotNull(ruralPopulation.get(0).Name);
             assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
             assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
+            assertNotEquals(-1.0, ruralPopulation.get(0).cityPopulationPercentage);
             assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
+            assertNotEquals(-1.0, ruralPopulation.get(0).nonCityPopulationPercentage);
             assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
-        } else {
-            fail("getTotalUrbanRuralPopulation returning Null pointer");
-        }
+        } else fail("getTotalUrbanRuralPopulation returning Null pointer");
     }
 
     /**
