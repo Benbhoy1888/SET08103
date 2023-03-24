@@ -27,4 +27,3 @@
 | TKL | Tokelau | Oceania | Polynesia | 2000 | Fakaofo |
 | CCK | Cocos (Keeling) Islands | Oceania | Australia and New Zealand | 600 | West Island |
 | PCN | Pitcairn | Oceania | Polynesia | 50 | Adamstown |
-| UMI | United States Minor Outlying Islands | Oceania | Micronesia/Caribbean | 0 | null |

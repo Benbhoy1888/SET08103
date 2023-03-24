@@ -232,10 +232,3 @@
 | VAT | Holy See (Vatican City State) | Europe | Southern Europe | 1000 | Città del Vaticano |
 | CCK | Cocos (Keeling) Islands | Oceania | Australia and New Zealand | 600 | West Island |
 | PCN | Pitcairn | Oceania | Polynesia | 50 | Adamstown |
-| ATA | Antarctica | Antarctica | Antarctica | 0 | null |
-| ATF | French Southern territories | Antarctica | Antarctica | 0 | null |
-| BVT | Bouvet Island | Antarctica | Antarctica | 0 | null |
-| HMD | Heard Island and McDonald Islands | Antarctica | Antarctica | 0 | null |
-| IOT | British Indian Ocean Territory | Africa | Eastern Africa | 0 | null |
-| SGS | South Georgia and the South Sandwich Islands | Antarctica | Antarctica | 0 | null |
-| UMI | United States Minor Outlying Islands | Oceania | Micronesia/Caribbean | 0 | null |
