@@ -77,8 +77,8 @@ public class CityReportTests {
             City city = new City();
 
             city.name = "Edinburgh";
-            city.country = "GBR";
-            city.district = "Scotland";
+            city.country = "United Kingdom";
+            city.district = "Western Europe";
             city.population = 450180;
             cities.add(city);
 
@@ -94,8 +94,8 @@ public class CityReportTests {
             City city = new City();
 
             city.name = "Edinburgh";
-            city.country = "GBR";
-            city.district = "Scotland";
+            city.country = "United Kingdom";
+            city.district = "Western Europe";
             city.population = 450180;
             cities.add(city);
 
@@ -111,8 +111,8 @@ public class CityReportTests {
             City city = new City();
 
             city.name = "Edinburgh";
-            city.country = "GBR";
-            city.district = "Scotland";
+            city.country = "United Kingdom";
+            city.district = "Western Europe";
             city.population = 450180;
             cities.add(city);
 

@@ -47,6 +47,7 @@ public class AppIntegrationTest {
     // test sql queries are correct
 
     /**
+<<<<<<< HEAD
      * Tests database connection
      */
     @Test
@@ -61,11 +62,14 @@ public class AppIntegrationTest {
     }
 
     /**
+=======
+>>>>>>> develop
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
     @Test
+<<<<<<< HEAD
     void testWorldCountries() {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
@@ -80,10 +84,25 @@ public class AppIntegrationTest {
             assertNotNull(worldCountries.get(0).capital);
         } else {
             fail("getAllCountries returning Null pointer");
+=======
+    void testWorldCities() {
+        // gets world countries information for world report using empty report type
+        ArrayList<City> worldCities = app.getAllCities("", "");
+
+        if(worldCities != null) {
+            assertTrue(worldCities.size() > 0);
+            assertNotNull(worldCities.get(0).name);
+            assertNotNull(worldCities.get(0).country);
+            assertNotNull(worldCities.get(0).district);
+            assertNotEquals(-1, worldCities.get(0).population);
+        } else {
+            fail("getAllCities returning Null pointer");
+>>>>>>> develop
         }
     }
 
     /**
+<<<<<<< HEAD
      * Tests object and attributes are not null after trying to get total population information from database when using
      * an empty string for report type (should generate world report object)
      */
@@ -112,6 +131,29 @@ public class AppIntegrationTest {
             fail("getAllCapitalCities returning Null pointer");
         }
     }*/
+=======
+     * Tests object and attributes are not null after trying to get language information from database
+     */
+ //   @Test
+//    void testLanguage() {
+        // gets world countries information for world report using empty report type
+//        Language language = app.getLanguage();
+
+
+
+//        if(language != null) {
+//            assertNotNull(language);
+//            assertNotNull(language.countryCode);
+//            assertNotNull(language.languageName);
+//            assertNotEquals(-1, language.population);
+ //       } else {
+//            fail("language returning Null pointer");
+//        }
+//   }
+
+
+
+>>>>>>> develop
     /**
      * Disconnects from database
      */
