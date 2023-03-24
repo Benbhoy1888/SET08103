@@ -242,7 +242,8 @@ public class App
                 reportType="Name";
            }
            else{
-               reportType="Name";
+               System.out.println("reportType not recognised");
+               return null;
            }
 
             // Create an SQL statement
