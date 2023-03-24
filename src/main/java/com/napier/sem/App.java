@@ -470,6 +470,8 @@ public class App
         try
         {
             // Create an SQL statement
+            con = getConnection();
+
             Statement stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting

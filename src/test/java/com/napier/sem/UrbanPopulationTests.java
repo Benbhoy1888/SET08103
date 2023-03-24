@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UrbanPopulationTests {
 
-    static App app;
+        static App app;
 
-    /**
-     * Creates a new app
-     */
+        /**
+         * Creates a new app
+         */
     @BeforeAll
     static void init(){
         app = new App();

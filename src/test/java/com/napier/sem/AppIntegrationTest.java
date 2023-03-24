@@ -37,16 +37,6 @@ public class AppIntegrationTest {
         assertEquals(5, 5);
     }
 
-
-
-    // Need test for connection to database without checking specific return values or inserting values to database
-
-    // Need test to check returned values are as expected
-
-    // Need test to check reports are outputted correctly from docker container
-
-    // test sql queries are correct
-
     /**
      * Tests database connection
      */
