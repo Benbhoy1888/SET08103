@@ -101,13 +101,13 @@ public class AppIntegrationTest {
     @Test
     void testWorldCapitalCities() {
         // gets world countries information for world report using empty report type
-        ArrayList<Capital> worldcapitalCities = app.getAllCapitalCites("", "");
+        ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
 
-        if(worldcapitalCities != null) {
-            assertTrue(worldcapitalCities.size() > 0);
-            assertNotNull(worldcapitalCities.get(0).name);
-            assertNotNull(worldcapitalCities.get(0).country);
-            assertNotEquals(-1, worldcapitalCities.get(0).population);
+        if(worldCapitalCities != null) {
+            assertTrue(worldCapitalCities.size() > 0);
+            assertNotNull(worldCapitalCities.get(0).name);
+            assertNotNull(worldCapitalCities.get(0).country);
+            assertNotEquals(-1, worldCapitalCities.get(0).population);
         } else {
             fail("getAllCapitalCities returning Null pointer");
         }
