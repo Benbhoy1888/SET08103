@@ -1,13 +1,23 @@
 package com.napier.sem;
 
+/**
+ * Represents a language
+ */
 public class Language {
 
-    // used for Languages class. Does not inherit from population class
+    /**
+     * Country code
+     */
     public String countryCode;
+
+    /**
+     * Language name
+     */
     public String languageName;
 
-    public double population;
-
-
+    /**
+     * Language population
+     */
+    public double population = -1;
 
 }

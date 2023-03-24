@@ -98,6 +98,11 @@ public class AppIntegrationTest {
 //        assertNotEquals(-1.0, totalPopulation.population);
 //    }
 
+    /**
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
     @Test
     void testWorldCities() {
         // gets world countries information for world report using empty report type
@@ -113,6 +118,28 @@ public class AppIntegrationTest {
             fail("getAllCities returning Null pointer");
         }
     }
+
+    /**
+     * Tests object and attributes are not null after trying to get language information from database
+     */
+    @Test
+    void testLanguage() {
+        // gets world countries information for world report using empty report type
+        Language language = app.getLanguage();
+
+
+
+        if(language != null) {
+            assertNotNull(language);
+            assertNotNull(language.countryCode);
+            assertNotNull(language.languageName);
+            assertNotEquals(-1, language.population);
+        } else {
+            fail("language returning Null pointer");
+        }
+    }
+
+
 
     /**
      * Disconnects from database

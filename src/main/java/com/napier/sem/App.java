@@ -85,7 +85,7 @@ public class App
         a.outputCityReport(regionCities, 3, "top3_regionCities");
         // top n in country
         a.outputCityReport(countryCities, 5, "top5_countryCities");
-        // top n in region
+        // top n in district
         a.outputCityReport(regionCities, 1, "top1_districtCities");
 
         // Capital City reports --- vvv ----------------------------------------------------------------
@@ -118,14 +118,14 @@ public class App
             return;
         }
 
-        // Check countries is not null
+        // Check cities is not null
         if (cities == null || cities.size()<1) {
             System.out.println("No cities");
             return;
         }
 
-        // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
-        // or displayN is greater than the number of countries
+        // sets displayN to total number of cities in ArrayList if either disiplayN is set to -1 (display all)
+        // or displayN is greater than the number of cities
         if(displayN>cities.size() || displayN<0){
             displayN = cities.size();
         }
@@ -135,7 +135,7 @@ public class App
         sb.append("|Name | Country | District| Population| \r\n");
         sb.append("| :--- | :--- | ---: | ---: |\r\n");
 
-        // Loop over all countries in the list
+        // Loop over all cities in the list
         for (int i=0; i<displayN;i++) {
             City city;
             city = cities.get(i);
@@ -165,7 +165,7 @@ public class App
      * or "r" (region) or "co" (country) or "d" (district) to get relevant report)
      * 'choice' is only used if continent or region is specified as reportType
      * @param reportType should be "w", "c" or "r", "" can also be used to get world
-     * @param choice if selecting a continent, region, country, district this should be specified here - ignored if report type is "w"
+     * @param choice if selecting a continent, region, country or district this should be specified here - ignored if report type is "w"
      * @return A list of all cities, or null if there is an error
      */
     public ArrayList<City> getAllCities(String reportType, String choice) {
@@ -238,32 +238,24 @@ public class App
     // Language reports --- vvv --------------------------------------------------------------------
 
     /**
-     * Gets total population information from database
-     * @param choice specifies which continent, region, country, distric or city as per reportType
-     * @return A TotalPopulation object, or null if there is an error
+     * Gets language information from database
+     * @return A Language object, or null if there is an error
      */
     public Language getLanguage() {
-        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
-        // if reportType is empty, should generate world report
-        // store reportType name in object
-        // get population in thousands to 2 decimal places
         return null;
     }
 
     /**
      * Outputs to Markdown
-     * Filename and extension is automatically generated based on reportType
      */
     public void outputLanguageReport(Language language) {
-        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
-        // population column in thousands, reflect in header
     }
 
     // Total Population --- vvv --------------------------------------------------------------------
     /**
      * Gets total population information from database
      * @param reportType
-     * @param choice specifies which continent, region, country, distric or city as per reportType
+     * @param choice specifies which continent, region, country, district or city as per reportType
      * @return A TotalPopulation object, or null if there is an error
      */
     public TotalPopulation getTotalPopulation(String reportType, String choice) {

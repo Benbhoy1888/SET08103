@@ -57,13 +57,6 @@ public class LanguageReportTests {
         app.outputLanguageReport(language);
     }
 
-    /**
-     * Tests if reportType is not recognised, returns null
-     */
-
-    /**
-     * Tests when choice is empty for report types other than world, return is null
-     */
 
     /**
      * Clears up after tests
