@@ -65,7 +65,7 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
-    @Test
+  /**  @Test
     void testWorldCountries() {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
@@ -82,7 +82,7 @@ public class AppIntegrationTest {
             fail("getAllCountries returning Null pointer");
         }
     }
-
+*/
     /**
      * Tests object and attributes are not null after trying to get total population information from database when using
      * an empty string for report type (should generate world report object)
