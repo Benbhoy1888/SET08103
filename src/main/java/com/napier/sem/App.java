@@ -292,7 +292,7 @@ public class App
             String strSelect =
                     "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
                             + "FROM country\n" +
-                            "JOIN city on country.code  = city.ID;/n";
+                            "JOIN country on city.ID  = country.ID;/n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";

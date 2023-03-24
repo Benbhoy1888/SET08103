@@ -25,7 +25,7 @@ public class CapitalCityReportTests {
      * Tests if ArrayList passed is null
      */
     @Test
-    void outputCapitalCitiesReportsTestNull(int displayN, String filename) {
+    void outputCapitalCitiesReportsTestNull() {
         app.outputCapitalCitiesReport(null, -1, "test");
     }
 
@@ -33,7 +33,7 @@ public class CapitalCityReportTests {
      *Tests if ArrayList passed is empty
      */
     @Test
-    void outputCapitalCitiesReportsEmptyListTest(int displayN, String filename) {
+    void outputCapitalCitiesReportsEmptyListTest() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         app.outputCapitalCitiesReport(capitalCities, -1, "test");
 
@@ -43,7 +43,7 @@ public class CapitalCityReportTests {
      * Tests for if an element in ArrayList passed is null
      */
     @Test
-    void outputCapitalCitiesReportsListContainsNull(int displayN, String filename) {
+    void outputCapitalCitiesReportsListContainsNull() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         capitalCities.add(null);
         app.outputCapitalCitiesReport(capitalCities, -1, "test");
@@ -54,7 +54,7 @@ public class CapitalCityReportTests {
      * Tests if a field is null
      */
     @Test
-    void outuputCapitalCitiesReportsNullFieldTest(int displayN, String filename) {
+    void outputCapitalCitiesReportsNullFieldTest() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = null;
@@ -68,7 +68,7 @@ public class CapitalCityReportTests {
      * Test for when ArrayList passed has elements as expected
      */
     @Test
-    void outputCapitalCitesReports(int displayN, String filename) {
+    void outputCapitalCitesReports() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
@@ -84,7 +84,7 @@ public class CapitalCityReportTests {
      * Tests for if displayN provided is greater than elements in list provided
      */
     @Test
-    void outputCapitalCitiesReportsN_MoreThanInListTest(int displayN, String filename) {
+    void outputCapitalCitiesReportsN_MoreThanInListTest() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
@@ -98,7 +98,7 @@ public class CapitalCityReportTests {
      * Tests for if empty string provided for filename creates a file
      */
     @Test
-    void outputCapitalCitiesReportsEmptyFileNameTest(int displayN, String filename) {
+    void outputCapitalCitiesReportsEmptyFileNameTest() {
         ArrayList<Capital> capitalCities = new ArrayList<>();
         Capital capital = new Capital();
         capital.name = "Canberra";
