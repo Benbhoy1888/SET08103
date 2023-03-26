@@ -221,7 +221,7 @@ public class App
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, country.Name AS Country, city.District, city.Population\n"
+                    "SELECT world.city.Name, world.country.Name AS Country, city.District, city.Population\n"
                             + "FROM city\n"
                             + "LEFT JOIN country on city.CountryCode = country.Code\n";
 
@@ -322,9 +322,9 @@ public class App
 
             /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
+                    "SELECT country.Name AS country, world.city.name AS capital, world.city.Population as population\n"
                             + "FROM country\n" +
-                            "JOIN country on city.ID  = country.ID;/n";
+                            "JOIN country on world.city.ID  = world.city.ID;/n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
