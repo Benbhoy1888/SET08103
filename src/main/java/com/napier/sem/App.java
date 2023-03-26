@@ -108,6 +108,19 @@ public class App
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
+        ArrayList<Urbanisation> urbanPopulationContinent = a.getTotalUrbanRuralPopulation("Con");
+        // urban report - Region
+        ArrayList<Urbanisation> urbanPopulationRegion = a.getTotalUrbanRuralPopulation("Reg");
+        // urban report - Continent
+        ArrayList<Urbanisation> urbanPopulationCountry = a.getTotalUrbanRuralPopulation("Cou");
+
+        // produce urban population report by continent
+        a.outputUrbanPopulationReport(urbanPopulationContinent, "Urban_Continent");
+        // produce urban population report by region
+        a.outputUrbanPopulationReport(urbanPopulationRegion, "Urban_Region");
+        // produce urban population report by country
+        a.outputUrbanPopulationReport(urbanPopulationCountry, "Urban_Country");
+
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
 
@@ -367,6 +380,158 @@ public class App
     // Language reports methods--- vvv --------------------------------------------------------------------
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
+
+    /**
+     * This method creates SQL query to return urban/rural population by either continent, region, or country
+     * @param reportType "Con" (urban continent report), "Reg" (urban region report), "Cou" (urban country report)
+     * @return population array containing return of SQL statement
+     */
+    public ArrayList<Urbanisation> getTotalUrbanRuralPopulation(String reportType) {
+
+        try
+        {
+            // Checks report type valid and correctly sets formatting
+
+            if(reportType.toUpperCase().equals("CON")) {
+                reportType="Continent";
+            }
+            else if(reportType.toUpperCase().equals("REG")) {
+                reportType="Region";
+            }
+            else if(reportType.toUpperCase().equals("COU")) {
+                reportType="Name";
+            }
+            else{
+                System.out.println("reportType not recognised");
+                return null;
+            }
+
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT world.country." + reportType + " AS " + reportType + ", SUM(world.country.Population) as total_population,\n" +
+                            "       (SELECT SUM(world.city.Population)\n" +
+                            "        FROM world.city\n" +
+                            "        JOIN world.country c on c.Code = world.city.CountryCode\n" +
+                            "        WHERE c." + reportType + " = world.country." + reportType + ") as urban_population,\n" +
+                            "    SUM(world.country.Population) - (SELECT SUM(world.city.Population)\n" +
+                            "                                       FROM world.city\n" +
+                            "                                       JOIN world.country c on c.Code = world.city.CountryCode\n" +
+                            "                                       WHERE c." + reportType + " = world.country. " + reportType + ") as rural_population,\n" +
+                            "\n" +
+                            "                                       (SELECT SUM(world.city.Population)\n" +
+                            "                                            FROM world.city\n" +
+                            "                                                     JOIN world.country c on c.Code = world.city.CountryCode\n" +
+                            "                                            WHERE c. " + reportType + " = world.country. " + reportType + ") / (SUM(world.country.Population )\n" +
+                            "                                                ) * 100 as urban_percentage\n" +
+                            "FROM world.country\n" +
+                            "GROUP BY world.country." + reportType;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract urban population information from result set
+            ArrayList<Urbanisation> urban = new ArrayList<Urbanisation>();
+            // Loop though query return and store values in population array
+            while (rset.next())
+            {
+                Urbanisation urb = new Urbanisation();
+                urb.Name = rset.getString(1);
+                urb.totalPopulation = rset.getLong(2);
+                urb.cityPopulation = rset.getLong(3);
+
+                // Only display city population by percentage if line does not return 0 for total population
+                if(urb.totalPopulation>0) {
+                    long totalPopulation  = rset.getLong(2);
+                    long cityPopulation = rset.getLong(3);
+                    double cityPercentage = (double)cityPopulation / (double)totalPopulation * 100;
+                    urb.cityPopulationPercentage = (double)Math.round(cityPercentage);
+                }
+                else {
+                    // display non-city population as 0.0 if total population = 0
+                    urb.cityPopulationPercentage  = -1.0;
+                }
+                urb.nonCityPopulation = rset.getLong(4);
+                // Only display non-city population by percentage if line does not return 0 for total population
+                if(urb.totalPopulation>0) {
+                    long totalPopulation  = rset.getLong(2);
+                    long nonCityPopulation = rset.getLong(4);
+                    double nonCityPercentage = (double)nonCityPopulation / (double)totalPopulation * 100;
+                    urb.nonCityPopulationPercentage = (double)Math.round(nonCityPercentage);
+                }
+                else{
+                    // display non-city population as 0.0 if total population = 0
+                    urb.nonCityPopulationPercentage = -1.0;
+                }
+                urban.add(urb);
+            }
+            return urban;
+        }
+        catch (Exception e)
+        {
+            // capture SQL query error(s)
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get urban population details\n");
+            System.out.println(reportType);
+            return null;
+        }
+    }
+
+    /**
+     * This method reads from array and stores data into markdown report file
+     * @param urban array
+     * @param filename name of markdown report file
+     */
+    public void outputUrbanPopulationReport(ArrayList<Urbanisation> urban, String filename) {
+
+        // return from method if no report filename provided
+        if(filename.equals("")){
+            return;
+        }
+
+        // Check urban populations is not null
+        if (urban == null || urban.size()<1) {
+            System.out.println("No urban population");
+            return;
+        }
+
+        // build report header
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | \r\n");
+        sb.append("| :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |\r\n");
+
+        // Loop over all rows in the list
+        int rowCount = urban.size();
+        for (int i= 0; i<rowCount; i++){
+            Urbanisation urb;
+            urb = urban.get(i);
+            if(urb == null) continue;
+            sb.append(("| " + urb.Name + " | " +
+                    urb.totalPopulation + " | " +
+                    urb.cityPopulation + " | " +
+                    urb.cityPopulationPercentage + " | " +
+                    urb.nonCityPopulation + " | " +
+                    urb.nonCityPopulationPercentage  + " |\r\n"));
+        }
+
+        try {
+            // create directory and file for the report
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/urban_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/urban_reports/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     // Total Population methods--- vvv --------------------------------------------------------------------
