@@ -234,9 +234,9 @@ public class App
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT world.city.Name, world.country.Name AS Country, city.District, city.Population\n"
-                            + "FROM city\n"
-                            + "LEFT JOIN country on city.CountryCode = country.Code\n";
+                    "SELECT world.city.Name, world.country.Name AS Country, world.city.District, world.city.Population\n"
+                            + "FROM world.city\n"
+                            + "LEFT JOIN world.country on world.city.CountryCode = country.Code\n";
 
 
 
@@ -335,9 +335,9 @@ public class App
 
             /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT country.Name AS country, world.city.name AS capital, world.city.Population as population\n"
-                            + "FROM country\n" +
-                            "JOIN country on world.city.ID  = world.city.ID;/n";
+                    "SELECT world.country.Name AS country, world.city.name AS capital, world.city.Population as population\n"
+                            + "FROM world.country\n" +
+                            "JOIN world.country on world.city.ID  = world.city.ID;/n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
@@ -664,9 +664,9 @@ public class App
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name as Capital\n"
-                           + "FROM country\n"
-                           + "JOIN city on country.Capital = city.ID\n";
+                    "SELECT world.country.Code, world.country.Name, world.country.Continent, world.country.Region, world.country.Population, world.city.Name as Capital\n"
+                           + "FROM world.country\n"
+                           + "JOIN world.city on country.Capital = city.ID\n";
             // Sets where clause for continent or region
             if(!(reportType.equals("World"))){
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
