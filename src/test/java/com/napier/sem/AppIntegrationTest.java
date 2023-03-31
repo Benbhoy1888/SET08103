@@ -61,8 +61,7 @@ public class AppIntegrationTest {
     }
 
     /**
-=======
->>>>>>> develop
+     * develop
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
@@ -85,8 +84,11 @@ public class AppIntegrationTest {
         }
     }
 
-
-        void testWorldCities() {
+    /**
+     * ##################################################################
+     */
+    @Test
+    void testWorldCities() {
         // gets world countries information for world report using empty report type
         ArrayList<City> worldCities = app.getAllCities("", "");
 
