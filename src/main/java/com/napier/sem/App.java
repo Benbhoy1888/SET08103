@@ -449,7 +449,7 @@ public class App
                 }
                 else {
                     // display non-city population as 0.0 if total population = 0
-                    urb.cityPopulationPercentage  = -1.0;
+                    urb.cityPopulationPercentage  = 0.0;
                 }
                 urb.nonCityPopulation = rset.getLong(4);
                 // Only display non-city population by percentage if line does not return 0 for total population
@@ -461,7 +461,7 @@ public class App
                 }
                 else{
                     // display non-city population as 0.0 if total population = 0
-                    urb.nonCityPopulationPercentage = -1.0;
+                    urb.nonCityPopulationPercentage = 0.0;
                 }
                 urban.add(urb);
             }
