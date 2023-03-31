@@ -79,3 +79,6 @@ jobs:
           automatic_release_tag: "latest"
           files: |
             ./target/*.jar
+          permissions:
+            id-token: write
+            contents: read
