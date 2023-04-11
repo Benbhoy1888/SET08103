@@ -83,3 +83,4 @@ jobs:
             id-token: write
             contents: read
             issues: write
+            pull-requests: write
