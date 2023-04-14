@@ -68,11 +68,11 @@ public class AppIntegrationTest {
      * an empty string for report type (should generate world report objects list)
      */
     @Test
-    void testWorldCountry() {
+    void testWorldCountries() {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
 
-        if (worldCountries != null) {
+        if(worldCountries != null) {
             assertTrue(worldCountries.size() > 0);
             assertNotNull(worldCountries.get(0).code);
             assertNotNull(worldCountries.get(0).name);
@@ -82,9 +82,6 @@ public class AppIntegrationTest {
             assertNotNull(worldCountries.get(0).capital);
         } else {
             fail("getAllCountries returning Null pointer");
-        }
-    }
-
 
         void testWorldCities() {
         // gets world countries information for world report using empty report type
@@ -122,9 +119,8 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
-    /**
     @Test
-    void testWorldCapitalCities(){
+    void testWorldCapitalCities() {
         // gets world countries information for world report using empty report type
         ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
 
@@ -134,11 +130,11 @@ public class AppIntegrationTest {
             assertNotNull(worldCapitalCities.get(0).country);
             assertNotEquals(-1, worldCapitalCities.get(0).population);
         } else {
-            fail("getAllCities returning Null pointer");
+            fail("getAllCapitalCities returning Null pointer");
         }
     }
-*/
-    /**
+
+    /**z
      * Tests object and attributes are not null after trying to get language information from database
      */
  //   @Test
@@ -166,7 +162,5 @@ public class AppIntegrationTest {
     @AfterAll
     static void disconnect() {
         app.disconnect();
-        }
-
-        }
-
+    }
+}
