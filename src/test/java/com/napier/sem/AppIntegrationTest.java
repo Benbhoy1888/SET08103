@@ -61,8 +61,7 @@ public class AppIntegrationTest {
     }
 
     /**
-=======
->>>>>>> develop
+
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
@@ -119,18 +118,33 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
+            // gets world capital cities information for world report using empty report type
     @Test
-    void testWorldCapitalCities() {
-        // gets world countries information for world report using empty report type
-        ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
+   void testWorldCapitalCities() {
+                ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
 
-        if(worldCapitalCities != null) {
-            assertTrue(worldCapitalCities.size() > 0);
-            assertNotNull(worldCapitalCities.get(0).name);
-            assertNotNull(worldCapitalCities.get(0).country);
-            assertNotEquals(-1, worldCapitalCities.get(0).population);
-        } else {
-            fail("getAllCapitalCities returning Null pointer");
+                if (worldCapitalCities != null) {
+                    assertTrue(worldCapitalCities.size() > 0);
+                    assertNotNull(worldCapitalCities.get(0).name);
+                    assertNotNull(worldCapitalCities.get(0).country);
+                    assertNotEquals(-1, worldCapitalCities.get(0).population);
+                } else {
+                    fail("getAllCapitalCities returning Null pointer");
+
+                    void TestWorldCapitalCities( ) {
+                        ArrayList<Capital> WorldCapitalCities = app.getAllCapitalCites("", "");
+
+                        if (worldCapitalCities != null) {
+                            assertTrue(worldCapitalCities.size() > 0);
+                            assertNotNull(worldCapitalCities.get(0).name);
+                            assertNotNull(worldCapitalCities.get(0).country);
+                            assertNotEquals(-1, worldCapitalCities.get(0).population);
+                        } else {
+                            fail("getAllCapitalCities returning Null pointer");
+                        }
+                    }
+                }
+            }
         }
     }
 
