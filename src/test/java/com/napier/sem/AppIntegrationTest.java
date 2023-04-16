@@ -69,16 +69,16 @@ public class AppIntegrationTest {
     @Test
     void testWorldCountries() {
         // gets world countries information for world report using empty report type
-        ArrayList<Country> worldCountries = app.getAllCountries("", "");
+        ArrayList<Country> WorldCapitalCities = app.getAllCountries("", "");
 
-        if(worldCountries != null) {
-            assertTrue(worldCountries.size() > 0);
-            assertNotNull(worldCountries.get(0).code);
-            assertNotNull(worldCountries.get(0).name);
-            assertNotNull(worldCountries.get(0).continent);
-            assertNotNull(worldCountries.get(0).region);
-            assertNotEquals(-1, worldCountries.get(0).population);
-            assertNotNull(worldCountries.get(0).capital);
+        if(WorldCapitalCities != null) {
+            assertTrue(WorldCapitalCities.size() > 0);
+            assertNotNull(WorldCapitalCities.get(0).code);
+            assertNotNull(WorldCapitalCities.get(0).name);
+            assertNotNull(WorldCapitalCities.get(0).continent);
+            assertNotNull(WorldCapitalCities.get(0).region);
+            assertNotEquals(-1, WorldCapitalCities.get(0).population);
+            assertNotNull(WorldCapitalCities.get(0).capital);
         } else {
             fail("getAllCountries returning Null pointer");
 
@@ -96,7 +96,7 @@ public class AppIntegrationTest {
             fail("getAllCities returning Null pointer");
 
         }
-    }
+
 
     /**
      * Tests object and attributes are not null after trying to get total population information from database when using
@@ -119,34 +119,25 @@ public class AppIntegrationTest {
      * an empty string for report type (should generate world report objects list)
      */
             // gets world capital cities information for world report using empty report type
-    @Test
-   void testWorldCapitalCities() {
+                void TestWorldCapitalCities() {
                 ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
 
-                if (worldCapitalCities != null) {
-                    assertTrue(worldCapitalCities.size() > 0);
-                    assertNotNull(worldCapitalCities.get(0).name);
-                    assertNotNull(worldCapitalCities.get(0).country);
-                    assertNotEquals(-1, worldCapitalCities.get(0).population);
+
+                if(WorldCapitalCities != null) {
+                    assertTrue(WorldCapitalCities.size() > 0);
+                    assertNotNull(WorldCapitalCities.get(0).name);
+                    assertNotNull(WorldCapitalCities.get(0).country);
+                    assertNotEquals(-1, WorldCapitalCities.get(0).population);
+
                 } else {
-                    fail("getAllCapitalCities returning Null pointer");
+                    fail("getAllCountries returning Null pointer");
 
-                    void TestWorldCapitalCities( ) {
-                        ArrayList<Capital> WorldCapitalCities = app.getAllCapitalCites("", "");
-
-                        if (worldCapitalCities != null) {
-                            assertTrue(worldCapitalCities.size() > 0);
-                            assertNotNull(worldCapitalCities.get(0).name);
-                            assertNotNull(worldCapitalCities.get(0).country);
-                            assertNotEquals(-1, worldCapitalCities.get(0).population);
-                        } else {
-                            fail("getAllCapitalCities returning Null pointer");
-                        }
-                    }
                 }
             }
         }
     }
+}
+
 
     /**z
      * Tests object and attributes are not null after trying to get language information from database
