@@ -22,4 +22,5 @@ To up-date version and create a release-
 * Merge release to master
 * Merge release to develop
 * Checkout feature branch  
-* 11/04/2023 push to check if deployment to GitHub is working 
+* 11/04/2023 push to check if deployment to Gitub
+* 17/04/2023 push to check if deployment ot GitHub is working
