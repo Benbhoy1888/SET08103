@@ -83,7 +83,7 @@ jobs:
           docker-compose up --abort-on-container-exit
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          secret: "${{ secrets.SECRETSTOKEN }}"
+          repo_token: "${{ secrets.SECRET_TOKEN }}"
           prerelease: false
           automatic_release_tag: "latest"
           files: |
