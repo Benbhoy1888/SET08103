@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -98,6 +99,23 @@ public class AppIntegrationTest {
 
         }
     }
+
+
+    @Test
+    void testTotalUrbanRuralPopulation() {
+        // gets world countries information for world report using empty report type
+        ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("con");
+
+        if(ruralPopulation != null) {
+            assertTrue(ruralPopulation.size() > 0);
+            Assertions.assertNotNull(ruralPopulation.get(0).Name);
+            assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
+            assertNotEquals(-1, ruralPopulation.get(0).cityPopulation);
+            assertNotEquals(-1.0, ruralPopulation.get(0).cityPopulationPercentage);
+            assertNotEquals(-1, ruralPopulation.get(0).nonCityPopulation);
+        } else fail("getTotalUrbanRuralPopulation returning Null pointer");
+    }
+
 
     /**
      * Tests object and attributes are not null after trying to get total population information from database when using
