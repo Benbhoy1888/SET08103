@@ -58,7 +58,7 @@ jobs:
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
-          flags: Integration Tests # optional
+          flags: Integration_Tests # optional
           verbose: false # optional (default = false)
 
 
