@@ -84,3 +84,8 @@ jobs:
             contents: write
             issues: write
             pull-requests: write
+
+            name: Platform Tests & Build
+            on: [ push ]
+            permissions:
+              contents: read
