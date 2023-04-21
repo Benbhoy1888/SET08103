@@ -3,7 +3,6 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 /**
  * A Class to run project world reports application
@@ -67,7 +66,7 @@ public class App
 
         ArrayList<City> districtCities = a.getAllCities("d", "Kabol");
 
-        // Generates country reports and outputs to markdown file for:
+        // Generates reports and outputs to markdown file for:
         // world
         a.outputCityReport(worldCities, -1, "allWorldCities");
         // continent
@@ -110,11 +109,21 @@ public class App
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+        // Extract population information for:
+        // world report
+        TotalPopulation worldPopulation = a.getTotalPopulation("w", "Sydney");
+        // continent report
+        TotalPopulation continentPopulation = a.getTotalPopulation("con", "Oceania");
+        // region report
+        TotalPopulation regionPopulation  = a.getTotalPopulation("r", "Western Europe");
+        // country report
+        TotalPopulation countryPopulation = a.getTotalPopulation("cou", "Argentina");
+        // district report
+        TotalPopulation districtPopulation = a.getTotalPopulation("d", "Buenos Aires");
+        // city report
+        TotalPopulation cityPopulation = a.getTotalPopulation("ci", "");
 
-
-        // Language reports method calls--- vvv --------------------------------------------------------
-
-        // Language reports --- vvv --------------------------------------------------------------------
 
 
         // Language reports --- vvv --------------------------------------------------------------------
@@ -128,7 +137,10 @@ public class App
         a.disconnect();
     }
 
-    // Cities reports --- vvv ----------------------------------------------------------------------
+
+
+
+    // Cities reports methods --- vvv ----------------------------------------------------------------------
 
     /**
      * Outputs to Markdown
@@ -215,7 +227,6 @@ public class App
             } else {
                 System.out.println("Cities report type not valid");
                 return null;
-
             }
 
 
@@ -255,15 +266,10 @@ public class App
             return null;
         }
     }
-    // Capital City reports --- vvv ----------------------------------------------------------------
+    // Capital City reports methods --- vvv ----------------------------------------------------------------
 
     public void outputCapitalCitiesReport(
             ArrayList<Capital> capitalCities, int displayN, String filename) {
-
-
-    // Urbanisation reports --- vvv ----------------------------------------------------------------
-
-    // Language reports --- vvv --------------------------------------------------------------------
 
         StringBuilder sb = new StringBuilder();
         //Println header
@@ -291,34 +297,31 @@ public class App
          writer.close();
         } catch (IOException e) {
               e.printStackTrace();
-          }
         }
+    }
 
-        public ArrayList<Capital> getAllcapitalCities(String reportType, String choice) throws SQLException {
-            Statement stmt;
-            try {
-                /** Creating an SQL statement*/
-                stmt = con.createStatement();
+    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) throws SQLException {
+        Statement stmt;
+        try {
+            /** Creating an SQL statement*/
+            stmt = con.createStatement();
 
-                // Checks report type valid and correctly sets formatting
-                if (reportType.equalsIgnoreCase("W") || reportType.equals("")){
-                    reportType = "World";
-                } else if (choice.equals("")) {
-                    System.out.println("No choice provided when report type is not W or ''");
-                    return null;
-                } else if (reportType.equalsIgnoreCase("C")) {
-                    reportType = "Continent";
-                } else if (reportType.equalsIgnoreCase("R")) {
-                    reportType = "Region";
-                } else if (reportType.equalsIgnoreCase("CO")) {
-                    reportType = "Country";
-                } else {
-                    System.out.println("Capital Cities report type not valid");
-                    return null;
-                }
-
-
-
+            // Checks report type valid and correctly sets formatting
+            if (reportType.equalsIgnoreCase("W") || reportType.equals("")){
+                reportType = "World";
+            } else if (choice.equals("")) {
+                System.out.println("No choice provided when report type is not W or ''");
+                return null;
+            } else if (reportType.equalsIgnoreCase("C")) {
+                reportType = "Continent";
+            } else if (reportType.equalsIgnoreCase("R")) {
+                reportType = "Region";
+            } else if (reportType.equalsIgnoreCase("CO")) {
+                reportType = "Country";
+            } else {
+                System.out.println("Capital Cities report type not valid");
+                return null;
+            }
 
             /** Create string for SQL statement*/
             String strSelect =
@@ -353,23 +356,10 @@ public class App
         }
     }
 
-    public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
-        return null;
-    }
-
-
-
-
-
 
     // Urbanisation reports methods--- vvv ----------------------------------------------------------------
 
     // Language reports methods--- vvv --------------------------------------------------------------------
-
-    // Urbanisation reports --- vvv ----------------------------------------------------------------
-
-
-    // Total Population methods--- vvv --------------------------------------------------------------------
 
     /**
      * Gets language information from database
@@ -385,10 +375,13 @@ public class App
     public void outputLanguageReport(Language language) {
     }
 
-    // Total Population --- vvv --------------------------------------------------------------------
+    // Total Population methods --- vvv --------------------------------------------------------------------
 
     /**
      * Gets total population information from database
+     * Use report types "con" - Continent, "cou" - Country, "ci" - City, the rest use 1st letter
+     * If reportType is empty, generates world report
+     * Population is given in thousands to 2 decimal places
      * @param reportType
      * @param choice specifies which continent, region, country, district or city as per reportType
      * @return A TotalPopulation object, or null if there is an error
@@ -398,7 +391,71 @@ public class App
         // if reportType is empty, should generate world report
         // store reportType name in object
         // get population in thousands to 2 decimal places
-        return null;
+
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            // Checks report type valid and correctly sets formatting
+            // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
+            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+                reportType = "World";
+            } else if (choice.equals("")){
+                System.out.println("No choice provided when report type is not W or ''");
+                return null;
+            } else if(reportType.toUpperCase().equals("CON")){
+                reportType = "Continent";
+            } else if (reportType.toUpperCase().equals("R")){
+                reportType = "Region";
+            } else if (reportType.toUpperCase().equals("COU")){
+                reportType = "Country";
+            } else if (reportType.toUpperCase().equals("D")){
+                reportType = "District";
+            } else if (reportType.toUpperCase().equals("CI")){
+                reportType = "City";
+            } else {
+                System.out.println("Countries report type not valid");
+                return null;
+            }
+
+            // Create string for SQL statement
+            String strSelect =
+
+                    // select statment for world, needs adapting (maybe if statment) for when not world (probably doesnt need to be in thousands)
+                    "SELECT ROUND(SUM(country.Population)/1000,2) as 'population'\n"
+                            + "FROM country\n"
+                            + "JOIN city on country.Capital = city.ID\n"
+                            + "group by 'population'";
+            // Sets where clause for continent or region
+            if(!(reportType.equals("World"))){
+                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            }
+            // Orders by largest population to smallest
+            strSelect += " ORDER BY Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information from result set
+            TotalPopulation population = new TotalPopulation();
+            while (rset.next())
+            {
+                population.reportType = reportType;
+                population.population = rset.getDouble("Population");
+
+                if(reportType.equals("World")) {
+                    population.name = "World";
+                } else {
+                    population.name = rset.getString("Name");
+                }
+            }
+            return population;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details\n");
+            return null;
+        }
     }
 
     /**
@@ -411,7 +468,7 @@ public class App
         // population column in thousands, reflect in header
     }
 
-    // Country reports --- vvv ---------------------------------------------------------------------
+    // Country reports methods --- vvv ---------------------------------------------------------------------
     /**
      * Outputs to Markdown
      * Extension is automatically added

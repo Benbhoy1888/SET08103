@@ -15,11 +15,14 @@ public class AppIntegrationTest {
 
     static App app;
 
+    /**
+     * Sets up db connection for tests
+     */
     @BeforeAll
     static void init()
     {
         app = new App();
-        app.connect("localhost:33060", 0);
+        app.connect("localhost:33060", 30000);
 
         // deletes reports directory
         File directory = new File("./reports");
@@ -37,14 +40,6 @@ public class AppIntegrationTest {
     }
 
 
-
-    // Need test for connection to database without checking specific return values or inserting values to database
-
-    // Need test to check returned values are as expected
-
-    // Need test to check reports are outputted correctly from docker container
-
-    // test sql queries are correct
 
     /**
      * Tests database connection
@@ -117,6 +112,8 @@ public class AppIntegrationTest {
 //        assertEquals("World", totalPopulation.reportType);
 //        assertNotNull(totalPopulation.name);
 //        assertNotEquals(-1.0, totalPopulation.population);
+
+
 */
 
     /**
