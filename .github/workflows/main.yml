@@ -1,8 +1,9 @@
 name: A workflow for Project World Reports App
-on: push
-  branches:
-    - master
-    - release
+on:
+  push:
+    branches:
+      - master
+      - release
 
 jobs:
   UnitTests:
