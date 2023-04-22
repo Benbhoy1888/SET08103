@@ -65,7 +65,7 @@ jobs:
   build:
     name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-20.04
-    if: github.ref_name == 'release'
+#    if: github.ref_name == 'release'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -88,4 +88,4 @@ jobs:
           files: |
             ./target/*.jar
       - name: Copy Output
-        run: docker container cp set08103_app_1:/tmp/reports ./reports 
+        run: docker cp set08103_app_1:/tmp/reports/. ./reports
