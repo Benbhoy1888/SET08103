@@ -80,12 +80,12 @@ jobs:
         run: |
           mvn package -DskipTests
           docker-compose up --abort-on-container-exit
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.SECRET_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: "latest"
-          files: |
-            ./target/*.jar
+#      - uses: "marvinpinto/action-automatic-releases@latest"
+#        with:
+#          repo_token: "${{ secrets.SECRET_TOKEN }}"
+#          prerelease: false
+#          automatic_release_tag: "latest"
+#          files: |
+#            ./target/*.jar
       - name: Copy Output
-        run: docker cp set08103_app_1:/tmp/reports/. ./reports
+        run: docker cp set08103-app-1:/tmp/reports/. ./reports
