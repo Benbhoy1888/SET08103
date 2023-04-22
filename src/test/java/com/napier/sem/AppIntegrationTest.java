@@ -125,7 +125,7 @@ public class AppIntegrationTest {
             // gets world capital cities information for world report using empty report type
     @Test
     void TestWorldCapitalCities() {
-     ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
+     ArrayList<Capital> worldCapitalCities = app.getAllCapitalCities("", "");
 
 
         if(worldCapitalCities != null) {
@@ -135,7 +135,7 @@ public class AppIntegrationTest {
             assertNotEquals(-1, worldCapitalCities.get(0).population);
 
         } else {
-            fail("getAllCountries returning Null pointer");
+            fail("getAllCapitalCities returning Null pointer");
 
         }
     }

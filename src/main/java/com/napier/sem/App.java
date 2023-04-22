@@ -3,25 +3,16 @@ package com.napier.sem;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 /**
  * A Class to run project world reports application
  * Reports generated are saved in reports directory
- *
  * To run locally, now just need to use green run arrow next to main method (no need to rebuild)
  */
-public class App
-{
-
-
-
-    private int displayN;
-    private String filename;
-    private Object Capital;
-
+public class App {
     /**
      * Main Method, program starts here
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -62,7 +53,7 @@ public class App
         a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
 
         // Cities reports --- vvv ----------------------------------------------------------------------
-        ArrayList<City> worldCities= a.getAllCities("w", "");
+        ArrayList<City> worldCities = a.getAllCities("w", "");
 
         ArrayList<City> continentCities = a.getAllCities("c", "Oceania");
 
@@ -96,25 +87,23 @@ public class App
         a.outputCityReport(regionCities, 1, "top1_districtCities");
 
         // Capital City reports --- vvv ----------------------------------------------------------------
+        a.getAllCapitalCities("", "");
 
 
-
-      //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
-           // if(filename.equals("")){
-            //    return;
-           // }
-      // Check countries is not null
-      //  if (CapitalCities == null || CapitalCities.size()<1) {
+        //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
+        // if(filename.equals("")){
+        //    return;
+        // }
+        // Check countries is not null
+        //  if (CapitalCities == null || CapitalCities.size()<1) {
         // System.out.println("No capitals");
-         //return;
+        //return;
         //}
-
 
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
-
 
 
         // Language reports method calls--- vvv --------------------------------------------------------
@@ -138,24 +127,25 @@ public class App
     /**
      * Outputs to Markdown
      * Extension is automatically added
-     * @param cities The list of cities to print
+     *
+     * @param cities   The list of cities to print
      * @param displayN number to display, -1 displays all
      * @param filename markdown output filename
      */
     public void outputCityReport(ArrayList<City> cities, int displayN, String filename) {
-        if(filename.equals("")){
+        if (filename.equals("")) {
             return;
         }
 
         // Check cities is not null
-        if (cities == null || cities.size()<1) {
+        if (cities == null || cities.size() < 1) {
             System.out.println("No cities");
             return;
         }
 
         // sets displayN to total number of cities in ArrayList if either disiplayN is set to -1 (display all)
         // or displayN is greater than the number of cities
-        if(displayN>cities.size() || displayN<0){
+        if (displayN > cities.size() || displayN < 0) {
             displayN = cities.size();
         }
 
@@ -165,10 +155,10 @@ public class App
         sb.append("| :--- | :--- | ---: | ---: |\r\n");
 
         // Loop over all cities in the list
-        for (int i=0; i<displayN;i++) {
+        for (int i = 0; i < displayN; i++) {
             City city;
             city = cities.get(i);
-            if(city == null) continue;
+            if (city == null) continue;
             sb.append(("| " + city.name + " | " +
                     city.country + " | " +
                     city.district + " | " +
@@ -177,7 +167,7 @@ public class App
 
         try {
             File directory = new File("./reports");
-            if(!directory.exists()){
+            if (!directory.exists()) {
                 directory.mkdir();
             }
             new File("./reports/city_reports").mkdir();
@@ -193,29 +183,29 @@ public class App
      * Gets all cities information from database (defaults to world, pass "c" (continent)
      * or "r" (region) or "co" (country) or "d" (district) to get relevant report)
      * 'choice' is only used if continent or region is specified as reportType
+     *
      * @param reportType should be "w", "c" or "r", "" can also be used to get world
-     * @param choice if selecting a continent, region, country or district this should be specified here - ignored if report type is "w"
+     * @param choice     if selecting a continent, region, country or district this should be specified here - ignored if report type is "w"
      * @return A list of all cities, or null if there is an error
      */
     public ArrayList<City> getAllCities(String reportType, String choice) {
-        try
-        {
+        try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
+            if (reportType.toUpperCase().equals("W") || reportType.equals("")) {
                 reportType = "World";
-            } else if (choice.equals("")){
+            } else if (choice.equals("")) {
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
-            } else if(reportType.toUpperCase().equals("C")){
+            } else if (reportType.toUpperCase().equals("C")) {
                 reportType = "country.Continent";
             } else if (reportType.toUpperCase().equals("R")) {
                 reportType = "country.Region";
-            }    else if (reportType.toUpperCase().equals("CO")){
-                    reportType = "country.Name";
-            }    else if (reportType.toUpperCase().equals("D")){
+            } else if (reportType.toUpperCase().equals("CO")) {
+                reportType = "country.Name";
+            } else if (reportType.toUpperCase().equals("D")) {
                 reportType = "city.District";
             } else {
                 System.out.println("Cities report type not valid");
@@ -231,9 +221,8 @@ public class App
                             + "LEFT JOIN country on city.CountryCode = country.Code\n";
 
 
-
             // Sets where clause for continent or region
-            if(!(reportType.equals("World"))){
+            if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
             // Orders by largest population to smallest
@@ -242,8 +231,7 @@ public class App
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
             ArrayList<City> cities = new ArrayList<City>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 City city = new City();
                 city.name = rset.getString("Name");
                 city.country = rset.getString("Country");
@@ -252,9 +240,7 @@ public class App
                 cities.add(city);
             }
             return cities;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details\n");
             return null;
@@ -269,7 +255,7 @@ public class App
             }
 
             // Check capitalCities is not null
-            if (capitalCities == null || capitalCities.size()<1) {
+            if (capitalCities == null || capitalCities.size() < 1) {
                 System.out.println("No capital cities");
                 return;
             }
@@ -295,9 +281,9 @@ public class App
                         capital.population + " |\r\n"));
             }
 
-            try{
+            try {
                 File directory = new File("./reports");
-                if(!directory.exists()){
+                if (!directory.exists()) {
                     directory.mkdir();
                 }
                 new File("./reports/city_reports").mkdir();
@@ -324,10 +310,10 @@ public class App
         sb.append("| :--- | :--- | ---: |\r\n");
 
         /** Loop over all countries in the list*/
-        for (int i=0; i<displayN;i++) {
+        for (int i = 0; i < displayN; i++) {
             Capital capital;
             capital = capitalCities.get(i);
-            if(capital== null) continue;
+            if (capital == null) continue;
             sb.append(("| " + capital.name + " | " +
                     capital.country + " | " +
                     capital.population + " |\r\n"));
@@ -335,7 +321,7 @@ public class App
 
         try {
             File directory = new File("./reports");
-            if(!directory.exists()){
+            if (!directory.exists()) {
                 directory.mkdir();
             }
             new File("./reports/capital_reports").mkdir();
@@ -347,14 +333,15 @@ public class App
         }
     }
 
-    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) throws SQLException {
+    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) {
         Statement stmt;
+
         try {
             /** Creating an SQL statement*/
             stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if (reportType.equalsIgnoreCase("W") || reportType.equals("")){
+            if (reportType.equalsIgnoreCase("W") || reportType.equals("")) {
                 reportType = "World";
             } else if (choice.equals("")) {
                 System.out.println("No choice provided when report type is not W or ''");
@@ -371,13 +358,11 @@ public class App
             }
 
 
-
-
             /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT country.Name AS country, city.name AS capital, city.Population as population\n"
+                    "SELECT country.Name AS Country, city.Name AS Capital, city.Population\n"
                             + "FROM country\n" +
-                            "JOIN country on city.ID  = country.ID;/n";
+                            "JOIN city on country.Capital = city.ID;\n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
@@ -397,17 +382,11 @@ public class App
                 capitalCities.add(capital);
             }
             return capitalCities;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get capital city details\n");
             return null;
         }
-    }
-
-    public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
-        return null;
     }
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
@@ -415,11 +394,161 @@ public class App
     // Language reports --- vvv --------------------------------------------------------------------
 
 
+    // capitalCites reports methods--- vvv ----------------------------------------------------------------
+
+    /**
+     * Outputs to Markdown
+     * Extension is automatically added
+     *
+     * @param capitalCities The list of capitalCities to print
+     * @param displayN number to display, -1 displays all
+     * @param filename markdown output filename
+     */
+    public void outputCapitalReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
+        if (filename.equals("")) {
+            return;
+        }
+
+        // Check capitalCities is not null
+        if (capitalCities == null || capitalCities.size() < 1) {
+            System.out.println("No countries");
+            return;
+        }
+
+        // sets displayN to total number of capitalCities in ArrayList if either disiplayN is set to -1 (display all)
+        // or displayN is greater than the number of CapitalCities
+        if (displayN > capitalCities.size() || displayN < 0) {
+            displayN = capitalCities.size();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append(" |Name | Population | Country |\r\n");
+        sb.append("| :--- | :--- | :---  |\r\n");
+
+        // Loop over all countries in the list
+        for (int i = 0; i < displayN; i++) {
+            Capital capital;
+            capital = capitalCities.get(i);
+            if (capital == null) continue;
+            sb.append(("| " + capital.name + " | " +
+                    capital.population + " | " +
+                    capital.country + " |\r\n"));
+        }
+
+        try {
+            File directory = new File("./reports");
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+            new File("./reports/capital_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/capital_reports/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets all capitals information from database (defaults to world, pass "c" (continent)
+     * or "r" (region) to get relevant report)
+     * 'choice' is only used if continent or region is specified as reportType
+     *
+     * @param reportType should be "w", "c" or "r", "" can also be used to get world
+     * @param choice     if selecting a continent or region, this should be specified here - ignored if report type is "w"
+     * @return A list of all capitalCities, or null if there is an error
+     */
+    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            // Checks report type valid and correctly sets formatting
+            if (reportType.toUpperCase().equals("W") || reportType.equals("")) {
+                reportType = "World";
+            } else if (choice.equals("")) {
+                System.out.println("No choice provided when report type is not W or ''");
+                return null;
+            } else if (reportType.toUpperCase().equals("P")) {
+                reportType = "population";
+            } else if (reportType.toUpperCase().equals("C")) {
+                reportType = "country";
+            } else {
+                System.out.println("Countries report type not valid");
+                return null;
+            }
+
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Name AS Country, city.Name AS Capital, city.Population\n"
+                    + "FROM country\n" +
+                    "JOIN city on country.Capital = city.ID;\n";
+            // Sets where clause for continent or region
+            if (!(reportType.equals("World"))) {
+                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            }
+            // Orders by largest population to smallest
+            strSelect += " ORDER BY Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information from result set
+            ArrayList<Capital> capitalCities = new ArrayList<Capital>();
+            while (rset.next()) {
+                Capital capital = new Capital();
+                capital.name = rset.getString("Name");
+                capital.population = rset.getInt("Population");
+                capital.country = rset.getString("Country");
+                capital.add(capitalCities);
+            }
+            return capitalCities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details\n");
+            return null;
+        }
+    }
+
+    /**
+     * Prints a list of capitalCities
+     * ///////////////////// NO LONGER USED, keep here for now //////////////////
+     *
+     * @param capital  The list of capitalCities to print
+     * @param displayN number to display, -1 displays all
+     */
+    public void printCapital(ArrayList<Capital> capital, int displayN) {
+        // checks list exists
+        if (capital != null) {
+
+            // checks list is not empty
+            if (capital.size() < 1) {
+                System.out.println("No capital city found\n");
+                return;
+            }
+
+            // Print header
+            System.out.println(String.format("", "Name", "Region", "Population", "Country"));
+
+            // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
+            // or displayN is greater than the number of countries
+            if (displayN > capital.size() || displayN == -1) {
+                displayN = capital.size();
+            }
+
+            // Loop over all countries in the list
+            for (int i = 0; i < displayN; i++) {
+                Capital capital
+                capital = capital.get(i);
+                String capital_string =
+                        String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
+                                capital.name, capital.population, capital.country);
+                System.out.println(capital_string);
+            }
+            System.out.println("");
+        }
+    }
 
 
-
-
-    // Urbanisation reports methods--- vvv ----------------------------------------------------------------
 
     // Language reports methods--- vvv --------------------------------------------------------------------
 
