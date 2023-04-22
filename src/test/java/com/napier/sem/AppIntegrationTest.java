@@ -121,18 +121,19 @@ public class AppIntegrationTest {
      * Tests object and attributes are not null after trying to get total population information from database when using
      * an empty string for report type (should generate world report object)
      */
-/**    @Test
-//    void testTotalPopulation() {
-//        // gets world countries information for world report using empty report type
-//        TotalPopulation totalPopulation = app.getTotalPopulation("", "");
-//
-//        assertNotNull(totalPopulation);
-//        assertEquals("World", totalPopulation.reportType);
-//        assertNotNull(totalPopulation.name);
-//        assertNotEquals(-1.0, totalPopulation.population);
+    @Test
+    void testTotalPopulation() {
+        // gets world countries information for world report using empty report type
+        TotalPopulation totalPopulation = app.getTotalPopulation("", "");
+
+        assertNotNull(totalPopulation);
+        assertEquals("World", totalPopulation.reportType);
+        assertNotNull(totalPopulation.name);
+        assertNotEquals(-1.0, totalPopulation.population);
+    }
 
 
-*/
+
 
     /**
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null

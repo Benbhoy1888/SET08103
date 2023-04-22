@@ -123,10 +123,10 @@ public class App
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
-        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
         // Extract population information for:
+        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
         // world report
-        TotalPopulation worldPopulation = a.getTotalPopulation("w", "Sydney");
+        TotalPopulation worldPopulation = a.getTotalPopulation("w", "");
         // continent report
         TotalPopulation continentPopulation = a.getTotalPopulation("con", "Oceania");
         // region report
@@ -134,9 +134,23 @@ public class App
         // country report
         TotalPopulation countryPopulation = a.getTotalPopulation("cou", "Argentina");
         // district report
-        TotalPopulation districtPopulation = a.getTotalPopulation("d", "Buenos Aires");
+        TotalPopulation districtPopulation = a.getTotalPopulation("d", "Port-Louis");
         // city report
-        TotalPopulation cityPopulation = a.getTotalPopulation("ci", "");
+        TotalPopulation cityPopulation = a.getTotalPopulation("ci", "Buenos Aires");
+
+        // Generates reports and outputs to markdown file for:
+        // world
+        a.outputTotalPopulationReport(worldPopulation);
+        // continent
+        a.outputTotalPopulationReport(continentPopulation);
+        // region
+        a.outputTotalPopulationReport(regionPopulation);
+        // country
+        a.outputTotalPopulationReport(countryPopulation);
+        // district
+        a.outputTotalPopulationReport(districtPopulation);
+        // city
+        a.outputTotalPopulationReport(cityPopulation);
 
 
 
@@ -570,11 +584,6 @@ public class App
      * @return A TotalPopulation object, or null if there is an error
      */
     public TotalPopulation getTotalPopulation(String reportType, String choice) {
-        // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
-        // if reportType is empty, should generate world report
-        // store reportType name in object
-        // get population in thousands to 2 decimal places
-
         try
         {
             // Create an SQL statement
@@ -598,24 +607,35 @@ public class App
             } else if (reportType.toUpperCase().equals("CI")){
                 reportType = "City";
             } else {
-                System.out.println("Countries report type not valid");
+                System.out.println("Total Population report type not valid");
                 return null;
             }
 
             // Create string for SQL statement
-            String strSelect =
+            String strSelect = "SELECT ROUND(SUM(Population)/1000,2) AS 'Population'";
 
-                    // select statment for world, needs adapting (maybe if statment) for when not world (probably doesnt need to be in thousands)
-                    "SELECT ROUND(SUM(country.Population)/1000,2) as 'population'\n"
-                            + "FROM country\n"
-                            + "JOIN city on country.Capital = city.ID\n"
-                            + "group by 'population'";
-            // Sets where clause for continent or region
-            if(!(reportType.equals("World"))){
-                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            if((reportType.equals("District")) || (reportType.equals("Region")) || (reportType.equals("Continent"))) {
+                strSelect += ", " + reportType + " AS Name\n";
+            } else if (!(reportType.equals("World"))) {
+                strSelect += ", Name\n";
+            } else {
+                strSelect += "\n";
             }
-            // Orders by largest population to smallest
-            strSelect += " ORDER BY Population DESC";
+
+            if((reportType.equals("District")) || (reportType.equals("City"))) {
+                strSelect += "FROM city\n";
+            } else {
+                strSelect += "FROM country\n";
+            }
+
+            if((reportType.equals(("Country"))) || (reportType.equals("City"))) {
+                strSelect += "WHERE Name = '" + choice + "'\n";
+            } else if (!(reportType.equals("World"))) {
+                strSelect += "WHERE " + reportType + " = '" + choice + "'\n";
+            }
+
+            strSelect += "GROUP BY 'Population'\n";
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
@@ -649,6 +669,35 @@ public class App
     public void outputTotalPopulationReport(TotalPopulation population) {
         // use report types "con" - continent, "cou" - country, "ci" - city, rest use 1st letter
         // population column in thousands, reflect in header
+
+        // Check population is not null
+        if (population == null) {
+            System.out.println("No TotalPopulation object provided for outputting Total Population Report");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Name | Population in Thousands|\r\n");
+        sb.append("| :--- | ---: |\r\n");
+
+
+        sb.append(("| " + population.name + " | " +
+        population.population + " K |\r\n"));
+
+
+        try {
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/total_population_reports").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/total_population_reports/" + population.reportType + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Country reports methods --- vvv ---------------------------------------------------------------------
