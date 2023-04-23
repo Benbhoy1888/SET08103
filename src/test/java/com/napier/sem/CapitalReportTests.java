@@ -125,7 +125,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesTypeNotRecognised() {
-         assertNull(app.getAllCapitalCities("aaaaa", "Funky Town"));
+         assertNull(app.getAllCapitalCities("", ""));
      }
 
      /**
