@@ -89,7 +89,6 @@ public class App {
         // Capital City reports --- vvv ----------------------------------------------------------------
 
 
-
         //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
         // if(filename.equals("")){
         //    return;
@@ -652,6 +651,8 @@ public class App {
         }
     }
 
+
+
     /**
      * Prints a list of capitalCities
      * ///////////////////// NO LONGER USED, keep here for now //////////////////
@@ -680,7 +681,7 @@ public class App {
 
             // Loop over all countries in the list
             for (int i = 0; i < displayN; i++) {
-                Capital capital
+                Capital capital;
                 capital = capital.get(i);
                 String capital_string =
                         String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
