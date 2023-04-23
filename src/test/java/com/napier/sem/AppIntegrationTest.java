@@ -157,7 +157,7 @@ public class AppIntegrationTest {
          */
         // gets world capital cities information for world report using empty report type
     @Test
-    void estWorldCapitalCities () {
+    void testWorldCapitalCities () {
             ArrayList<Capital> worldCapitalCities = app.getAllCapitalCities("", "");
 
 
