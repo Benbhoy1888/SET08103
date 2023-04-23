@@ -51,7 +51,7 @@ public class TotalPopulationTests {
     void outputTotalPopulationReport() {
         TotalPopulation totalPopulation = new TotalPopulation();
 
-        totalPopulation.reportType = "w";
+        totalPopulation.reportType = "World";
         totalPopulation.name = "World";
         totalPopulation.population = 6078749.45;
 
