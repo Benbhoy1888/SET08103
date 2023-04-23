@@ -88,16 +88,33 @@ public class App {
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
+        // Cities reports --- vvv ----------------------------------------------------------------------
+        ArrayList<Capital> worldCapital= a.getAllCapitalCities("w", "");
 
-        //  public void outputCapitalCityReport(ArrayList<Capital> capitalCities, int displayN, String filename) {
-        // if(filename.equals("")){
-        //    return;
-        // }
-        // Check countries is not null
-        //  if (CapitalCities == null || CapitalCities.size()<1) {
-        // System.out.println("No capitals");
-        //return;
-        //}
+        ArrayList<Capital> regionCapital = a.getAllCapitalCities("r", "Western Europe");
+
+        ArrayList<Capital> countryCapital = a.getAllCapitalCities("co", "United Kingdom");
+
+        ArrayList<Capital> populationCapital = a.getAllCapitalCities("co", "United Kingdom");
+
+        // Generates country reports and outputs to markdown file for:
+        // world
+        a.outputCapitalReport(worldCapital, -1, "allWorldCapital");
+        // region
+        a.outputCapitalReport(regionCapital, -1, "allCapitalRegion");
+        // country
+        a.outputCapitalCitiesReport(countryCapital, -1, "allCapitalCountry");
+
+
+        // top n in world
+        a.outputCityReport(worldCities, 5, "top5_worldCities");
+        a.outputCapitalReport(populationCapital,-1, "top2_populationCapital");
+        // top n in region
+        a.outputCapitalReport(regionCapital, 3, "top3_regionCapital");
+        // top n in country
+        a.outputCapitalReport(countryCapital, -1, "top5_countryCapital");
+
+
 
 
         // Urbanisation reports --- vvv ----------------------------------------------------------------
@@ -601,7 +618,7 @@ public class App {
      * @param choice     if selecting a continent or region, this should be specified here - ignored if report type is "w"
      * @return A list of all capitalCities, or null if there is an error
      */
-    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) {
+    public ArrayList<Capital> getAllCapital(String reportType, String choice) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -657,15 +674,15 @@ public class App {
      * Prints a list of capitalCities
      * ///////////////////// NO LONGER USED, keep here for now //////////////////
      *
-     * @param capital  The list of capitalCities to print
+     * @param capitalCities  The list of capitalCities to print
      * @param displayN number to display, -1 displays all
      */
-    public void printCapital(ArrayList<Capital> capital, int displayN) {
+    public void printCapital(ArrayList<Capital> capitalCities, int displayN) {
         // checks list exists
-        if (capital != null) {
+        if (capitalCities != null) {
 
             // checks list is not empty
-            if (capital.size() < 1) {
+            if (capitalCities.size() < 1) {
                 System.out.println("No capital city found\n");
                 return;
             }
@@ -675,14 +692,14 @@ public class App {
 
             // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
             // or displayN is greater than the number of countries
-            if (displayN > capital.size() || displayN == -1) {
-                displayN = capital.size();
+            if (displayN > capitalCities.size() || displayN == -1) {
+                displayN = capitalCities.size();
             }
 
             // Loop over all countries in the list
             for (int i = 0; i < displayN; i++) {
                 Capital capital;
-                capital = capital.get(i);
+                capital = capitalCities.get(i);
                 String capital_string =
                         String.format("%-4s %-53s %-15s %-27s %-12s %-36s",
                                 capital.name, capital.population, capital.country);
@@ -753,6 +770,7 @@ public class App {
     /**
      * Outputs to Markdown
      */
+
     public void outputLanguageReport(Language language) {
     }
 
