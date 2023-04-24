@@ -123,15 +123,9 @@ public class App
 
         // TotalPopulation reports --- vvv -------------------------------------------------------------
 
-
-
-        // Language reports method calls--- vvv --------------------------------------------------------
-
         // Language reports --- vvv --------------------------------------------------------------------
-
-
-        // Language reports --- vvv --------------------------------------------------------------------
-
+        ArrayList<Language> languageArrayList = a.getLanguageReport();
+        a.outputLanguageReport(languageArrayList,"languages");
 
         // ---------------------------------------------------------------------------------------------
 
@@ -737,6 +731,101 @@ public class App
             System.out.println("");
         }
     }
+
+    // Language Reports --- vvv -------------------------------------------------------------------
+
+    /**
+     * This method creates SQL query to return the number of people and percentage of those globally who speak
+     * Chinese, English, Hindi, Spanish and Arabic.
+     * @return language array containing return of SQL statement
+     */
+    public ArrayList<Language> getLanguageReport() {
+
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect="SELECT Language, `Number of People`, ROUND((`Number of People`/`Total Population`)*100, 2) AS \"World Percentage\"\n" +
+                    "FROM (SELECT world.countrylanguage.Language, ROUND(SUM(world.country.Population*(world.countrylanguage.Percentage/100)),0) AS 'Number of People',\n" +
+                    "             (SELECT SUM(Population) FROM country) AS 'Total Population'\n" +
+                    "      FROM world.country\n" +
+                    "               JOIN world.countrylanguage ON countrylanguage.CountryCode = country.Code\n" +
+                    "      WHERE Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')\n" +
+                    "      GROUP BY Language) AS lang";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract language information from result set
+            ArrayList<Language> languages= new ArrayList<Language>();
+            // Loop though query return and store values in language array
+            while (rset.next())
+            {
+                Language lan = new Language();
+                lan.languageName = rset.getString(1);
+                lan.population = rset.getLong(2);
+                lan.percentage = rset.getDouble(3);
+                languages.add(lan);
+            }
+            return languages;
+        }
+        catch(Exception e) {
+            // capture SQL query error(s)
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language details\n");
+            return null;
+
+        }
+    }
+
+    /**
+     * This method reads from array and stores data into markdown report file
+     * @param languages array
+     * @param filename name of markdown report file
+     */
+    public void outputLanguageReport(ArrayList<Language> languages, String filename) {
+
+        // return from method if no report filename provided
+        if(filename.equals("")){
+            return;
+        }
+
+        // Check language is not null
+        if (languages == null || languages.size()<1) {
+            System.out.println("No Languages");
+            return;
+        }
+
+        // build report header
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("|Language | Number of people | World Percentage| \r\n");
+        sb.append("| :--- | ---: | ---: |\r\n");
+
+        // Loop over all rows in the list
+        int rowCount = languages.size();
+        for (int i= 0; i<rowCount; i++){
+            Language lan;
+            lan = languages.get(i);
+            if(lan == null) continue;
+            sb.append(("| " + lan.languageName + " | " +
+                    lan.population + " | " +
+                    lan.percentage + " |\r\n"));
+        }
+
+        try {
+            // create directory and file for the report
+            File directory = new File("./reports");
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            new File("./reports/languages_report").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/languages_report/" + filename + ".md"));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Menu --- vvv --------------------------------------------------------------------------------
     /**
