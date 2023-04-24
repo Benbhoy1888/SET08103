@@ -20,4 +20,9 @@ public class Language {
      */
     public double population = -1;
 
+    /**
+     * Language percentage
+     */
+
+    public double percentage=-1.0;
 }
