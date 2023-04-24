@@ -170,7 +170,6 @@ public class AppIntegrationTest {
 
             if (language != null) {
                 assertNotNull(language);
-                assertNotNull(language.countryCode);
                 assertNotNull(language.languageName);
                 assertNotEquals(-1, language.population);
             } else {
@@ -187,4 +186,5 @@ public class AppIntegrationTest {
             app.disconnect();
         }
     }
-}
+
+
