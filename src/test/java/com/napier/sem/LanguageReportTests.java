@@ -48,7 +48,7 @@ public class LanguageReportTests {
     @Test
     void outputLanguageReport() {
         Language language = new Language();
-        
+
         language.languageName = "English";
         language.population = 93.7;
 
