@@ -389,7 +389,7 @@ public class App
         }
     }
 
-    public ArrayList<Capital> getAllCapitalCites(String reportType, String choice) {
+    public ArrayList<Capital> getAllCapitalCities(String reportType, String choice) {
         return null;
     }
 

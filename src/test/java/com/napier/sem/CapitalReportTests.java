@@ -98,7 +98,8 @@ import static org.junit.jupiter.api.Assertions.fail;
          capital.population = 18886000;
          capital.country = "Australia";
          capitalCities.add(capital);
-         app.outputCapitalCitiesReport(capitalCities, 2, "test");
+         app.outputCapitalCitiesReport(null, 2, "test");
+
      }
 
      /**
@@ -125,7 +126,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesTypeNotRecognised() {
-         assertNull(app.getAllCapitalCites("", ""));
+         assertNull(app.getAllCapitalCities("", ""));
      }
 
      /**
@@ -133,8 +134,8 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesChoiceEmpty() {
-         assertNull(app.getAllCapitalCites("r", ""));
-         assertNull(app.getAllCapitalCites("c", ""));
+         assertNull(app.getAllCapitalCities("r", ""));
+         assertNull(app.getAllCapitalCities("c", ""));
      }
 
      /**
