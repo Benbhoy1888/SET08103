@@ -691,19 +691,7 @@ public class App {
     // Language reports methods--- vvv --------------------------------------------------------------------
 
     // Urbanisation reports methods --- vvv ----------------------------------------------------------------
-    /**
-     * Gets language information from database
-     * @return A Language object, or null if there is an error
-     */
-    public Language getLanguage() {
-        return null;
-    }
 
-    /**
-     * Outputs to Markdown
-     */
-    public void outputLanguageReport(Language language) {
-    }
 
     // Total Population --- vvv --------------------------------------------------------------------
 
