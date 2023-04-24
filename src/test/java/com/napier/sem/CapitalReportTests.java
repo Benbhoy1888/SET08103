@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
- class CapitalCityReportTests {
+ class CapitalReportTests {
 
      static App app;
 
@@ -125,7 +125,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesTypeNotRecognised() {
-         assertNull(app.getAllCapitalCities("", ""));
+         assertNull(app.getAllCapitalCites("", ""));
      }
 
      /**
@@ -133,8 +133,8 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesChoiceEmpty() {
-         assertNull(app.getAllCapitalCities("r", ""));
-         assertNull(app.getAllCapitalCities("c", ""));
+         assertNull(app.getAllCapitalCites("r", ""));
+         assertNull(app.getAllCapitalCites("c", ""));
      }
 
      /**

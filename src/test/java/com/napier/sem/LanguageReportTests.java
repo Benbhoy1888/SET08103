@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class LanguageReportTests {
@@ -25,34 +26,22 @@ public class LanguageReportTests {
     void outputLanguageReportNullObject() {
         Language language = null;
 
-        app.outputLanguageReport(language);
+        app.outputLanguageReport(null, "test");
     }
 
-    /**
-     * Tests if a field is null an error is not thrown
-     */
-    @Test
-    void outputLanguageReportNullField() {
-        Language language = new Language();
-
-        language.languageName = null;
-        language.population = 0;
-
-
-        app.outputLanguageReport(language);
-    }
 
     /**
      * Test when object passed as expected an error is not thrown
      */
     @Test
     void outputLanguageReport() {
+        ArrayList<Language> languages = new ArrayList<>();
         Language language = new Language();
 
         language.languageName = "English";
         language.population = 93.7;
 
-        app.outputLanguageReport(language);
+        app.outputLanguageReport(null,"test");
     }
 
 

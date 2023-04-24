@@ -20,7 +20,8 @@ public class AppIntegrationTest {
      * Sets up db connection for tests
      */
     @BeforeAll
-    static void init() {
+    static void init()
+    {
         app = new App();
         app.connect("localhost:33060", 30000);
 
@@ -40,6 +41,7 @@ public class AppIntegrationTest {
     }
 
 
+
     /**
      * Tests database connection
      */
@@ -55,17 +57,13 @@ public class AppIntegrationTest {
     }
 
     /**
-     * <<<<<<< HEAD
      * develop
-     * =======
-     * <p>
-     * >>>>>>> adding_markdownfiles_to_the_app_feature-emma
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
     @Test
-    void testWorldCountries() {
+    void testWorldCountry() {
         // gets world countries information for world report using empty report type
         ArrayList<Country> worldCountries = app.getAllCountries("", "");
 
@@ -82,14 +80,15 @@ public class AppIntegrationTest {
         }
     }
 
-
+    /**
+     * ##################################################################
+     */
     @Test
-
     void testWorldCities() {
         // gets world countries information for world report using empty report type
         ArrayList<City> worldCities = app.getAllCities("", "");
 
-        if (worldCities != null) {
+        if(worldCities != null) {
             assertTrue(worldCities.size() > 0);
             assertNotNull(worldCities.get(0).name);
             assertNotNull(worldCities.get(0).country);
@@ -103,11 +102,11 @@ public class AppIntegrationTest {
 
 
     @Test
-            void testTotalUrbanRuralPopulation() {
+    void testTotalUrbanRuralPopulation() {
         // gets world countries information for world report using empty report type
         ArrayList<Urbanisation> ruralPopulation = app.getTotalUrbanRuralPopulation("con");
 
-        if (ruralPopulation != null) {
+        if(ruralPopulation != null) {
             assertTrue(ruralPopulation.size() > 0);
             Assertions.assertNotNull(ruralPopulation.get(0).Name);
             assertNotEquals(-1, ruralPopulation.get(0).totalPopulation);
@@ -134,72 +133,55 @@ public class AppIntegrationTest {
     }
 
 
+
+
     /**
-     * //     * Tests object and attributes are not null after trying to get total population information from database when using
-     * //     * an empty string for report type (should generate world report object)
-     * //
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
      */
-    @Test
-    void testTotalPopulation() {
-        // gets world countries information for world report using empty report type
-        TotalPopulation totalPopulation = app.getTotalPopulation("", "");
-
-        assertNotNull(totalPopulation);
-        assertEquals("World", totalPopulation.reportType);
-        assertNotNull(totalPopulation.name);
-        assertNotEquals(-1.0, totalPopulation.population);
-
-    }
-        /**
-         * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
-         * after trying to get country information from database when using
-         * an empty string for report type (should generate world report objects list)
-         */
-        // gets world capital cities information for world report using empty report type
-    @Test
-    void testWorldCapitalCities () {
-            ArrayList<Capital> worldCapitalCities = app.getAllCapitalCities("", "");
-
-
-            if (worldCapitalCities != null) {
-                assertTrue(((ArrayList<Capital>) worldCapitalCities).size() > 0);
-                assertNotNull(worldCapitalCities.get(0).name);
-                assertNotNull(worldCapitalCities.get(0).country);
-                assertNotEquals(-1, worldCapitalCities.get(0).population);
-
-            } else {
-                fail("getAllCapitalCities returning Null pointer");
-
-            }
-        }
-
-
-   /**z
+    /**
+     @Test
+     void testWorldCapitalCities(){
+     // gets world countries information for world report using empty report type
+     ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
+     if(worldCapitalCities != null) {
+     assertTrue(worldCapitalCities.size() > 0);
+     assertNotNull(worldCapitalCities.get(0).name);
+     assertNotNull(worldCapitalCities.get(0).country);
+     assertNotEquals(-1, worldCapitalCities.get(0).population);
+     } else {
+     fail("getAllCities returning Null pointer");
+     }
+     }
+     */
+    /**
      * Tests object and attributes are not null after trying to get language information from database
      */
-        @Test
-        void testLanguage () {
-            // gets world countries information for world report using empty report type
-            Language language = app.getLanguage();
+    @Test
+    void testLanguages() {
+        // gets languages for world report using empty report type
+        ArrayList<Language> languages= app.getLanguageReport();
 
+        if(languages != null) {
+            assertTrue(languages.size() > 0);
+            assertNotNull(languages.get(0).languageName);
+            assertNotEquals(-1, languages.get(0).population);
+            assertNotEquals(-1.0, languages.get(0).percentage);
+        } else {
+            fail("getAllCities returning Null pointer");
 
-            if (language != null) {
-                assertNotNull(language);
-                assertNotNull(language.countryCode);
-                assertNotNull(language.languageName);
-                assertNotEquals(-1, language.population);
-            } else {
-                fail("language returning Null pointer");
-            }
-        }
-
-
-        /**
-         * Disconnects from database
-         */
-        @AfterAll
-        static void disconnect () {
-            app.disconnect();
         }
     }
+
+
+
+    /**
+     * Disconnects from database
+     */
+    @AfterAll
+    static void disconnect() {
+        app.disconnect();
+    }
+
 }

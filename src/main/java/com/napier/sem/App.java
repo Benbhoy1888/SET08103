@@ -559,19 +559,6 @@ public class App
 
     // Total Population methods--- vvv --------------------------------------------------------------------
 
-    /**
-     * Gets language information from database
-     * @return A Language object, or null if there is an error
-     */
-    public Language getLanguage() {
-        return null;
-    }
-
-    /**
-     * Outputs to Markdown
-     */
-    public void outputLanguageReport(Language language) {
-    }
 
     // Total Population methods --- vvv --------------------------------------------------------------------
 
@@ -863,7 +850,6 @@ public class App
         }
     }
 
-    // Language
 
     // Language Reports --- vvv -------------------------------------------------------------------
 
