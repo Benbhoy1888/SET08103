@@ -35,7 +35,6 @@ public class LanguageReportTests {
     void outputLanguageReportNullField() {
         Language language = new Language();
 
-        language.countryCode = null;
         language.languageName = null;
         language.population = 0;
 
@@ -50,7 +49,6 @@ public class LanguageReportTests {
     void outputLanguageReport() {
         Language language = new Language();
 
-        language.countryCode = "GBR";
         language.languageName = "English";
         language.population = 93.7;
 

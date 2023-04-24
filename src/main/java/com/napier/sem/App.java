@@ -88,31 +88,6 @@ public class App {
 
         // Capital City reports --- vvv ----------------------------------------------------------------
 
-        // Cities reports --- vvv ----------------------------------------------------------------------
-        ArrayList<Capital> worldCapital= a.getAllCapitalCities("w", "");
-
-        ArrayList<Capital> regionCapital = a.getAllCapitalCities("r", "Western Europe");
-
-        ArrayList<Capital> countryCapital = a.getAllCapitalCities("co", "United Kingdom");
-
-        ArrayList<Capital> populationCapital = a.getAllCapitalCities("co", "United Kingdom");
-
-        // Generates country reports and outputs to markdown file for:
-        // world
-        a.outputCapitalReport(worldCapital, -1, "allWorldCapital");
-        // region
-        a.outputCapitalReport(regionCapital, -1, "allCapitalRegion");
-        // country
-        a.outputCapitalCitiesReport(countryCapital, -1, "allCapitalCountry");
-
-
-        // top n in world
-        a.outputCityReport(worldCities, 5, "top5_worldCities");
-        a.outputCapitalReport(populationCapital,-1, "top2_populationCapital");
-        // top n in region
-        a.outputCapitalReport(regionCapital, 3, "top3_regionCapital");
-        // top n in country
-        a.outputCapitalReport(countryCapital, -1, "top5_countryCapital");
 
 
 
@@ -770,7 +745,6 @@ public class App {
     /**
      * Outputs to Markdown
      */
-
     public void outputLanguageReport(Language language) {
     }
 
