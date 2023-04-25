@@ -141,40 +141,38 @@ public class AppIntegrationTest {
      * an empty string for report type (should generate world report objects list)
      */
     /**
-    @Test
-    void testWorldCapitalCities(){
-        // gets world countries information for world report using empty report type
-        ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
-
-        if(worldCapitalCities != null) {
-            assertTrue(worldCapitalCities.size() > 0);
-            assertNotNull(worldCapitalCities.get(0).name);
-            assertNotNull(worldCapitalCities.get(0).country);
-            assertNotEquals(-1, worldCapitalCities.get(0).population);
-        } else {
-            fail("getAllCities returning Null pointer");
-        }
-    }
-*/
+     @Test
+     void testWorldCapitalCities(){
+     // gets world countries information for world report using empty report type
+     ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
+     if(worldCapitalCities != null) {
+     assertTrue(worldCapitalCities.size() > 0);
+     assertNotNull(worldCapitalCities.get(0).name);
+     assertNotNull(worldCapitalCities.get(0).country);
+     assertNotEquals(-1, worldCapitalCities.get(0).population);
+     } else {
+     fail("getAllCities returning Null pointer");
+     }
+     }
+     */
     /**
      * Tests object and attributes are not null after trying to get language information from database
      */
- //   @Test
-//    void testLanguage() {
-        // gets world countries information for world report using empty report type
-//        Language language = app.getLanguage();
+    @Test
+    void testLanguages() {
+        // gets languages for world report using empty report type
+        ArrayList<Language> languages= app.getLanguageReport();
 
+        if(languages != null) {
+            assertTrue(languages.size() > 0);
+            assertNotNull(languages.get(0).languageName);
+            assertNotEquals(-1, languages.get(0).population);
+            assertNotEquals(-1.0, languages.get(0).percentage);
+        } else {
+            fail("getAllCities returning Null pointer");
 
-
-//        if(language != null) {
-//            assertNotNull(language);
-//            assertNotNull(language.countryCode);
-//            assertNotNull(language.languageName);
-//            assertNotEquals(-1, language.population);
- //       } else {
-//            fail("language returning Null pointer");
-//        }
-//   }
+        }
+    }
 
 
 
@@ -184,7 +182,6 @@ public class AppIntegrationTest {
     @AfterAll
     static void disconnect() {
         app.disconnect();
-        }
+    }
 
-        }
-
+}
