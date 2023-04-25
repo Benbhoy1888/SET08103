@@ -89,4 +89,4 @@ jobs:
 #            ./target/*.jar
       - name: Copy Output
         run: docker cp set08103_app_1:/tmp/reports/. ./reports
-#        run: docker cp softwareem-group-project-app-1:/tmp/reports/. ./reports
+#        run: docker cp softwareem-group-project-app-1:/tmp/reports/. ./reports .
