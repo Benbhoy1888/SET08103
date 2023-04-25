@@ -27,5 +27,5 @@ To up-date version and create a release-
 * 21/04/2023 junit packages reloaded and pushed
 * 21/04/2023 added deloyment permissions to main.xml
 * 24/04/2023 re-push to correct mising objects in languages unit test
-* 26/04/2023 re-push
+* 26/04/2023 re-push v2
 * 
