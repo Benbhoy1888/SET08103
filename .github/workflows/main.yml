@@ -79,6 +79,7 @@ jobs:
       - name: Package and Run docker compose
         run: |
           mvn package -DskipTests
+          sudo docker cp -r container:/set08103-app:/tmp/reports /reports
           docker-compose up --abort-on-container-exit
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -88,4 +89,3 @@ jobs:
           files: |
             ./target/*.jar
       - name: Copy Output
-        run: docker container cp set08103_app_1:/tmp/reports ./reports 
