@@ -27,4 +27,9 @@ public class Capital {
      * Region
      */
     public String region;
+
+    /**
+     * continent
+     */
+    public String continent;
 }

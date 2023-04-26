@@ -87,24 +87,36 @@ public class App {
         // top n in district
         a.outputCityReport(regionCities, 1, "top1_districtCities");
         // Capital City reports --- vvv ----------------------------------------------------------------
-        ArrayList<Capital> WorldCapital= a.getAllCapitalCities("w", "");
+        ArrayList<Capital> worldCapitalCities= a.getAllCapitalCities("w", "");
 
+        ArrayList<Capital> nameCapitalCities = a.getAllCapitalCities("n", "London");
 
+        ArrayList<Capital> countryCapitalCities = a.getAllCapitalCities("co", "United Kingdom");
+        ArrayList<Capital> regionCapitalCities = a.getAllCapitalCities("r", " northwest coast of Europe");
 
-        ArrayList<Capital> nameCapital = a.getAllCapitalCities("n", "Western Europe");
-
-        ArrayList<Capital> countryCapital = a.getAllCapitalCities("co", "United Kingdom");
+        ArrayList<Capital> continentCapitalCities = a.getAllCapitalCities("c", "Oceania");
 
         // Generates reports and outputs to markdown file for:
         // world
-        a.outputCapitalCitiesReport(WorldCapital, -1, "allworldCapitalCities");
+        a.outputCapitalCitiesReport(worldCapitalCities, -1, "allWorldCapitalCities");
         // country
-        a.outputCapitalCitiesReport(countryCapital, -1, "allCapitalCitiesCountry");
+        a.outputCapitalCitiesReport(countryCapitalCities, -1, "allCapitalCitiesCountry");
+        // region
+        a.outputCapitalCitiesReport(regionCapitalCities, -1, "allCapitalCitiesRegion");
+        // continent
+        a.outputCapitalCitiesReport(continentCapitalCities, -1, "allCapitalCitiesContinent");
         // Generates capital reports and outputs to markdown file for:
-        // all capital in world
-        a.outputCapitalCitiesReport(WorldCapital, -1, "allWorldCapital");
-        // top n populated capital in world (in this case, n = 5)
-        a.outputCapitalCitiesReport(WorldCapital, 5, "top5_worldCapital");
+       // all capital in world
+        // top n in world
+              a.outputCapitalCitiesReport(worldCapitalCities, 5, "top5_worldCapitalCities");
+                // top n in continent
+                a.outputCapitalCitiesReport(continentCapitalCities, 8, "top8_continentCities");
+               // top n in region
+                a.outputCapitalCitiesReport(regionCapitalCities, 3, "top3_regionCapitalCities");
+               // top n in country
+             a.outputCapitalCitiesReport(countryCapitalCities, 5, "top5_countryCapitalCities");
+               // top n in district
+             a.outputCapitalCitiesReport(regionCapitalCities, 1, "top1_districtCapitalCities");
 
 
 
@@ -319,7 +331,7 @@ public class App {
 
         StringBuilder sb = new StringBuilder();
         // Print header
-        sb.append("|Name | Country | Region| Population| \r\n");
+        sb.append("|Name | Country | Region| District|Population| \r\n");
         sb.append("| :--- | :--- | ---: | ---: |\r\n");
 
         // Loop over all cities in the list
@@ -329,7 +341,8 @@ public class App {
             if (capital == null) continue;
             sb.append(("| " + capital.name + " | " +
                     capital.country + " | " +
-                    capital.region +"|"+
+                    capital.region + "|" +
+                    capital.continent +"|"+
                     capital.population + " |\r\n"));
         }
 
@@ -347,39 +360,12 @@ public class App {
         }
 
 
-
-        //Println header
-        sb.append("|Name | Country | Region| Population| \r\n");
-        sb.append("| :--- | :--- | ---: |\r\n");
-
-        /** Loop over all countries in the list*/
-        for (int i = 0; i < displayN; i++) {
-            Capital capital;
-            capital = capitalCities.get(i);
-            if (capital == null) continue;
-            sb.append(("| " + capital.name + " | " +
-                    capital.country + " | " +
-                    capital.region +"|"+
-                    capital.population + " |\r\n"));
-        }
-        try {
-            File directory = new File("./reports");
-            if (!directory.exists()) {
-                directory.mkdir();
-            }
-            new File("./reports/capital_reports").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/capitalCity_reports/" + filename + ".md"));
-            writer.write(sb.toString());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     /**
      * Gets all cities information from database (defaults to world, pass "c" (continent)
      * or "r" (region) or "co" (country) or "d" (district) to get relevant report)
      * 'choice' is only used if continent or region is specified as reportType
-     * @param reportType should be "w", "c" or "r", "" can also be used to get world
+     * @param reportType should be "w", "co", "p", "c" or "r", "" can also be used to get world
      * @param choice if selecting a continent, region, country or district this should be specified here - ignored if report type is "w"
      * @return A list of all cities, or null if there is an error
      */
@@ -397,13 +383,15 @@ public class App {
             } else if (choice.equals("")) {
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
-            } else if (reportType.equalsIgnoreCase("C")) {
-                reportType = "Continent";
             } else if (reportType.equalsIgnoreCase("R")) {
                 reportType = "Region";
             } else if (reportType.equalsIgnoreCase("CO")) {
                 reportType = "Country";
-            } else {
+
+            } else if (reportType.equalsIgnoreCase("C")) {
+                reportType = "Contient";
+
+            }else {
                 System.out.println("Capital Cities report type not valid");
                 return null;
             }
@@ -413,11 +401,17 @@ public class App {
 
             /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT country.Name , country.Region ,city.name ,city.Population \n"
+                    "SELECT country.Name AS country , country.continent,country.Region AS region ,city.name as city ,city.Population as population \n"
                             + "FROM country\n" +
                             "JOIN country on city.ID  = city.ID;\n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
+                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            }
+            if (!(reportType.equals("Region"))) {
+                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
+            }
+            if (!(reportType.equals("Continent"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
             /** Orders by largest population to smallest*/
@@ -432,6 +426,7 @@ public class App {
                 capital.name = rset.getString("Name");
                 capital.country = rset.getString("Country");
                  capital.region = rset.getString("Region");
+                 capital.continent = rset.getString("District");
                 capital.population = rset.getInt("Population");
                 capitalCities.add(capital);
             }
