@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
- class CapitalCityReportTests {
+ class CapitalReportTests {
 
      static App app;
 
@@ -98,7 +98,8 @@ import static org.junit.jupiter.api.Assertions.fail;
          capital.population = 18886000;
          capital.country = "Australia";
          capitalCities.add(capital);
-         app.outputCapitalCitiesReport(capitalCities, 2, "test");
+         app.outputCapitalCitiesReport(null, 2, "test");
+
      }
 
      /**

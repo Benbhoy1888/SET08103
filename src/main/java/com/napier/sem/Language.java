@@ -6,6 +6,11 @@ package com.napier.sem;
 public class Language {
 
     /**
+     * Country code
+     */
+    public String countryCode;
+
+    /**
      * Language name
      */
     public String languageName;
@@ -18,6 +23,6 @@ public class Language {
     /**
      * Language percentage
      */
-    public double percentage=-1.0;
 
+    public double percentage=-1.0;
 }

@@ -88,4 +88,9 @@ jobs:
           files: |
             ./target/*.jar
       - name: Copy Output
-        run: docker container cp set08103_app_1:/tmp/reports ./reports 
+        run: docker cp set08103_app_1:./tmp/reports ./
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: reports # The branch the action should deploy to.
+          folder: reports # The folder we are copying
