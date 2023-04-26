@@ -95,6 +95,24 @@ public class AppIntegrationTest {
 
         }
     }
+    /**
+     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
+     * after trying to get country information from database when using
+     * an empty string for report type (should generate world report objects list)
+     */
+    @Test
+    void testWorldCapitalCities(){
+        // gets world countries information for world report using empty report type
+        ArrayList<Capital> worldCapitalCities = app.getAllCapitalCities("", "");
+        if(worldCapitalCities != null) {
+            assertTrue(worldCapitalCities.size() > 0);
+            assertNotNull(worldCapitalCities.get(0).name);
+            assertNotNull(worldCapitalCities.get(0).country);
+            assertNotEquals(-1, worldCapitalCities.get(0).population);
+        } else {
+            fail("getAllCities returning Null pointer");
+        }
+    }
 
 
     @Test
@@ -131,26 +149,7 @@ public class AppIntegrationTest {
 
 
 
-    /**
-     * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
-     * after trying to get country information from database when using
-     * an empty string for report type (should generate world report objects list)
-     */
-    /**
-     @Test
-     void testWorldCapitalCities(){
-     // gets world countries information for world report using empty report type
-     ArrayList<Capital> worldCapitalCities = app.getAllCapitalCites("", "");
-     if(worldCapitalCities != null) {
-     assertTrue(worldCapitalCities.size() > 0);
-     assertNotNull(worldCapitalCities.get(0).name);
-     assertNotNull(worldCapitalCities.get(0).country);
-     assertNotEquals(-1, worldCapitalCities.get(0).population);
-     } else {
-     fail("getAllCities returning Null pointer");
-     }
-     }
-     */
+
     /**
      * Tests object and attributes are not null after trying to get language information from database
      */

@@ -86,7 +86,6 @@ public class App {
         a.outputCityReport(countryCities, 5, "top5_countryCities");
         // top n in district
         a.outputCityReport(regionCities, 1, "top1_districtCities");
-
         // Capital City reports --- vvv ----------------------------------------------------------------
         ArrayList<Capital> worldCapital= a.getAllCapitalCities("w", "");
 
@@ -96,15 +95,11 @@ public class App {
 
         ArrayList<Capital> countryCapital = a.getAllCapitalCities("co", "United Kingdom");
 
-        ArrayList<Capital> populationCapital =a.getAllCapitalCities("pop","500");
-
         // Generates reports and outputs to markdown file for:
         // world
         a.outputCapitalCitiesReport(worldCapital, -1, "allworldCapitalCities");
         // country
         a.outputCapitalCitiesReport(countryCapital, -1, "allCapitalCitiesCountry");
-        // population
-        a.outputCapitalCitiesReport(populationCapital, -1, "allCapitalCitiespopulation");
 
 
 
@@ -303,8 +298,8 @@ public class App {
             return null;
         }
     }
-    // Capital City reports --- vvv ----------------------------------------------------------------
 
+    // Capital City reports --- vvv ----------------------------------------------------------------
     public void outputCapitalCitiesReport(
             ArrayList<Capital> capitalCities, int displayN, String filename) {
 
@@ -444,6 +439,7 @@ public class App {
             return null;
         }
     }
+
 
     // Urbanisation reports --- vvv ----------------------------------------------------------------
 
