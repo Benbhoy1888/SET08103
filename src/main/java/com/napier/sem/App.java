@@ -203,7 +203,7 @@ public class App {
             return;
         }
 
-        // sets displayN to total number of cities in ArrayList if either disiplayN is set to -1 (display all)
+        // sets displayN to total number of cities in ArrayList if either displayN is set to -1 (display all)
         // or displayN is greater than the number of cities
         if(displayN>cities.size() || displayN<0){
             displayN = cities.size();
@@ -292,7 +292,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract country information from result set
-            ArrayList<City> cities = new ArrayList<City>();
+            ArrayList<City> cities = new ArrayList<>();
             while (rset.next())
             {
                 City city = new City();
@@ -322,7 +322,7 @@ public class App {
             return;
         }
 
-        // sets displayN to total number of cities in ArrayList if either disiplayN is set to -1 (display all)
+        // sets displayN to total number of cities in ArrayList if either displayN is set to -1 (display all)
         // or displayN is greater than the number of cities
         if (displayN > capitalCities.size() || displayN < 0) {
             displayN = capitalCities.size();
@@ -338,11 +338,7 @@ public class App {
             Capital capital;
             capital = capitalCities.get(i);
             if (capital == null) continue;
-            sb.append(("| " + capital.name + " | " +
-                    capital.country + " | " +
-                    capital.region + "|" +
-                    capital.continent +"|"+
-                    capital.population + " |\r\n"));
+            sb.append("| ").append(capital.name).append(" | ").append(capital.country).append(" | ").append(capital.region).append("|").append(capital.continent).append("|").append(capital.population).append(" |\r\n");
         }
 
         try {
@@ -377,18 +373,19 @@ public class App {
             stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
-            if (reportType.equalsIgnoreCase("W") || reportType.equals("")){
+            if(reportType.toUpperCase().equals("W") || reportType.equals("")) {
                 reportType = "World";
-            } else if (choice.equals("")) {
+            } else if (choice.equals("")){
                 System.out.println("No choice provided when report type is not W or ''");
                 return null;
-            } else if (reportType.equalsIgnoreCase("R")) {
-                reportType = "Region";
-            } else if (reportType.equalsIgnoreCase("CO")) {
-                reportType = "Country";
-
-            } else if (reportType.equalsIgnoreCase("C")) {
-                reportType = "Contient";
+            } else if(reportType.toUpperCase().equals("C")){
+                reportType = "country.Continent";
+            } else if (reportType.toUpperCase().equals("R")) {
+                reportType = "country.Region";
+            }    else if (reportType.toUpperCase().equals("CO")){
+                reportType = "country.Name";
+            }    else if (reportType.toUpperCase().equals("D")){
+                reportType = "city.District";
 
             }else {
                 System.out.println("Capital Cities report type not valid");
@@ -656,7 +653,7 @@ public class App {
             return;
         }
 
-        // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
+        // sets displayN to total number of countries in ArrayList if either displayN is set to -1 (display all)
         // or displayN is greater than the number of countries
         if(displayN>countries.size() || displayN<0){
             displayN = countries.size();
@@ -780,7 +777,7 @@ public class App {
             // Print header
             System.out.println(String.format("%-4s %-53s %-15s %-27s %-12s %-36s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
 
-            // sets displayN to total number of countries in ArrayList if either disiplayN is set to -1 (display all)
+            // sets displayN to total number of countries in ArrayList if either displayN is set to -1 (display all)
             // or displayN is greater than the number of countries
             if(displayN>countries.size() || displayN==-1){
                 displayN = countries.size();
@@ -870,10 +867,10 @@ public class App {
 
         // Loop over all rows in the list
         int rowCount = languages.size();
-        for (int i= 0; i<rowCount; i++){
+        for (Language language : languages) {
             Language lan;
-            lan = languages.get(i);
-            if(lan == null) continue;
+            lan = language;
+            if (lan == null) continue;
             sb.append(("| " + lan.languageName + " | " +
                     lan.population + " | " +
                     lan.percentage + " |\r\n"));
@@ -895,13 +892,6 @@ public class App {
     }
 
     // Menu --- vvv --------------------------------------------------------------------------------
-    /**
-     * Creates a menu for user
-     * Parses choice(s) and creates relevant report(s)
-     */
-    private void createMenu() {
-        Menu m = new Menu();
-    }
 
     // Database --- vvv ----------------------------------------------------------------------------
     /**
