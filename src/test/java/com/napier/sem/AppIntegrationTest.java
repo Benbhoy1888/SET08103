@@ -108,6 +108,7 @@ public class AppIntegrationTest {
             assertTrue(worldCapitalCities.size() > 0);
             assertNotNull(worldCapitalCities.get(0).name);
             assertNotNull(worldCapitalCities.get(0).country);
+            assertNotNull(worldCapitalCities.get(0).region);
             assertNotEquals(-1, worldCapitalCities.get(0).population);
         } else {
             fail("getAllCities returning Null pointer");
