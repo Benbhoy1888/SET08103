@@ -84,7 +84,7 @@ public class AppIntegrationTest {
         // gets world countries information for world report using empty report type
         ArrayList<City> worldCities = app.getAllCities("", "");
 
-        if(worldCities != null) {
+        if (worldCities != null) {
             assertTrue(worldCities.size() > 0);
             assertNotNull(worldCities.get(0).name);
             assertNotNull(worldCities.get(0).country);
@@ -95,18 +95,17 @@ public class AppIntegrationTest {
 
         }
     }
+
     /**
      * Tests ArrayList is contains at least 1 object and that the first objects attributes are not null
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
     @Test
-    void testWorldCapitalCities(){
+    void testWorldCapitalCities() {
         // gets world countries information for world report using empty report type
         ArrayList<Capital> worldCapitalCities = app.getAllCapitalCities("", "");
-        if(worldCapitalCities != null) {
-            // check array list is null
-            assertNotNull(worldCapitalCities);
+        if (worldCapitalCities != null) {
             /*Check data items are not null*/
             assertTrue(worldCapitalCities.size() > 0);
             assertNotNull(worldCapitalCities.get(0).name);
@@ -118,6 +117,8 @@ public class AppIntegrationTest {
             fail("getAllCapitalCities returning Null pointer");
         }
     }
+
+
 
 
     @Test

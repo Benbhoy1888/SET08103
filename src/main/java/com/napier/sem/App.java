@@ -7,14 +7,13 @@ import java.util.ArrayList;
 /**
  * A Class to run project world reports application
  * Reports generated are saved in reports directory
- *
  * To run locally, now just need to use green run arrow next to main method (no need to rebuild)
  */
 public class App {
     /**
      * Main Method, program starts here
      *
-     * @param args
+     * @param args creating the methods
      */
     public static void main(String[] args) {
         // Create new Application
@@ -220,10 +219,10 @@ public class App {
             City city;
             city = cities.get(i);
             if(city == null) continue;
-            sb.append(("| " + city.name + " | " +
+            sb.append("| " + city.name + " | " +
                     city.country + " | " +
                     city.district + " | " +
-                    city.population + " |\r\n"));
+                    city.population + " |\r\n");
         }
 
         try {
@@ -374,7 +373,7 @@ public class App {
     public ArrayList<Capital> getAllCapitalCities(String reportType, String choice)  {
         Statement stmt;
         try {
-            /** Creating an SQL statement*/
+        /** Creating an SQL statement*/
             stmt = con.createStatement();
 
             // Checks report type valid and correctly sets formatting
@@ -399,7 +398,7 @@ public class App {
 
 
 
-            /** Create string for SQL statement*/
+        /** Create string for SQL statement*/
             String strSelect =
                     "SELECT country.Name AS country , country.continent,country.Region AS region ,city.name as city ,city.Population as population \n"
                             + "FROM country\n" +
@@ -411,7 +410,7 @@ public class App {
             if (!(reportType.equals("Region"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
-            if (!(reportType.equals("Continent"))) {
+            if ((reportType.equals("Continent"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
             /** Orders by largest population to smallest*/
@@ -420,7 +419,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             /** Extract country information from result set*/
-            ArrayList<Capital> capitalCities = new ArrayList<Capital>();
+            ArrayList<Capital> capitalCities = new ArrayList<>();
             while (rset.next()) {
                 Capital capital = new Capital();
                 capital.name = rset.getString("Name");
