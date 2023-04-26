@@ -33,25 +33,25 @@ public class App {
 
         // Extract country information for:
         // world report
-        ArrayList<Country> worldCountries = a.getAllCountries("w", "");
+        ArrayList<Country> worldCapital = a.getAllCountries("w", "");
         // continent report
         ArrayList<Country> continentCountries = a.getAllCountries("c", "Oceania");
         //region report
-        ArrayList<Country> regionCountries = a.getAllCountries("r", "Western Europe");
+        ArrayList<Country> regionCapital = a.getAllCountries("r", "Western Europe");
 
         // Generates country reports and outputs to markdown file for:
         // all countries in world
-        a.outputCountryReport(worldCountries, -1, "allWorldCountries");
+        a.outputCountryReport(worldCapital, -1, "allWorldCountries");
         // all countries in continent (in this case, continent = 'Oceania')
         a.outputCountryReport(continentCountries, -1, "allCountriesContinent");
         // all countries in region (in this case, region = 'Western Europe')
-        a.outputCountryReport(regionCountries, -1, "allCountriesRegion");
+        a.outputCountryReport(regionCapital, -1, "allCountriesRegion");
         // top n populated countries in world (in this case, n = 5)
-        a.outputCountryReport(worldCountries, 5, "top5_worldCountries");
+        a.outputCountryReport(worldCapital, 5, "top5_worldCountries");
         // top n populated countries in continent (in this case, n = 8, continent = 'Oceania')
         a.outputCountryReport(continentCountries, 8, "top8_continentCountries");
         // top n populated countries in region (in this case, n = 3, region = 'Western Europe')
-        a.outputCountryReport(regionCountries, 3, "top3_regionCountries");
+        a.outputCountryReport(regionCapital, 3, "top3_regionCountries");
 
         // Cities reports --- vvv ----------------------------------------------------------------------
         ArrayList<City> worldCities= a.getAllCities("w", "");
@@ -87,7 +87,7 @@ public class App {
         // top n in district
         a.outputCityReport(regionCities, 1, "top1_districtCities");
         // Capital City reports --- vvv ----------------------------------------------------------------
-        ArrayList<Capital> worldCapital= a.getAllCapitalCities("w", "");
+        ArrayList<Capital> WorldCapital= a.getAllCapitalCities("w", "");
 
 
 
@@ -97,12 +97,14 @@ public class App {
 
         // Generates reports and outputs to markdown file for:
         // world
-        a.outputCapitalCitiesReport(worldCapital, -1, "allworldCapitalCities");
+        a.outputCapitalCitiesReport(WorldCapital, -1, "allworldCapitalCities");
         // country
         a.outputCapitalCitiesReport(countryCapital, -1, "allCapitalCitiesCountry");
-
-
-
+        // Generates capital reports and outputs to markdown file for:
+        // all capital in world
+        a.outputCapitalCitiesReport(WorldCapital, -1, "allWorldCapital");
+        // top n populated capital in world (in this case, n = 5)
+        a.outputCapitalCitiesReport(WorldCapital, 5, "top5_worldCapital");
 
 
 
@@ -317,7 +319,7 @@ public class App {
 
         StringBuilder sb = new StringBuilder();
         // Print header
-        sb.append("|Name | Country | District| Population| \r\n");
+        sb.append("|Name | Country | Region| Population| \r\n");
         sb.append("| :--- | :--- | ---: | ---: |\r\n");
 
         // Loop over all cities in the list
@@ -327,6 +329,7 @@ public class App {
             if (capital == null) continue;
             sb.append(("| " + capital.name + " | " +
                     capital.country + " | " +
+                    capital.region +"|"+
                     capital.population + " |\r\n"));
         }
 
@@ -346,7 +349,7 @@ public class App {
 
 
         //Println header
-        sb.append("|Name | Country | Population| \r\n");
+        sb.append("|Name | Country | Region| Population| \r\n");
         sb.append("| :--- | :--- | ---: |\r\n");
 
         /** Loop over all countries in the list*/
@@ -356,6 +359,7 @@ public class App {
             if (capital == null) continue;
             sb.append(("| " + capital.name + " | " +
                     capital.country + " | " +
+                    capital.region +"|"+
                     capital.population + " |\r\n"));
         }
         try {
@@ -409,24 +413,25 @@ public class App {
 
             /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT world.country.Name AS country, world.city.name AS capital, world.city.Population as population\n"
-                            + "FROM world.country\n" +
-                            "JOIN world.country on world.city.ID  = world.city.ID;/n";
+                    "SELECT country.Name , country.Region ,city.name ,city.Population \n"
+                            + "FROM country\n" +
+                            "JOIN country on city.ID  = city.ID;\n";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
             /** Orders by largest population to smallest*/
-            strSelect += " ORDER BY Population DESC";
+            strSelect += " ORDER BY Population DESC\n";
             /** Execute SQL statement*/
             ResultSet rset = stmt.executeQuery(strSelect);
+
             /** Extract country information from result set*/
             ArrayList<Capital> capitalCities = new ArrayList<Capital>();
             while (rset.next()) {
                 Capital capital = new Capital();
                 capital.name = rset.getString("Name");
                 capital.country = rset.getString("Country");
-                //  capital.region = rset.getString("Region");
+                 capital.region = rset.getString("Region");
                 capital.population = rset.getInt("Population");
                 capitalCities.add(capital);
             }

@@ -23,6 +23,8 @@ public class Capital {
      */
     public String country;
 
-    public void add(ArrayList<Capital> capitalCities) {
-    }
+    /**
+     * Region
+     */
+    public String region;
 }

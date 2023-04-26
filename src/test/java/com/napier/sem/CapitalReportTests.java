@@ -65,6 +65,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
          capital.name = null;
          capital.population = 0; // int field
+         capital.region=null;
          capital.country = null;
          capitalCities.add(capital);
 
@@ -79,6 +80,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          ArrayList<Capital> capitalCities = new ArrayList<>();
          Capital capital = new Capital();
          capital.name = "Canberra";
+         capital.region = "Australia and New Zealand";
          capital.population = 18886000;
          capital.country = "Australia";
 
@@ -96,6 +98,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          Capital capital = new Capital();
          capital.name = "Canberra";
          capital.population = 18886000;
+         capital.region = "Australia and New Zealand";
          capital.country = "Australia";
          capitalCities.add(capital);
          app.outputCapitalCitiesReport(null, 2, "test");
@@ -111,6 +114,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          Capital capital = new Capital();
          capital.name = "Canberra";
          capital.population = 18886000;
+         capital.region = "Australia and New Zealand";
          capital.country = "Australia";
          capitalCities.add(capital);
          app.outputCapitalCitiesReport(capitalCities, -1, "test");
