@@ -4,7 +4,7 @@
 
 
 | ID | Name | Met | Screenshot |
-| :---: | :--- | :--- | :---: |
+| :---: | :---: | :---: | :---: |
 | 1. | All the countries in the world organised by largest population to smallest. | Yes | ![countries - world](requirments_screenshots/allWorldCountries.png) |
 | 2. | All the countries in a continent organised by largest population to smallest. | Yes | ![countries - continent](requirments_screenshots/allCountriesContinent.png) |
 | 3. | All the countries in a region organised by largest population to smallest. | Yes | ![countries - region](requirments_screenshots/allCountriesRegion.png) |
