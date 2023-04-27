@@ -7,7 +7,7 @@
 * Main Build Status:&emsp;&ensp;&nbsp; ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=master&style=flat)  
 * Release Build Status: &ensp;![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=release&style=flat)   
 * Develop Build Status: &nbsp;![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=develop&style=flat) 
-*CodeCov Build Status:	[![codecov](https://codecov.io/gh/Benbhoy1888/SET08103/branch/master/graph/badge.svg?token=Z14TRAVG1B)](https://codecov.io/gh/Benbhoy1888/SET08103) 
+* CodeCov Build Status:	[![codecov](https://codecov.io/gh/Benbhoy1888/SET08103/branch/master/graph/badge.svg?token=Z14TRAVG1B)](https://codecov.io/gh/Benbhoy1888/SET08103)    
 <br>
 
 
