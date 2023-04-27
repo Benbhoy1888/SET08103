@@ -533,9 +533,9 @@ public class App
             sb.append(("| " + urb.Name + " | " +
                     urb.totalPopulation + " | " +
                     urb.cityPopulation + " | " +
-                    urb.cityPopulationPercentage + " | " +
+                    urb.cityPopulationPercentage + "% | " +
                     urb.nonCityPopulation + " | " +
-                    urb.nonCityPopulationPercentage  + " |\r\n"));
+                    urb.nonCityPopulationPercentage  + "% |\r\n"));
         }
 
         try {
@@ -927,7 +927,7 @@ public class App
             if(lan == null) continue;
             sb.append(("| " + lan.languageName + " | " +
                     lan.population + " | " +
-                    lan.percentage + " |\r\n"));
+                    lan.percentage  + "% |\r\n"));
         }
 
         try {
