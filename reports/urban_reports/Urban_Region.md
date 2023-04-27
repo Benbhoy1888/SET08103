@@ -1,4 +1,4 @@
-|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | 
+|Name |Total Population |Population living in cities |Percent living cities | Population not living in cities | Percentage not living in cities | 
 | :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |
 | Caribbean | 38140000 | 11067550 | 29.0% | 27072450 | 71.0% |
 | Southern and Central Asia | 1490776000 | 207688970 | 14.0% | 1283087030 | 86.0% |

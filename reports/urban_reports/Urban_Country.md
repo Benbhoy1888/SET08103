@@ -1,4 +1,4 @@
-|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | 
+|Name |Total Population |Population living in cities |Percent living cities | Population not living in cities | Percentage not living in cities | 
 | :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |
 | Aruba | 103000 | 29034 | 28.0% | 73966 | 72.0% |
 | Afghanistan | 22720000 | 2332100 | 10.0% | 20387900 | 90.0% |

@@ -1,4 +1,4 @@
-|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | 
+|Name |Total Population |Population living in cities |Percent living cities | Population not living in cities | Percentage not living in cities | 
 | :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |
 | North America | 482993000 | 168250381 | 35.0% | 314742619 | 65.0% |
 | Asia | 3705025700 | 697604103 | 19.0% | 3007421597 | 81.0% |

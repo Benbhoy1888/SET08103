@@ -521,7 +521,7 @@ public class App
         // build report header
         StringBuilder sb = new StringBuilder();
         // Print header
-        sb.append("|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | \r\n");
+        sb.append("|Name |Total Population |Population living in cities |Percent living cities | Population not living in cities | Percentage not living in cities | \r\n");
         sb.append("| :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |\r\n");
 
         // Loop over all rows in the list
