@@ -149,7 +149,7 @@ public class AppIntegrationTest {
         // gets world countries information for world report using empty report type
         TotalPopulation totalPopulation = app.getTotalPopulation("", "");
 
-        Assertions.assertNotNull(totalPopulation);
+        assertNotNull(totalPopulation);
         assertEquals("World", totalPopulation.reportType);
         assertNotNull(totalPopulation.name);
         assertNotEquals(-1.0, totalPopulation.population);
