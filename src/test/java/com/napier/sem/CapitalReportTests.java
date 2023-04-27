@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @BeforeAll
      static void init() {
+
          app = new App();
      }
 
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void outputCapitalCitiesReportsTestNull() {
+
          app.outputCapitalCitiesReport(null, -1, "test");
      }
 
@@ -67,6 +69,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          capital.population = 0; // int field
          capital.region=null;
          capital.country = null;
+         capital.continent=null;
          capitalCities.add(capital);
 
          app.outputCapitalCitiesReport(capitalCities, -1, "test");
@@ -83,6 +86,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          capital.region = "Australia and New Zealand";
          capital.population = 18886000;
          capital.country = "Australia";
+         capital.continent="Oceania";
 
          capitalCities.add(capital);
 
@@ -100,6 +104,7 @@ import static org.junit.jupiter.api.Assertions.fail;
          capital.population = 18886000;
          capital.region = "Australia and New Zealand";
          capital.country = "Australia";
+         capital.continent="Oceania";
          capitalCities.add(capital);
          app.outputCapitalCitiesReport(null, 2, "test");
 
@@ -130,7 +135,7 @@ import static org.junit.jupiter.api.Assertions.fail;
       */
      @Test
      void getAllCapitalCitiesTypeNotRecognised() {
-         assertNull(app.getAllCapitalCities("", ""));
+         assertNull(app.getAllCapitalCities("aaaa", "asia"));
      }
 
      /**

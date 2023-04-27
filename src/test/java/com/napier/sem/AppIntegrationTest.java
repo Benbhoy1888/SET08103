@@ -100,6 +100,7 @@ public class AppIntegrationTest {
      * after trying to get country information from database when using
      * an empty string for report type (should generate world report objects list)
      */
+
     @Test
     void testWorldCapitalCities() {
         // gets world countries information for world report using empty report type
@@ -114,9 +115,11 @@ public class AppIntegrationTest {
             assertNotNull(WorldCapitalCities.get(0).continent);
             assertNotEquals(-1, WorldCapitalCities.get(0).population);
         } else {
-            Assertions.fail("getAllCapitalCities returning Null pointer");
+            fail("getAllCapitalCities returning Null pointer");
         }
     }
+
+
 
 
 

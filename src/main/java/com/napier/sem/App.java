@@ -88,12 +88,14 @@ public class App {
         // Capital City reports --- vvv ----------------------------------------------------------------
         ArrayList<Capital> worldCapitalCities= a.getAllCapitalCities("w", "");
 
-        ArrayList<Capital> nameCapitalCities = a.getAllCapitalCities("n", "London");
+        ArrayList<Capital> nameCapitalCities = a.getAllCapitalCities("n", "Canberra");
 
-        ArrayList<Capital> countryCapitalCities = a.getAllCapitalCities("co", "United Kingdom");
-        ArrayList<Capital> regionCapitalCities = a.getAllCapitalCities("r", " northwest coast of Europe");
+        ArrayList<Capital> countryCapitalCities = a.getAllCapitalCities("co", "Australia");
+        ArrayList<Capital> regionCapitalCities = a.getAllCapitalCities("r", " Australia and New Zealand");
 
         ArrayList<Capital> continentCapitalCities = a.getAllCapitalCities("c", "Oceania");
+
+        ArrayList<Capital> populationCapitalCities = a.getAllCapitalCities("p", "18886000");
 
         // Generates reports and outputs to markdown file for:
         // world
@@ -104,6 +106,8 @@ public class App {
         a.outputCapitalCitiesReport(regionCapitalCities, -1, "allCapitalCitiesRegion");
         // continent
         a.outputCapitalCitiesReport(continentCapitalCities, -1, "allCapitalCitiesContinent");
+        // population
+        a.outputCapitalCitiesReport(populationCapitalCities, -1, "allCapitalCitiesPopulation");
         // Generates capital reports and outputs to markdown file for:
        // all capital in world
         // top n in world
@@ -312,7 +316,7 @@ public class App {
         }
     }
 
-    // Capital City reports --- vvv ----------------------------------------------------------------
+    // Capital City reports methods--- vvv ----------------------------------------------------------------
     public void outputCapitalCitiesReport(
             ArrayList<Capital> capitalCities, int displayN, String filename) {
 
@@ -393,10 +397,10 @@ public class App {
 
 
         /** Create string for SQL statement*/
-            String strSelect =
-                            "SELECT country.Name AS country , country.Continent as contient,country.Region AS region ,city.Name as city ,city.Population as population\n" +
-                            "FROM country\n" +
-                            "LEFT  JOIN city on country.code  = city.CountryCode";
+
+            String strSelect = "SELECT country.Name AS country , country.Continent as contient,country.Region AS region ,city.Name as city ,city.Population as population\n" +
+                    "FROM country\n" +
+                    "LEFT  JOIN city on country.code  = city.CountryCode;";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
