@@ -870,7 +870,7 @@ public class App
                     "      FROM world.country\n" +
                     "               JOIN world.countrylanguage ON countrylanguage.CountryCode = country.Code\n" +
                     "      WHERE Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')\n" +
-                    "      GROUP BY Language) AS lang";
+                    "      GROUP BY Language) AS lang ORDER BY `Number of People` DESC;";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract language information from result set

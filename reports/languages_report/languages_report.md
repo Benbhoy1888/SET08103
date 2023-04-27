@@ -1,7 +1,7 @@
 |Language | Number of people | World Percentage| 
 | :--- | ---: | ---: |
-| English | 3.47077867E8 | 5.71 |
-| Spanish | 3.55029462E8 | 5.84 |
-| Arabic | 2.33839239E8 | 3.85 |
-| Hindi | 4.0563307E8 | 6.67 |
-| Chinese | 1.191843539E9 | 19.61 |
+| Chinese | 1191843539 | 19.61 |
+| Hindi | 405633070 | 6.67 |
+| Spanish | 355029462 | 5.84 |
+| English | 347077867 | 5.71 |
+| Arabic | 233839239 | 3.85 |
