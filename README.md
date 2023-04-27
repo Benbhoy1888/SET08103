@@ -6,7 +6,8 @@
 * Release:&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp; [![Releases](https://img.shields.io/github/release/Benbhoy1888/SET08103/all.svg?style=flat-square)](https://github.com/Benbhoy1888/SET08103/releases&style=flat)  
 * Main Build Status:&emsp;&ensp;&nbsp; ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=master&style=flat)  
 * Release Build Status: &ensp;![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=release&style=flat)   
-* Develop Build Status: &nbsp;![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=develop&style=flat)  
+* Develop Build Status: &nbsp;![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/Benbhoy1888/SET08103/main.yml?branch=develop&style=flat) 
+*CodeCov Build Status:	[![codecov](https://codecov.io/gh/Benbhoy1888/SET08103/branch/master/graph/badge.svg?token=Z14TRAVG1B)](https://codecov.io/gh/Benbhoy1888/SET08103) 
 <br>
 
 
@@ -18,16 +19,16 @@
 | 4. | The top N populated countries in the world where N is provided by the user. | Yes | ![countries - world n](requirments_screenshots/top5_worldCountries.png) |
 | 5. | The top N populated countries in a continent where N is provided by the user. | Yes | ![countries - continent n](requirments_screenshots/top8_continentCountries.png) |
 | 6. | The top N populated countries in a region where N is provided by the user. | Yes | ![countries - region n](requirments_screenshots/top3_regionCountries.png) |
-| 7. | All the cities in the world organised by largest population to smallest. | COMPLETED? | ![cities - world](requirments_screenshots/FILENAME_HERE) |
-| 8. | All the cities in a continent organised by largest population to smallest. | COMPLETED? | ![cities - continent](requirments_screenshots/FILENAME_HERE) |
-| 9. | All the cities in a region organised by largest population to smallest. | COMPLETED? | ![cities - region](requirments_screenshots/FILENAME_HERE) | 
-| 10. | All the cities in a country organised by largest population to smallest. | COMPLETED? | ![cities - country](requirments_screenshots/FILENAME_HERE) |
-| 11. | All the cities in a district organised by largest population to smallest. | COMPLETED? | ![cities - district](requirments_screenshots/FILENAME_HERE) |
-| 12. | The top N populated cities in the world where N is provided by the user. | COMPLETED? | ![cities - world n](requirments_screenshots/FILENAME_HERE) |
-| 13. | The top N populated cities in a continent where N is provided by the user. | COMPLETED? | ![cities - continent n](requirments_screenshots/FILENAME_HERE) | 
-| 14. | The top N populated cities in a region where N is provided by the user. | COMPLETED? | ![cities - region n](requirments_screenshots/FILENAME_HERE) |
-| 15. | The top N populated cities in a country where N is provided by the user. | COMPLETED? | ![cities - country n](requirments_screenshots/FILENAME_HERE) |
-| 16. | The top N populated cities in a district where N is provided by the user. | COMPLETED? | ![cities - district n](requirments_screenshots/FILENAME_HERE) |
+| 7. | All the cities in the world organised by largest population to smallest. | Yes | ![cities - world](requirments_screenshots/worldCities.png) |
+| 8. | All the cities in a continent organised by largest population to smallest. | Yes | ![cities - continent](requirments_screenshots/continentCities.png) |
+| 9. | All the cities in a region organised by largest population to smallest. | Yes | ![cities - region](requirments_screenshots/regionCities.png) | 
+| 10. | All the cities in a country organised by largest population to smallest. | Yes | ![cities - country](requirments_screenshots/countryCities.png) |
+| 11. | All the cities in a district organised by largest population to smallest. | Yes | ![cities - district](requirments_screenshots/districtCities.png) |
+| 12. | The top N populated cities in the world where N is provided by the user. | Yes | ![cities - world n](requirments_screenshots/topCitiesWorld.png) |
+| 13. | The top N populated cities in a continent where N is provided by the user. | Yes | ![cities - continent n](requirments_screenshots/topCitiesContinent.png) | 
+| 14. | The top N populated cities in a region where N is provided by the user. | Yes | ![cities - region n](requirments_screenshots/topCitiesRegion.png) |
+| 15. | The top N populated cities in a country where N is provided by the user. | Yes | ![cities - country n](requirments_screenshots/topCitiesCountries.png) |
+| 16. | The top N populated cities in a district where N is provided by the user. | Yes | ![cities - district n](requirments_screenshots/topCitiesDistrict.png) |
 | 17. | All the capital cities in the world organised by largest population to smallest. | COMPLETED? | ![capital cities - world](requirments_screenshots/FILENAME_HERE) |
 | 18. | All the capital cities in a continent organised by largest population to smallest. | COMPLETED? | ![capital cities - continent](requirments_screenshots/FILENAME_HERE) |
 | 19. | All the capital cities in a region organised by largest to smallest. | COMPLETED? | ![capital cities - region](requirments_screenshots/FILENAME_HERE) | 
