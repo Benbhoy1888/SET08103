@@ -92,7 +92,6 @@ public class AppIntegrationTest {
             assertNotEquals(-1, worldCities.get(0).population);
         } else {
             fail("getAllCities returning Null pointer");
-
         }
     }
 
@@ -105,6 +104,7 @@ public class AppIntegrationTest {
     void testWorldCapitalCities() {
         // gets world countries information for world report using empty report type
         ArrayList<Capital> WorldCapitalCities = app.getAllCapitalCities("", "");
+
         if (WorldCapitalCities != null) {
             /*Check data items are not null*/
             assertTrue(WorldCapitalCities.size() > 0);
@@ -113,7 +113,9 @@ public class AppIntegrationTest {
             assertNotNull(WorldCapitalCities.get(0).region);
             assertNotNull(WorldCapitalCities.get(0).continent);
             assertNotEquals(-1, WorldCapitalCities.get(0).population);
-        } else fail("getAllCapitalCities returning Null pointer");
+        } else {
+            Assertions.fail("getAllCapitalCities returning Null pointer");
+        }
     }
 
 
@@ -144,7 +146,7 @@ public class AppIntegrationTest {
         // gets world countries information for world report using empty report type
         TotalPopulation totalPopulation = app.getTotalPopulation("", "");
 
-        assertNotNull(totalPopulation);
+        Assertions.assertNotNull(totalPopulation);
         assertEquals("World", totalPopulation.reportType);
         assertNotNull(totalPopulation.name);
         assertNotEquals(-1.0, totalPopulation.population);

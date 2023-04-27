@@ -384,10 +384,7 @@ public class App {
                 reportType = "country.Region";
             }    else if (reportType.toUpperCase().equals("CO")){
                 reportType = "country.Name";
-            }    else if (reportType.toUpperCase().equals("D")){
-                reportType = "city.District";
-
-            }else {
+            }   else {
                 System.out.println("Capital Cities report type not valid");
                 return null;
             }
@@ -397,21 +394,21 @@ public class App {
 
         /** Create string for SQL statement*/
             String strSelect =
-                    "SELECT country.Name AS country , country.continent,country.Region AS region ,city.name as city ,city.Population as population \n"
-                            + "FROM country\n" +
-                            "JOIN country on city.ID  = city.ID;\n";
+                            "SELECT country.Name AS country , country.Continent as contient,country.Region AS region ,city.Name as city ,city.Population as population\n" +
+                            "FROM country\n" +
+                            "LEFT  JOIN city on country.code  = city.CountryCode";
             /** Sets where clause for continent or region*/
             if (!(reportType.equals("World"))) {
                 strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
             }
-            if (!(reportType.equals("Region"))) {
-                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
-            }
-            if ((reportType.equals("Continent"))) {
-                strSelect += " WHERE " + reportType + " = '" + choice + "'\n";
-            }
+
             /** Orders by largest population to smallest*/
             strSelect += " ORDER BY Population DESC\n";
+
+            strSelect+=";";
+
+            System.out.println("Query: " + strSelect);
+
             /** Execute SQL statement*/
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -422,7 +419,7 @@ public class App {
                 capital.name = rset.getString("Name");
                 capital.country = rset.getString("Country");
                  capital.region = rset.getString("Region");
-                 capital.continent = rset.getString("District");
+                 capital.continent = rset.getString("Continent");
                 capital.population = rset.getInt("Population");
                 capitalCities.add(capital);
             }
