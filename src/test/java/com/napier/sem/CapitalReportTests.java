@@ -39,7 +39,6 @@ import static org.junit.jupiter.api.Assertions.fail;
          ArrayList<Capital> capitalCities = new ArrayList<>();
 
          app.outputCapitalCitiesReport(capitalCities, -1, "test");
-
      }
 
      /**
@@ -52,7 +51,6 @@ import static org.junit.jupiter.api.Assertions.fail;
          capitalCities.add(null);
 
          app.outputCapitalCitiesReport(capitalCities, -1, "test");
-
      }
 
      /**

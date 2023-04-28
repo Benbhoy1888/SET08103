@@ -1,3 +1,3 @@
-|Name | Population in Thousands|
+| Name | Population in Thousands |
 | :--- | ---: |
 | Oceania | 30401.15 K |
