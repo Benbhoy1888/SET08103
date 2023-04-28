@@ -39,7 +39,7 @@ public class LanguageReportTests {
         Language language = new Language();
 
         language.languageName = "English";
-        language.population = 93.7;
+        language.population = 93;
 
         app.outputLanguageReport(null,"test");
     }

@@ -18,7 +18,7 @@ public class Language {
     /**
      * Language population
      */
-    public double population = -1;
+    public long population = -1;
 
     /**
      * Language percentage

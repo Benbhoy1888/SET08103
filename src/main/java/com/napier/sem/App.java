@@ -521,7 +521,7 @@ public class App
         // build report header
         StringBuilder sb = new StringBuilder();
         // Print header
-        sb.append("|Name |Total Population |Population living in cities |Percent| Population not living in cities | Percentage | \r\n");
+        sb.append("|Name |Total Population |Population living in cities |Percent living cities | Population not living in cities | Percentage not living in cities | \r\n");
         sb.append("| :--- | ---: | ---: | ------------------------------: | ---: | -------------------------------: |\r\n");
 
         // Loop over all rows in the list
@@ -533,9 +533,9 @@ public class App
             sb.append(("| " + urb.Name + " | " +
                     urb.totalPopulation + " | " +
                     urb.cityPopulation + " | " +
-                    urb.cityPopulationPercentage + " | " +
+                    urb.cityPopulationPercentage + "% | " +
                     urb.nonCityPopulation + " | " +
-                    urb.nonCityPopulationPercentage  + " |\r\n"));
+                    urb.nonCityPopulationPercentage  + "% |\r\n"));
         }
 
         try {
@@ -870,7 +870,7 @@ public class App
                     "      FROM world.country\n" +
                     "               JOIN world.countrylanguage ON countrylanguage.CountryCode = country.Code\n" +
                     "      WHERE Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')\n" +
-                    "      GROUP BY Language) AS lang";
+                    "      GROUP BY Language) AS lang ORDER BY `Number of People` DESC;";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract language information from result set
@@ -927,7 +927,7 @@ public class App
             if(lan == null) continue;
             sb.append(("| " + lan.languageName + " | " +
                     lan.population + " | " +
-                    lan.percentage + " |\r\n"));
+                    lan.percentage  + "% |\r\n"));
         }
 
         try {
