@@ -10,14 +10,13 @@ public class Capital {
      */
     public String name ;
 
+    /**
+     * Country
+     */
+    public String country;
 
     /**
      * Population
      */
     public int population ;
-
-    /**
-     * Country
-     */
-    public String country;
 }
