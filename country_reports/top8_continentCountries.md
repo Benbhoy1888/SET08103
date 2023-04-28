@@ -1,4 +1,4 @@
-|Code |Name |Continent | Region | Population | Capital |
+| Code | Name | Continent | Region | Population | Capital |
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | AUS | Australia | Oceania | Australia and New Zealand | 18886000 | Canberra |
 | PNG | Papua New Guinea | Oceania | Melanesia | 4807000 | Port Moresby |

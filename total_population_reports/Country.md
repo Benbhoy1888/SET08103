@@ -1,3 +1,3 @@
-|Name | Population in Thousands|
+| Name | Population in Thousands |
 | :--- | ---: |
 | Argentina | 37032.0 K |

@@ -1,4 +1,4 @@
-|Code |Name |Continent | Region | Population | Capital |
+| Code | Name | Continent | Region | Population | Capital |
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | DEU | Germany | Europe | Western Europe | 82164700 | Berlin |
 | FRA | France | Europe | Western Europe | 59225700 | Paris |
